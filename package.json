@@ -1,6 +1,7 @@
 {
     "devDependencies": {
-        "@symfony/webpack-encore": "^0.17.0"
+        "@symfony/webpack-encore": "^0.17.0",
+        "tailwindcss": "^0.5.2"
     },
     "license": "UNLICENSED",
     "private": true,

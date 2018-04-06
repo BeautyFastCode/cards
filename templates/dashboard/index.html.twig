@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dashboard | Cards{% endblock %}
+
+{% block nav %}
+    <nav class="flex bg-green-dark p-4">
+        <div class="flex-grow">
+            <a href="#" class="text-green-dark no-underline inline-block border
+                rounded-tl-lg rounded-br-lg px-2 py-1 bg-white
+                hover:bg-green-darkest hover:border-transparent hover:text-white">
+                <i class="fas fa-tachometer-alt"></i> Dashboard
+            </a>
+        </div>
+        <div class="flex-grow">
+            <a href="#" class="text-white no-underline text-xl">Cards</a>
+        </div>
+
+        <div>
+            <a href="{{ path('frontend') }}" class="text-green-dark no-underline inline-block border
+                rounded-tl-lg rounded-br-lg px-2 py-1 bg-white
+                hover:bg-green-darkest hover:border-transparent hover:text-white">
+                Log Out <i class="fas fa-sign-out-alt"></i>
+            </a>
+        </div>
+    </nav>
+{% endblock %}
+
+{% block main %}
+
+{% endblock %}
