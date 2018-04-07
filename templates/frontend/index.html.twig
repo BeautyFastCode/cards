@@ -3,23 +3,20 @@
 {% block title %}Frontend | Cards{% endblock %}
 
 {% block nav %}
-    <nav class="flex bg-green-light p-4">
-        <div class="flex-grow">
-            <a href="{{ path('frontend') }}" class="no-underline text-white text-xl font-bold hover:text-green-dark">
+    <nav class="">
+        <div class="">
+            <a href="{{ path('frontend') }}" class="">
                 <p>
-                    <span class="text-green-light inline-block border rounded-tl-lg rounded-br-lg px-2 py-1 bg-white
-                                hover:bg-green-dark hover:border-transparent hover:text-white">C</span> ards
+                    Cards
                 </p>
             </a>
         </div>
 
         <div>
-            <a href="{{ path('dashboard') }}" class="text-white no-underline inline-block border border-green rounded-tl-lg rounded-br-lg px-2 py-1 bg-green
-        hover:bg-green-lighter hover:border-transparent hover:text-green">
+            <a href="{{ path('dashboard') }}" class="">
                 <i class="fas fa-sign-in-alt"></i> Log In
             </a>
-            <a href="#" class="text-green-light no-underline inline-block border rounded-tl-lg rounded-br-lg px-2 py-1 bg-white
-        hover:bg-green-dark hover:border-transparent hover:text-white">
+            <a href="#" class="">
                 <i class="fas fa-sign-in-alt"></i> Sign Up
             </a>
         </div>
@@ -27,35 +24,31 @@
 {% endblock %}
 
 {% block main %}
-    <section class="container mx-auto">
-        <h1 class="text-center my-8">Thanks for using Cards.</h1>
+    <section class="intro container text-center">
+        <h1>Thanks for using Cards.</h1>
     </section>
-    <section class="bg-grey-light">
-        <div class="container mx-auto py-4">
-            <div class="flex -mx-2">
-                <div class="w-1/2 px-2">
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                        Ad animi assumenda at ducimus eaque error facilis fuga hic nihil nisi non,
-                        obcaecati, quaerat qui quis, quod rem reprehenderit saepe veniam?
-                    </p>
-                </div>
-                <div class="w-1/2">
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                        Ad animi assumenda at ducimus eaque error facilis fuga hic nihil nisi non,
-                        obcaecati, quaerat qui quis, quod rem reprehenderit saepe veniam?
-                    </p>
-                </div>
+    <section class="information container bg-light">
+        <div class="row">
+            <div class="col-12 col-md-6">
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Ad animi assumenda at ducimus eaque error facilis fuga hic nihil nisi non,
+                    obcaecati, quaerat qui quis, quod rem reprehenderit saepe veniam?
+                </p>
+            </div>
+            <div class="col-12 col-md-6">
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Ad animi assumenda at ducimus eaque error facilis fuga hic nihil nisi non,
+                    obcaecati, quaerat qui quis, quod rem reprehenderit saepe veniam?
+                </p>
             </div>
         </div>
     </section>
 {% endblock %}
 
 {% block footer %}
-    <section class="bg-grey-darkest text-grey py-4">
-        <div class="container mx-auto">
+    <section class="container">
             <h6>Cards © Copyright 2018. All rights reserved.</h6>
-        </div>
     </section>
 {% endblock %}

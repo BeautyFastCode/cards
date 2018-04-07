@@ -1,0 +1,17 @@
+/*
+ * Import Bootstrap SASS
+ * The ~ allows you to reference things in node_modules
+ */
+@import "~bootstrap/scss/bootstrap.scss";
+
+/*
+ * Main styles.
+ */
+body {
+    background-color: $gray-200;
+}
+
+/*
+ * Styles for parts, components etc.
+ */
+@import "footer";

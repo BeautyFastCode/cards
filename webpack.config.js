@@ -1,24 +1,50 @@
 var Encore = require('@symfony/webpack-encore');
 
+/**
+ * The Encore helps generate the Webpack configuration.
+ */
 Encore
-    // the project directory where compiled assets will be stored
+    /*
+     * The project directory where compiled assets will be stored
+     */
     .setOutputPath('public/build/')
-    // the public path used by the web server to access the previous directory
+
+    /*
+     * The public path used by the web server to access the previous directory
+     */
     .setPublicPath('/build')
+
+    /*
+     * Empty the outputPath dir before each build
+     */
     .cleanupOutputBeforeBuild()
+
+    /*
+     * For production, enable source maps
+     */
     .enableSourceMaps(!Encore.isProduction())
+
     // uncomment to create hashed filenames (e.g. app.abc123.css)
     // .enableVersioning(Encore.isProduction())
 
-    // uncomment to define the assets of the project
-    // .addEntry('js/app', './assets/js/app.js')
-    // .addStyleEntry('css/app', './assets/css/app.scss')
+    /*
+     * Will create public/build/app.js and public/build/app.css
+     */
+    .addEntry('js/cards', './assets/js/cards.js')
+    .addStyleEntry('css/cards', './assets/scss/cards.scss')
 
-    // uncomment if you use Sass/SCSS files
-    // .enableSassLoader()
+    /*
+     * Sass/SCSS
+     */
+    .enableSassLoader()
 
     // uncomment for legacy applications that require $/jQuery as a global variable
     // .autoProvidejQuery()
+
+    /*
+     * Show OS notifications when builds finish/fail
+     */
+    .enableBuildNotifications()
 ;
 
 module.exports = Encore.getWebpackConfig();
