@@ -19,6 +19,9 @@
 .brand {
     font-family: $headings-font-family;
 }
+.logo-w-4 {
+    width: 4rem;
+}
 
 .navbar-white {
     border-bottom: .03rem solid lighten($primary, 20%);

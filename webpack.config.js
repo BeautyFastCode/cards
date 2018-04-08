@@ -1,5 +1,5 @@
 var Encore = require('@symfony/webpack-encore');
-// const GoogleFontsPlugin = require("google-fonts-webpack-plugin");
+const GoogleFontsPlugin = require("google-fonts-webpack-plugin");
 
 /**
  * The Encore helps generate the Webpack configuration.
@@ -18,14 +18,19 @@ Encore
     /*
      * Empty the outputPath dir before each build
      */
-    // .cleanupOutputBeforeBuild() // disable for build speed
+    .cleanupOutputBeforeBuild()
 
     /*
      * For production, enable source maps
      */
     .enableSourceMaps(!Encore.isProduction())
 
-    // uncomment to create hashed filenames (e.g. app.abc123.css)
+    /*
+     * Enable versioning - each filename will now include a hash,
+     * that changes whenever the contents of that file change.
+     *
+     * uncomment to create hashed filenames (e.g. app.abc123.css)
+     */
     // .enableVersioning(Encore.isProduction())
 
     /*
@@ -33,6 +38,8 @@ Encore
      */
     .addEntry('js/cards', './assets/js/cards.js')
     .addStyleEntry('css/cards', './assets/scss/cards.scss')
+    .addEntry('images/cards-logo.svg', './assets/svg/cards-logo.svg')
+    .addEntry('images/cards-logo-white.svg', './assets/svg/cards-logo-white.svg')
 
     /*
      * Sass/SCSS
@@ -47,15 +54,17 @@ Encore
      */
     .enableBuildNotifications()
 
-    // disable for build speed
-/*    .addPlugin(
+    /*
+     * This plugin download the Google Fonts
+     */
+    .addPlugin(
         new GoogleFontsPlugin({
             fonts: [
                 { family: "Merienda One" }
             ],
             path: 'fonts/'
         })
-    )*/
+    )
 ;
 
 module.exports = Encore.getWebpackConfig();
