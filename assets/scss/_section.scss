@@ -1,0 +1,19 @@
+.section-nav {
+    border-left: .01rem solid $secondary;
+
+    .nav-item {
+        .nav-link {
+            color: $secondary;
+
+            &:hover {
+                color: $primary;
+            }
+        }
+    }
+
+}
+
+section {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}

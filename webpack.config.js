@@ -1,4 +1,5 @@
 var Encore = require('@symfony/webpack-encore');
+// const GoogleFontsPlugin = require("google-fonts-webpack-plugin");
 
 /**
  * The Encore helps generate the Webpack configuration.
@@ -17,7 +18,7 @@ Encore
     /*
      * Empty the outputPath dir before each build
      */
-    .cleanupOutputBeforeBuild()
+    // .cleanupOutputBeforeBuild() // disable for build speed
 
     /*
      * For production, enable source maps
@@ -45,6 +46,16 @@ Encore
      * Show OS notifications when builds finish/fail
      */
     .enableBuildNotifications()
+
+    // disable for build speed
+/*    .addPlugin(
+        new GoogleFontsPlugin({
+            fonts: [
+                { family: "Merienda One" }
+            ],
+            path: 'fonts/'
+        })
+    )*/
 ;
 
 module.exports = Encore.getWebpackConfig();

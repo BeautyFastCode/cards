@@ -2,53 +2,36 @@
 
 {% block title %}Frontend | Cards{% endblock %}
 
-{% block nav %}
-    <nav class="">
-        <div class="">
-            <a href="{{ path('frontend') }}" class="">
-                <p>
-                    Cards
-                </p>
-            </a>
-        </div>
-
-        <div>
-            <a href="{{ path('dashboard') }}" class="">
-                <i class="fas fa-sign-in-alt"></i> Log In
-            </a>
-            <a href="#" class="">
-                <i class="fas fa-sign-in-alt"></i> Sign Up
-            </a>
-        </div>
-    </nav>
-{% endblock %}
-
 {% block main %}
     <section class="intro container text-center">
-        <h1>Thanks for using Cards.</h1>
+        <h1 class="display-3">Thanks for using Cards.</h1>
     </section>
-    <section class="information container bg-light">
-        <div class="row">
-            <div class="col-12 col-md-6">
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Ad animi assumenda at ducimus eaque error facilis fuga hic nihil nisi non,
-                    obcaecati, quaerat qui quis, quod rem reprehenderit saepe veniam?
-                </p>
-            </div>
-            <div class="col-12 col-md-6">
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Ad animi assumenda at ducimus eaque error facilis fuga hic nihil nisi non,
-                    obcaecati, quaerat qui quis, quod rem reprehenderit saepe veniam?
-                </p>
+    <section class="information bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-md-6">
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                        Ad animi assumenda at ducimus eaque error facilis fuga hic nihil nisi non,
+                        obcaecati, quaerat qui quis, quod rem reprehenderit saepe veniam?
+                    </p>
+                </div>
+                <div class="col-12 col-md-6">
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                        Ad animi assumenda at ducimus eaque error facilis fuga hic nihil nisi non,
+                        obcaecati, quaerat qui quis, quod rem reprehenderit saepe veniam?
+                    </p>
+                </div>
             </div>
         </div>
     </section>
 {% endblock %}
 
 {% block footer %}
-    <section class="container">
-            <h6>Cards © Copyright 2018. All rights reserved.</h6>
-    </section>
+    <footer class="bg-dark text-light">
+            <section class="container">
+                <p><span class="brand">Cards </span>© Copyright 2018. All rights reserved.</p>
+            </section>
+    </footer>
 {% endblock %}

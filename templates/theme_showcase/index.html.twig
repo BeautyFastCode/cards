@@ -1,0 +1,121 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Theme Showcase | Cards{% endblock %}
+
+{% block main %}
+
+    <div class="row">
+        <aside class="col-md-3 order-last">
+            <ul class="nav section-nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Headings</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#theme-colors">Theme colors</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#buttons">Buttons</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Nav item</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Nav item</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Nav item</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Nav item</a>
+                </li>
+            </ul>
+        </aside>
+
+        <div class="col-md-9">
+            <section class="container">
+                <h1 class="display-3">Theme Showcase</h1>
+            </section>
+
+            <section id="headings" class="container">
+                <h2>Headings</h2>
+                <hr class="mb-4">
+                <h1>H1</h1>
+                <h2>H2</h2>
+                <h3>H3</h3>
+                <h4>H4</h4>
+                <h5>H5</h5>
+                <h6>H6</h6>
+            </section>
+
+            <section id="theme-colors" class="container">
+                <h2>Theme colors</h2>
+                <hr class="mb-4">
+                <div class="row text-white">
+                    <div class="col-md-4">
+                        <div class="p-3 mb-3 bg-primary">Primary</div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="p-3 mb-3 bg-secondary">Secondary</div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="p-3 mb-3 bg-success">Success</div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="p-3 mb-3 bg-danger">Danger</div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="p-3 mb-3 bg-warning">Warning</div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="p-3 mb-3 bg-info">Info</div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="p-3 mb-3 bg-light text-dark">Light</div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="p-3 mb-3 bg-dark">Dark</div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="buttons" class="container">
+                <h2>Buttons</h2>
+                <hr class="mb-4">
+                <div class="mb-4">
+                    <button type="button" class="btn btn-primary btn-sm">Small button</button>
+                    <button type="button" class="btn btn-secondary btn-sm">Small button</button>
+                    <button type="button" class="btn btn-success btn-sm">Small button</button>
+                    <button type="button" class="btn btn-danger btn-sm">Small button</button>
+                    <button type="button" class="btn btn-warning btn-sm">Small button</button>
+                    <button type="button" class="btn btn-info btn-sm">Small button</button>
+                    <button type="button" class="btn btn-light btn-sm">Small button</button>
+                    <button type="button" class="btn btn-dark btn-sm">Small button</button>
+                </div>
+
+                <div class="mb-4">
+                    <button type="button" class="btn btn-primary btn-lg">Button</button>
+                    <button type="button" class="btn btn-secondary btn-lg">Button</button>
+                    <button type="button" class="btn btn-success btn-lg">Button</button>
+                    <button type="button" class="btn btn-danger btn-lg">Button</button>
+                    <button type="button" class="btn btn-warning btn-lg">Button</button>
+                    <button type="button" class="btn btn-info btn-lg">Button</button>
+                    <button type="button" class="btn btn-light btn-lg">Button</button>
+                    <button type="button" class="btn btn-dark btn-lg">Button</button>
+                </div>
+
+                <div class="mb-4">
+                    <button type="button" class="btn btn-primary btn-lg">Large button</button>
+                    <button type="button" class="btn btn-secondary btn-lg">Large button</button>
+                    <button type="button" class="btn btn-success btn-lg">Large button</button>
+                    <button type="button" class="btn btn-danger btn-lg">Large button</button>
+                    <button type="button" class="btn btn-warning btn-lg">Large button</button>
+                    <button type="button" class="btn btn-info btn-lg">Large button</button>
+                    <button type="button" class="btn btn-light btn-lg">Large button</button>
+                    <button type="button" class="btn btn-dark btn-lg">Large button</button>
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+{% endblock %}

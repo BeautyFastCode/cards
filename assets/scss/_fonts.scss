@@ -1,0 +1,20 @@
+/*
+ * Google Font Merienda One
+*/
+
+$meriendaFileName: '/build/fonts/MeriendaOne-Regular';
+
+@font-face {
+    font-family: 'Merienda One';
+    font-style: normal;
+    font-weight: 400;
+
+    src: local('Merienda One'), local('MeriendaOne'),
+         url($meriendaFileName + '.woff2') format('woff2');
+
+    src: url($meriendaFileName + '.eot') format('eot') format("embedded-opentype")
+         url($meriendaFileName + '.eot') format('eot'),
+         url($meriendaFileName + '.woff') format('woff'),
+         url($meriendaFileName + '.ttf') format('ttf'),
+         url($meriendaFileName + '.svg') format('svg'),
+}

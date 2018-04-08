@@ -1,0 +1,28 @@
+{% block main_navbar %}
+    <nav class="navbar navbar-dark bg-primary">
+        <a href="{{ path('frontend') }}" class="navbar-brand brand">
+            Cards
+        </a>
+
+        <ul class="navbar-nav flex-row mr-auto">
+           <li class="nav-item">
+               <a href="{{ path('theme_showcase') }}" class="nav-link">
+                   Theme Showcase
+               </a>
+           </li>
+        </ul>
+
+        <ul class="navbar-nav flex-row">
+            <li class="nav-item ml-2">
+                <a href="{{ path('dashboard') }}" class="nav-link">
+                    <i class="fa fa-sign-in"></i> Log In
+                </a>
+            </li>
+            <li class="nav-item ml-2">
+                <a href="#" class="btn btn-light btn-sm text-primary px-2">
+                    <i class="fa fa-sign-in"></i> Sign Up
+                </a>
+            </li>
+        </ul>
+    </nav>
+{% endblock %}

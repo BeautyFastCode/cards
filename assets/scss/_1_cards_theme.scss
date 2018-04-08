@@ -1,0 +1,106 @@
+/**
+ * Customize Bootstrap.
+ * You can override variables in _variables.scss with the !default flag.
+ */
+
+//
+// Color system
+//
+
+$white:    #fff;
+$gray-100: #f8f9fa;
+$gray-200: #e9ecef;
+$gray-300: #dee2e6;
+$gray-400: #ced4da;
+$gray-500: #adb5bd;
+$gray-600: #6c757d;
+$gray-700: #495057;
+$gray-800: #343a40;
+$gray-900: #212529;
+$black:    #000;
+
+$blue:    #007bff;
+$indigo:  #6610f2;
+$purple:  #6f42c1;
+$pink:    #e83e8c;
+$red:     #dc3545;
+$cherry-red:    #C40000;
+$orange:  #fd7e14;
+$yellow:  #ffc107;
+$green:   #28a745;
+$teal:    #20c997;
+$cyan:    #17a2b8;
+
+$primary:       $cherry-red;
+$secondary:     $gray-500;
+$success:       lighten($green, 20%);
+$info:          lighten($blue, 20%);
+$warning:       lighten($orange, 20%);
+$danger:        lighten($red, 20%);
+$light:         $gray-200;
+$dark:          $gray-700;
+
+// Body
+//
+// Settings for the `<body>` element.
+
+$body-color:                $dark;
+
+// Fonts
+//
+// Font, line-height, and color for body text, headings, and more.
+
+$headings-font-family:        'Merienda One', cursive;
+$headings-color: $dark;
+$headings-margin-bottom:      0;
+
+$hr-border-color:             lighten($red, 30%);
+$hr-border-width:             .05rem;
+$hr-margin-y:                 0;
+
+.display-1, .display-2, .display-3, .display-4 {
+    color: $secondary;
+}
+
+// Buttons
+//
+//
+
+// Components
+//
+// Define common padding and border radius sizes and more.
+
+$border-radius-lg:            .8rem 0 .8rem 0;
+$border-radius:               .7rem 0 .7rem 0;
+$border-radius-sm:            .6rem 0 .6rem 0;
+
+/*
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+*/
+
+/*
+ * Import all Bootstrap SASS.
+ * The ~ allows you to reference things in node_modules.
+ */
+@import "~bootstrap/scss/bootstrap.scss";
+
+
+/**
+ * Imports only the parts of Bootstrap you need,
+ * for smaller final CSS file.
+ */
+
+// Required
+//@import "~bootstrap/scss/functions";
+//@import "~bootstrap/scss/variables";
+//@import "~bootstrap/scss/mixins";
+//
+//// Optional
+//@import "~bootstrap/scss/reboot";   // Normalization of HTML elements.
+//@import "~bootstrap/scss/grid";     // Columns and Rows.
+//@import "~bootstrap/scss/nav";      // Base class for navigation components.
+//@import "~bootstrap/scss/navbar";   // Navigation bar, menu.
+
+/*
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+*/

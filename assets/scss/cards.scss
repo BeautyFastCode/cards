@@ -1,17 +1,32 @@
 /*
- * Import Bootstrap SASS
- * The ~ allows you to reference things in node_modules
+ * Import Font Awesome SASS.
  */
-@import "~bootstrap/scss/bootstrap.scss";
+@import "~font-awesome/scss/font-awesome";
 
 /*
- * Main styles.
+ * Import Google Fonts.
  */
-body {
-    background-color: $gray-200;
+@import "fonts";
+
+/**
+ * Import Bootstrap SASS and custom theme.
+ */
+@import "1_cards_theme";
+
+/*
+ * Main styles
+ */
+.brand {
+    font-family: $headings-font-family;
+}
+
+.navbar-white {
+    border-bottom: .03rem solid lighten($primary, 20%);
 }
 
 /*
  * Styles for parts, components etc.
  */
+@import "section";
+@import "deck";
 @import "footer";
