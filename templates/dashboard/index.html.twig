@@ -9,78 +9,31 @@
 {% block main %}
     <div class="container">
 
-        <section>
-            <h2>Suite A</h2>
-            <hr class="mb-2">
-            <div class="row">
-                <div class="col-3">
-                    <a href="#" class="deck bg-secondary text-white">
-                        <p>Untitled Deck</p>
-                    </a>
-                </div>
-                <div class="col-3">
-                    <a href="#" class="deck bg-success text-white">
-                        <p>Welcome Deck</p>
-                    </a>
-                </div>
-                <div class="col-3">
-                    <a href="#" class="deck bg-light text-secondary">
-                        <p><i class="fa fa-plus"></i> Create new Deck</p>
-                    </a>
-                </div>
-            </div>
-        </section>
-
-        <section>
-            <nav>
-                <ul class="nav">
-                    <li class="nav-item ml-2">
-                        <h2>Calendar</h2>
-                    </li>
-                    <li class="nav-item ml-2">
-                        <a href="#" class="btn btn-light btn-sm text-secondary">
-                            <i class="fa fa-pencil"></i>
-                            Change name
-                        </a>
-                    </li>
-                    <li class="nav-item ml-2">
-                        <a href="#" class="btn btn-light btn-sm text-secondary">
-                            <i class="fa fa-cog"></i>
-                            Settings
-                        </a>
-                    </li>
-                    <li class="nav-item ml-auto">
-                        <a href="#" class="btn btn-light btn-sm text-secondary">
-                            <i class="fa fa-list"></i>
-                        </a>
-                    </li>
-                    <li class="nav-item ml-2">
-                        <a href="#" class="btn btn-light btn-sm text-secondary">
-                            <i class="fa fa-th"></i>
-                        </a>
-                    </li>
-                </ul>
+        {% for suite in suites %}
+            <section>
+                {% include 'dashboard/_suite-navbar.html.twig' with {'suite': suite} %}
                 <hr class="mb-2">
-            </nav>
 
-            <div class="row">
-                <div class="col-3">
-                    <a href="#" class="deck bg-danger text-white">
-                            <p>2018 - 04</p>
-                    </a>
+                <div class="row">
+                    {% if suite.decks is defined %}
+                        {% for deck in suite.decks %}
+                            <div class="col-3">
+                                <a href="#" class="deck {{ deck.background }} text-white">
+                                    <p>{{ deck.name }}</p>
+                                </a>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+
+                    <div class="col-3">
+                        <a href="#" class="deck bg-light text-secondary">
+                            <p><i class="fa fa-plus"></i> Create new Deck</p>
+                        </a>
+                    </div>
+
                 </div>
-                <div class="col-3">
-                    <a href="#" class="deck bg-warning text-white">
-                        <p>Project Cards</p>
-                    </a>
-                </div>
-                <div class="col-3">
-                    <a href="#" class="deck bg-light text-secondary">
-                        <p><i class="fa fa-plus"></i> Create new Deck</p>
-                    </a>
-                </div>
-            </div>
-        </section>
+            </section>
+        {% endfor %}
 
         <section>
             <hr class="mb-2">
