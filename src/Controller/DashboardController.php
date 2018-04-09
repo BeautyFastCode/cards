@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -47,5 +48,42 @@ class DashboardController extends Controller
         ];
 
         return $this->render('dashboard/index.html.twig', ['suites' => $suites]);
+    }
+
+    /**
+     * @Route("/deck/{card}/{state}", name="show-deck", defaults={"card"=0,"state"="question"})
+     *
+     * @param string $card
+     * @param string $state
+     *
+     * @return Response
+     */
+    public function showDeck(string $card, string $state)
+    {
+        $deck = [
+            'name'       => 'Welcome Deck',
+            'background' => 'bg-success',
+            'cards'      => [
+                [
+                    'front' => 'Front Card',
+                    'back'  => 'Back Card',
+                ],
+                [
+                    'front' => 'How are you?',
+                    'back'  => 'I\'m fine.',
+                ],
+                [
+                    'front' => 'What colour do you like?',
+                    'back'  => 'I like the red cherry.',
+                ],
+            ],
+        ];
+
+        return $this->render('dashboard/show-deck.html.twig',
+            [
+                'deck'  => $deck,
+                'card' => $card,
+                'state' => $state,
+            ]);
     }
 }

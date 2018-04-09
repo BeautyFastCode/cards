@@ -1,0 +1,112 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ deck.name }} | Cards{% endblock %}
+
+{% block main_navbar %}
+    {% include 'dashboard/_navbar.html.twig' %}
+{% endblock %}
+
+{% block main %}
+
+    <div class="container text-center">
+        <section>
+            {% include 'dashboard/_deck-navbar.html.twig' with {'deck': deck} %}
+
+            <div class="progress">
+                <div class="progress-bar" role="progressbar" style="width: 25%;"
+                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%
+                </div>
+            </div>
+
+            <hr class="mb-2">
+        </section>
+
+        {% if deck.cards is defined %}
+            {% set nextCard = card + 1 %}
+
+            {% if deck.cards|length < nextCard %}
+                {% set state = 'summary' %}
+            {% else %}
+                {% set currentCard = deck.cards[card] %}
+            {% endif %}
+
+            <section>
+                {% if state == 'question' %}
+
+                    <i class="fa fa-5x fa-question text-light" aria-hidden="true"></i>
+
+                    <div class="card w-50 bg-light p-4 ml-auto mr-auto">
+                        <h2>{{ currentCard.front }}</h2>
+                    </div>
+
+                {% elseif state == 'answer' %}
+                    <i class="fa fa-5x fa-comment-o text-light" aria-hidden="true"></i>
+
+                    <div class="card w-50 bg-light p-4 ml-auto mr-auto">
+                        <h2>{{ currentCard.front }}</h2>
+                        <hr class="my-4 border-dark">
+                        <h2>{{ currentCard.back }}</h2>
+                    </div>
+                {% endif %}
+            </section>
+
+        {% endif %}
+
+        <section>
+            {% if state == 'question' %}
+                <a href="{{ path('show-deck', {'card': card, 'state': 'answer'}) }}" class="btn btn-light btn-lg text-secondary">
+                    <i class="fa fa-eye"></i>
+                    See Answer.
+                </a>
+            {% elseif state == 'answer' %}
+                <a href="{{ path('show-deck', {'card': nextCard,'state': 'question'}) }}" class="btn btn-light btn-lg text-secondary">
+                    <i class="fa fa-3x fa-star text-danger"></i>
+                    <i class="fa fa-3x fa-star-half-o text-info"></i>
+                    <i class="fa fa-3x fa-star-o text-success"></i>
+                </a>
+            {% endif %}
+        </section>
+
+        <section>
+            {% if state == 'summary' %}
+                <h1>You finished the study of this deck.</h1>
+                <hr class="mb-2">
+                <a href="{{ path('show-deck', {'card': 0, 'state': 'question'}) }}" class="btn btn-light btn-lg text-secondary">
+                    <i class="fa fa-eye"></i>
+                    Start again.
+                </a>
+            {% endif %}
+        </section>
+{#
+        <section>
+            #}
+{#
+                Rate the answer:
+                1 - repeat
+                2 - good
+                3 - easy
+            #}{#
+
+            <i class="fa fa-3x fa-star text-danger"></i>
+            <i class="fa fa-3x fa-star-half-o text-info"></i>
+            <i class="fa fa-3x fa-star-o text-success"></i>
+            <br>
+            <i class="fa fa-3x fa-frown-o"></i>
+            <i class="fa fa-3x fa-smile-o"></i>
+
+            <br>
+            <i class="fa fa-3x fa-thumbs-o-down"></i>
+            <i class="fa fa-3x fa-thumbs-o-up"></i>
+
+            <br>
+            <i class="fa fa-3x fa-heart-o"></i>
+            <i class="fa fa-3x fa-heart"></i>
+
+        </section>
+#}
+
+    </div>
+    {{ dump() }}
+{% endblock %}
+
+{% block footer %}{% endblock %}

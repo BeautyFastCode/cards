@@ -18,7 +18,8 @@
                     {% if suite.decks is defined %}
                         {% for deck in suite.decks %}
                             <div class="col-3">
-                                <a href="#" class="deck {{ deck.background }} text-white">
+                                <a href="{{ path('show-deck') }}"
+                                   class="deck {{ deck.background }} text-white">
                                     <p>{{ deck.name }}</p>
                                 </a>
                             </div>
