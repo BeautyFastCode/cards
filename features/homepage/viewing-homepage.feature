@@ -6,24 +6,25 @@ Feature: Viewing the homepage
 
     @ui
     Scenario: Viewing the homepage, header area
-        Given I browse to page 'http://127.0.0.1:8000/'
-        And I see logo in navigation bar
-        And I see link 'Log In'
-        And I see link 'Sign Up'
+        Given I am on "http://127.0.0.1:8000/"
+        And I should see a "body" element
+        And I should see a "nav .navbar-brand img" element
+        And I should see text matching "Log In"
+        And I should see text matching "Sign Up"
 
-#    @ui
-#    Scenario: Viewing the homepage, sections area
-#        Given I browse to page 'http://127.0.0.1:8000/'
-#        And I see section 'cover'
-#        And I see section 'benefits'
-#        And I see section 'showcase'
-#        And I see section 'counters'
-#        And I see section 'suites'
-#        And I see section 'subscribe'
-#        And I see section 'start-learning'
-#
-#    @ui
-#    Scenario: Viewing the homepage, footer area
-#        Given I browse to page 'http://127.0.0.1:8000/'
-#        And I see logo in footer
-#        And I see copyright text in footer
+    @ui
+    Scenario: Viewing the homepage, sections area
+        Given I am on "http://127.0.0.1:8000/"
+        And I should see a "section.cover" element
+        And I should see a "section.benefits" element
+        And I should see a "section.showcase" element
+        And I should see a "section.counters" element
+        And I should see a "section.suites" element
+        And I should see a "section.subscribe" element
+        And I should see a "section.start-learning" element
+
+    @ui
+    Scenario: Viewing the homepage, footer area
+        Given I am on "http://127.0.0.1:8000/"
+        And I should see a "footer img.logo-w-4" element
+        And I should see "All rights reserved." in the "footer" element
