@@ -15,9 +15,7 @@
     <body>
         {% block body %}
 
-            {% block main_navbar %}
-                {% include 'homepage/_navbar.html.twig' %}
-            {% endblock %}
+            {% block main_navbar %}{% endblock %}
 
             <header>
                 {% block header %}{% endblock %}
@@ -27,9 +25,7 @@
                 {% block main %}{% endblock %}
             </main>
 
-            {% block footer %}
-                {% include 'homepage/_footer.html.twig' %}
-            {% endblock %}
+            {% block footer %}{% endblock %}
 
             {{ dump() }}
 

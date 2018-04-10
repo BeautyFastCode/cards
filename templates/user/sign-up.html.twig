@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Create a Cards Account{% endblock %}
+
+{% block main %}
+    <div class="container my-5 mx-auto">
+
+        <section>
+            <div class="row">
+                <div class="col-md-6">
+                    <h1><i class="fa fa-plus"></i> Create a Cards Account.</h1>
+                </div>
+                <div class="col-md-3">
+                    <a href="{{ path('login') }}" class="btn btn-light text-secondary btn-sm">
+                        <i class="fa fa-sign-in"></i>
+                        or login to your account.
+                    </a>
+                </div>
+            </div>
+
+            <hr class="mb-2">
+        </section>
+
+        <section class="w-50">
+            <form>
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" class="form-control" placeholder="eg., Jan Smith">
+                </div>
+                <div class="form-group">
+                    <label>Email (or username)</label>
+                    <input type="email" class="form-control" placeholder="eg., jan.smith@mail.org">
+                </div>
+                <div class="form-group">
+                    <label >Password</label>
+                    <input type="password" class="form-control" placeholder="e.g., ********">
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block">
+                    <i class="fa fa-plus"></i>
+                    Create New Account</button>
+            </form>
+        </section>
+
+        <section>
+            <hr class="mb-2">
+            <p>By creating an account, you agree to our <a href="{{ path('privacy') }}" target="_top">Terms of Service
+                and Privacy Policy.</a></p>
+        </section>
+
+    </div>
+
+{% endblock %}
+
+{% block footer %}
+    {% include 'homepage/_footer.html.twig' %}
+    {{ parent() }}
+{% endblock %}

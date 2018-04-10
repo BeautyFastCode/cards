@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reset Your Cards Password{% endblock %}
+
+{% block main %}
+    <div class="container my-5 mx-auto">
+
+        <section>
+            <h1><i class="fa fa-refresh"></i> Reset Your Cards Password.</h1>
+            <hr class="mb-2">
+        </section>
+
+        <section class="w-50">
+            <p>Submit your email address and we’ll send you a link to reset your password.</p>
+            <form>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" class="form-control" placeholder="eg., ala@has.cat">
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block">
+                    <i class="fa fa-send"></i>
+                    Submit</button>
+            </form>
+        </section>
+
+        <section>
+            <hr class="mb-2">
+            <a href="{{ path('login') }}" class="btn btn-light text-secondary btn-sm">
+                <i class="fa fa-sign-in"></i>
+                or you can try logging in again.
+            </a>
+        </section>
+
+    </div>
+{% endblock %}
+
+{% block footer %}
+    {% include 'homepage/_footer.html.twig' %}
+    {{ parent() }}
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Logged out of Cards{% endblock %}
+
+{% block main_navbar %}
+    {% include 'homepage/_navbar.html.twig' %}
+{% endblock %}
+
+{% block main %}
+
+    <section class="container text-center my-5">
+        <h1 class="display-3">Thanks for using Cards.</h1>
+        <p class="text-secondary">You're all logged out.</p>
+    </section>
+
+    <section class="information bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-md-6">
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                        Ad animi assumenda at ducimus eaque error facilis fuga hic nihil nisi non,
+                        obcaecati, quaerat qui quis, quod rem reprehenderit saepe veniam?
+                    </p>
+                </div>
+                <div class="col-12 col-md-6">
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                        Ad animi assumenda at ducimus eaque error facilis fuga hic nihil nisi non,
+                        obcaecati, quaerat qui quis, quod rem reprehenderit saepe veniam?
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
+
+{% block footer %}
+    {% include 'homepage/_footer.html.twig' %}
+    {{ parent() }}
+{% endblock %}

@@ -2,6 +2,10 @@
 
 {% block title %}Theme Showcase | Cards{% endblock %}
 
+{% block main_navbar %}
+    {% include 'homepage/_navbar.html.twig' %}
+{% endblock %}
+
 {% block main %}
 
     <div class="row">
@@ -118,4 +122,9 @@
         </div>
     </div>
 
+{% endblock %}
+
+{% block footer %}
+    {% include 'homepage/_footer.html.twig' %}
+    {{ parent() }}
 {% endblock %}

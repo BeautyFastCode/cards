@@ -2,30 +2,11 @@
 
 {% block title %}Cards{% endblock %}
 
+{% block main_navbar %}
+    {% include 'homepage/_navbar.html.twig' %}
+{% endblock %}
+
 {% block main %}
-    {#<section class="intro container text-center">#}
-        {#<h1 class="display-3">Thanks for using Cards.</h1>#}
-    {#</section>#}
-    {#<section class="information bg-light">#}
-        {#<div class="container">#}
-            {#<div class="row">#}
-                {#<div class="col-12 col-md-6">#}
-                    {#<p>#}
-                        {#Lorem ipsum dolor sit amet, consectetur adipisicing elit.#}
-                        {#Ad animi assumenda at ducimus eaque error facilis fuga hic nihil nisi non,#}
-                        {#obcaecati, quaerat qui quis, quod rem reprehenderit saepe veniam?#}
-                    {#</p>#}
-                {#</div>#}
-                {#<div class="col-12 col-md-6">#}
-                    {#<p>#}
-                        {#Lorem ipsum dolor sit amet, consectetur adipisicing elit.#}
-                        {#Ad animi assumenda at ducimus eaque error facilis fuga hic nihil nisi non,#}
-                        {#obcaecati, quaerat qui quis, quod rem reprehenderit saepe veniam?#}
-                    {#</p>#}
-                {#</div>#}
-            {#</div>#}
-        {#</div>#}
-    {#</section>#}
 
     <section class="cover">
         <h1>Speed up your learning skills 10x with Cards.</h1>
@@ -82,3 +63,7 @@
 
 {% endblock %}
 
+{% block footer %}
+    {% include 'homepage/_footer.html.twig' %}
+    {{ parent() }}
+{% endblock %}
