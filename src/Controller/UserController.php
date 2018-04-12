@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -33,10 +35,16 @@ class UserController extends Controller
 
     /**
      * @Route("/forgot", name="forgot")
+     *
+     * @param Request $request
+     * @return Response
      */
-    public function forgot()
+    public function forgot(Request $request)
     {
-        return $this->render('user/forgot.html.twig');
+        return $this->render('user/forgot.html.twig',
+            [
+                'email' => $request->query->get('email')
+            ]);
     }
 
     /**
