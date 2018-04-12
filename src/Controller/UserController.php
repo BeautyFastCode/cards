@@ -46,4 +46,12 @@ class UserController extends Controller
     {
         return $this->render('user/sign-up.html.twig');
     }
+
+    /**
+     * @Route("/successfully-created", name="successfully-created")
+     */
+    public function successfullyCreated()
+    {
+        return $this->render('user/successfully-created.html.twig');
+    }
 }

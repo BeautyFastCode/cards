@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reset Your Cards Password{% endblock %}
+
+{% block main_navbar %}
+    {% include 'homepage/_navbar.html.twig' %}
+{% endblock %}
+
+{% block main %}
+    <div class="container my-5 mx-auto">
+
+        <section>
+            <h1><i class="fa fa-info-circle"></i> New account has been successfully created.</h1>
+            <hr class="mb-2">
+            <p>We'll send a verification link to the email address you used to create the account.</p>
+            <p>Look for the verification email in your inbox and click the link in that email.</p>
+            <p>A confirmation message will appear in your web browser.</p>
+        </section>
+
+    </div>
+{% endblock %}
+
+{% block footer %}
+    {% include 'homepage/_footer.html.twig' %}
+    {{ parent() }}
+{% endblock %}
