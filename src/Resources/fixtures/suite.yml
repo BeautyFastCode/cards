@@ -1,0 +1,7 @@
+App\Entity\Suite:
+    suite_1:
+        name: "Suite A"
+    suite_2:
+        name: "Calendar"
+    suite_3:
+        name: "Empty Suite"

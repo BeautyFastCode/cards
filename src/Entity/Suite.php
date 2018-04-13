@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * @ORM\Table(name="suites")
  * @ORM\Entity(repositoryClass="App\Repository\SuiteRepository")
  */
 class Suite
@@ -21,16 +22,26 @@ class Suite
      */
     private $name;
 
-    public function getId()
+    /**
+     * @return int
+     */
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function getName(): ?string
+    /**
+     * @return string
+     */
+    public function getName(): string
     {
         return $this->name;
     }
 
+    /**
+     * @param string $name
+     * @return Suite
+     */
     public function setName(string $name): self
     {
         $this->name = $name;
