@@ -48,4 +48,14 @@ class Suite
 
         return $this;
     }
+
+    /**
+     * @return array
+     */
+    public function asArray(): array
+    {
+        return [
+            'name' => $this->name,
+        ];
+    }
 }

@@ -89,6 +89,46 @@ default | When (I )switch to frame :name
 default | When (I )switch to main frame
 default | Then (the )total elapsed time should be :comparison than :expected seconds
 default | Then (the )total elapsed time should be :comparison to :expected seconds
+default | Then the response should be in JSON
+default | Then the response should not be in JSON
+default | Then the JSON node :node should be equal to :text
+default | Then the JSON nodes should be equal to:
+default | Then the JSON node :node should match :pattern
+default | Then the JSON node :node should be null
+default | Then the JSON node :node should not be null
+default | Then the JSON node :node should be true
+default | Then the JSON node :node should be false
+default | Then the JSON node :node should be equal to the string :text
+default | Then the JSON node :node should be equal to the number :number
+default | Then the JSON node :node should have :count element(s)
+default | Then the JSON node :node should contain :text
+default | Then the JSON nodes should contain:
+default | Then the JSON node :node should not contain :text
+default | Then the JSON nodes should not contain:
+default | Given the JSON node :name should exist
+default | Given the JSON node :name should not exist
+default | Then the JSON should be valid according to this schema:
+default | Then the JSON should be invalid according to this schema:
+default | Then the JSON should be valid according to the schema :filename
+default | Then the JSON should be invalid according to the schema :filename
+default | Then the JSON should be equal to:
+default | Then print last JSON response
+default | Given I send a :method request to :url
+default | Given I send a :method request to :url with parameters:
+default | Given I send a :method request to :url with body:
+default | Then the response should be equal to
+default | Then the response should be equal to:
+default | Then the response should be empty
+default | Then the header :name should be equal to :value
+default | Then the header :name should not be equal to :value
+default | Then the header :name should contain :value
+default | Then the header :name should not contain :value
+default | Then the header :name should not exist
+default | Then the response should expire in the future
+default | Then I add :name header equal to :value
+default | Then the response should be encoded in :encoding
+default | Then print last response headers
+default | Then print the corresponding curl command
 default | Then the response should be in XML
 default | Then the response should not be in XML
 default | Then the XML element :element should exist(s)
@@ -112,4 +152,5 @@ default | Then the XML feed should be valid according to the relax NG schema :fi
 default | Then the XML feed should be valid according to this relax NG schema:
 default | Then the atom feed should be valid
 default | Then the RSS2 feed should be valid
+
 ```

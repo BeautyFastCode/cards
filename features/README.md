@@ -32,11 +32,14 @@ Feature: {custom_title}
 
 - @ui
 - @email
+- @api
 
 - @homepage
 - @customer-registration
 - @customer-login
 - @customer-logout
 - @learning
+
+- @suite
 
 ---

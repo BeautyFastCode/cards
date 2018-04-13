@@ -2,6 +2,7 @@
 
 namespace App\Controller\Api;
 
+use App\Entity\Suite;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -26,6 +27,16 @@ class SuiteController extends Controller
      */
     public function index(): JsonResponse
     {
-        return new JsonResponse();
+        $suites = $this->getDoctrine()
+            ->getRepository(Suite::class)
+            ->findAll();
+
+        $suitesArray = [];
+        foreach ($suites as $suite) {
+            /** @var Suite $suite */
+            $suitesArray[] = $suite->asArray();
+        }
+
+        return new JsonResponse($suitesArray);
     }
 }
