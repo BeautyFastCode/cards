@@ -37,5 +37,6 @@ Feature: {custom_title}
 - @customer-registration
 - @customer-login
 - @customer-logout
+- @learning
 
 ---

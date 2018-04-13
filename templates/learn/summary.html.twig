@@ -11,7 +11,7 @@
     <div class="container">
 
         <section>
-            <h2>{{ deck.name }}</h2>
+            <h2>Learning summary.</h2>
             <hr class="mb-2">
 
             <div class="row">
@@ -28,7 +28,11 @@
 
                     <a href="{{ path('learn') }}" class="btn btn-lg btn-primary">
                         <i class="fa fa-leanpub" aria-hidden="true"></i>
-                        Start Learning
+                        Resume learning
+                    </a>
+                    <a href="{{ path('dashboard') }}" class="btn btn-lg btn-light text-secondary">
+                        <i class="fa fa-leanpub" aria-hidden="true"></i>
+                        Go to decks.
                     </a>
                 </div>
             </div>

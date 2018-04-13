@@ -51,14 +51,11 @@ class DashboardController extends Controller
     }
 
     /**
-     * @Route("/deck/{card}/{state}", name="show-deck", defaults={"card"=0,"state"="question"})
-     *
-     * @param string $card
-     * @param string $state
+     * @Route("/deck", name="show-deck")
      *
      * @return Response
      */
-    public function showDeck(string $card, string $state)
+    public function showDeck()
     {
         $deck = [
             'name'       => 'Welcome Deck',
@@ -82,8 +79,6 @@ class DashboardController extends Controller
         return $this->render('dashboard/show-deck.html.twig',
             [
                 'deck'  => $deck,
-                'card' => $card,
-                'state' => $state,
             ]);
     }
 }
