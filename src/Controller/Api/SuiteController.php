@@ -64,18 +64,32 @@ class SuiteController extends Controller
         );
     }
 
-//
-//    /**
-//     * Create action
-//     *
-//     * @Route("/api/suites", name="api_suites_post_collection")
-//     * @Method({"Post"})
-//     *
-//     * @param Request $request
-//     * @return JsonResponse
-//     */
-//    public function create(Request $request): JsonResponse
-//    {
-//
-//    }
+    /**
+     * Create action
+     *
+     * @Route("/api/suites", name="api_suites_post_collection")
+     * @Method({"Post"})
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function create(Request $request): JsonResponse
+    {
+        $data = json_decode(
+            $request->getContent(),
+            true
+        );
+
+        $suite = new Suite();
+        $suite->setName($data['name']);
+
+        $manager = $this->getDoctrine()->getManager();
+        $manager->persist($suite);
+        $manager->flush();
+
+        return new JsonResponse(
+            $suite->asArray(),
+            JsonResponse::HTTP_CREATED
+        );
+    }
 }

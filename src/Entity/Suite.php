@@ -55,6 +55,7 @@ class Suite
     public function asArray(): array
     {
         return [
+            'id' => $this->id,
             'name' => $this->name,
         ];
     }
