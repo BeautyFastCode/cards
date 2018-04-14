@@ -80,8 +80,18 @@ class SuiteController extends Controller
             true
         );
 
-        $suite = new Suite();
-        $suite->setName($data['name']);
+        $form = $this->createForm(SuiteType::class, new Suite());
+        $form->submit($data);
+
+        if (false === $form->isValid()) {
+            return new JsonResponse(
+                [
+                    'status' => 'Form is not valid',
+                ]
+            );
+        }
+
+        $suite = $form->getData();
 
         $manager = $this->getDoctrine()->getManager();
         $manager->persist($suite);

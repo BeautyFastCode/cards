@@ -20,6 +20,7 @@ class SuiteType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Suite::class,
+            'csrf_protection' => false,
         ]);
     }
 }
