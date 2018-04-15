@@ -5,7 +5,11 @@ Feature: CRUD functionality for the Suite, available via JSON Api
     I wan to be able to Create, Read, Update, Delete the Suite via JSON Api
 
     Background:
-        Given there are fixtures refreshed
+        Given there are Suites with the following details:
+            | name        |
+            | Suite A     |
+            | Calendar    |
+            | Empty Suite |
 
     @api
     Scenario: Get only one suite - read action

@@ -1,9 +1,10 @@
 <?php
 
+use App\Entity\Suite;
 use Behat\Behat\Context\Context;
+use Behat\Gherkin\Node\TableNode;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
-use Symfony\Bundle\FrameworkBundle\Console\Application;
-use Symfony\Component\Console\Input\ArrayInput;
 
 class CardsContext implements Context
 {
@@ -13,32 +14,50 @@ class CardsContext implements Context
     private $kernel;
 
     /**
+     * @var EntityManagerInterface
+     */
+    private $entityManager;
+
+    /**
      * Class constructor
      *
-     * @param KernelInterface $kernel
+     * @param KernelInterface        $kernel
+     * @param EntityManagerInterface $entityManager
      */
-    public function __construct(KernelInterface $kernel)
+    public function __construct(KernelInterface $kernel, EntityManagerInterface $entityManager)
     {
         $this->kernel = $kernel;
+        $this->entityManager = $entityManager;
     }
 
     /**
-     * @Given /^there are fixtures refreshed$/
+     * @Given there are Suites with the following details:
+     * @param TableNode $suitesTable
      */
-    public function thereAreFixturesRefreshed()
+    public function thereAreSuitesWithTheFollowingDetails(TableNode $suitesTable)
     {
-        $application = new Application($this->kernel);
-        $application->setAutoExit(false);
+        /*
+         * Delete all previous records.
+         */
+        $queryBuilder = $this->entityManager->createQueryBuilder();
+
+        $query = $queryBuilder
+            ->delete('App:Suite', 's')
+            ->getQuery();
+
+        $query->execute();
 
         /*
-         * todo: don't refresh all - but only changed entities
+         * New records.
          */
-        $input = new ArrayInput(array(
-            'command' => 'hautelook:fixtures:load',
+        foreach ($suitesTable->getColumnsHash() as $key => $value) {
 
-            '--no-interaction',
-        ));
+            $suite = new Suite();
+            $suite->setName($value['name']);
 
-        $application->run($input);
+            $this->entityManager->persist($suite);
+        }
+
+        $this->entityManager->flush();
     }
 }
