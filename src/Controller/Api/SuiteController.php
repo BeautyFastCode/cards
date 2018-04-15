@@ -4,6 +4,7 @@ namespace App\Controller\Api;
 
 use App\Entity\Suite;
 use App\Form\SuiteType;
+use App\Repository\SuiteRepository;
 use App\Serializer\FormErrorSerializer;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -12,14 +13,15 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-/*
-  api_suites_get_collection         GET      ANY      ANY    /api/suites
-  api_suites_post_collection        POST     ANY      ANY    /api/suites
-  api_suites_get_item               GET      ANY      ANY    /api/suites/{id}
-  api_suites_put_item               PUT      ANY      ANY    /api/suites/{id}
-  api_suites_delete_item            DELETE   ANY      ANY    /api/suites/{id}
+/**
+ * Api for Suite entity:
+ *
+ * api_suites_get_collection         GET      ANY      ANY    /api/suites
+ * api_suites_post_collection        POST     ANY      ANY    /api/suites todo: collection or single
+ * api_suites_get_item               GET      ANY      ANY    /api/suites/{id}
+ * api_suites_put_item               PUT      ANY      ANY    /api/suites/{id}
+ * api_suites_delete_item            DELETE   ANY      ANY    /api/suites/{id}
  */
-
 class SuiteController extends AbstractController
 {
     /**
@@ -33,21 +35,30 @@ class SuiteController extends AbstractController
     private $formErrorSerializer;
 
     /**
+     * @var SuiteRepository
+     */
+    private $suiteRepository;
+
+    /**
      * Class constructor
      *
      * @param EntityManagerInterface $entityManager
      * @param FormErrorSerializer    $formErrorSerializer
+     * @param SuiteRepository        $suiteRepository
      */
-    public function __construct(EntityManagerInterface $entityManager, FormErrorSerializer $formErrorSerializer)
+    public function __construct(EntityManagerInterface $entityManager,
+                                FormErrorSerializer $formErrorSerializer,
+                                SuiteRepository $suiteRepository)
     {
         $this->entityManager = $entityManager;
         $this->formErrorSerializer = $formErrorSerializer;
+        $this->suiteRepository = $suiteRepository;
     }
 
     /**
      * Read action
      *
-     * @Route("/api/suites/{id}", name="api_suites_get_item")
+     * @Route("/api/suites/{id}", name="api_suites_get_item", requirements={"id"="\d+"})
      * @Method({"GET"})
      *
      * @param Suite $suite
@@ -57,7 +68,7 @@ class SuiteController extends AbstractController
     public function read(Suite $suite): JsonResponse
     {
         return new JsonResponse(
-            $suite->toArray(),
+            $suite,
             JsonResponse::HTTP_OK
         );
     }
@@ -72,18 +83,8 @@ class SuiteController extends AbstractController
      */
     public function list(): JsonResponse
     {
-        $suites = $this->getDoctrine()
-            ->getRepository(Suite::class)
-            ->findAll();
-
-        $suitesArray = [];
-        foreach ($suites as $suite) {
-            /** @var Suite $suite */
-            $suitesArray[] = $suite->toArray();
-        }
-
         return new JsonResponse(
-            $suitesArray,
+            $this->suiteRepository->findAll(),
             JsonResponse::HTTP_OK
         );
     }
@@ -124,7 +125,7 @@ class SuiteController extends AbstractController
         $this->entityManager->flush();
 
         return new JsonResponse(
-            $suite->toArray(),
+            $suite,
             JsonResponse::HTTP_CREATED
         );
     }

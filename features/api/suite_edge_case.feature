@@ -84,3 +84,20 @@ Feature: Edge cases for Suite data
     }
 }
 """
+
+    @api @edge_case
+    Scenario: Suite Id must be numeric
+        Given I send a "GET" request to "/api/suites/abc"
+        Then the response status code should be 404
+
+    @api @edge_case
+    Scenario: Suite Id must be positive
+        Given I send a "GET" request to "/api/suites/-1"
+        Then the response status code should be 404
+
+    @api @edge_case
+    Scenario: Suite Id must be exist
+        Given I send a "GET" request to "/api/suites/1000"
+        Then the response status code should be 404
+
+        # todo: responses in JSON

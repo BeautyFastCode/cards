@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="suites")
  * @ORM\Entity(repositoryClass="App\Repository\SuiteRepository")
  */
-class Suite
+class Suite implements \JsonSerializable
 {
     /**
      * @ORM\Id()
@@ -54,12 +54,12 @@ class Suite
     }
 
     /**
-     * @return array
+     * {@inheritdoc}
      */
-    public function toArray(): array
+    function jsonSerialize(): array
     {
         return [
-            'id' => $this->id,
+            'id'   => $this->id,
             'name' => $this->name,
         ];
     }
