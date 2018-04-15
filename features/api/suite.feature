@@ -69,3 +69,45 @@ Feature: CRUD functionality for the Suite, available via JSON Api
     "name": "New Suite"
 }
 """
+
+    @api
+    Scenario: Update an existing Suite - update all properties action - PUT
+        When I add "Content-Type" header equal to "application/json"
+        And I add "Accept" header equal to "application/json"
+        And I send a "PUT" request to "/api/suites/1" with body:
+"""
+{
+    "name": "Suite A, version 2"
+}
+"""
+        Then the response status code should be 200
+        And the response should be in JSON
+        And the header "Content-Type" should be equal to "application/json"
+        And the JSON should be equal to:
+"""
+{
+    "id": 1,
+    "name": "Suite A, version 2"
+}
+"""
+
+    @api
+    Scenario: Update an existing Suite - update selected properties action - PATCH
+        When I add "Content-Type" header equal to "application/json"
+        And I add "Accept" header equal to "application/json"
+        And I send a "PATCH" request to "/api/suites/1" with body:
+"""
+{
+    "name": "Suite A, version 3"
+}
+"""
+        Then the response status code should be 200
+        And the response should be in JSON
+        And the header "Content-Type" should be equal to "application/json"
+        And the JSON should be equal to:
+"""
+{
+    "id": 1,
+    "name": "Suite A, version 3"
+}
+"""

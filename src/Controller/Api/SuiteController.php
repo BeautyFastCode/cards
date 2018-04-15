@@ -16,10 +16,11 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * Api for Suite entity:
  *
+ * api_suites_get_item               GET      ANY      ANY    /api/suites/{id}
  * api_suites_get_collection         GET      ANY      ANY    /api/suites
  * api_suites_post_collection        POST     ANY      ANY    /api/suites todo: collection or single
- * api_suites_get_item               GET      ANY      ANY    /api/suites/{id}
  * api_suites_put_item               PUT      ANY      ANY    /api/suites/{id}
+ * api_suites_patch_item             PATCH    ANY      ANY    /api/suites/{id}
  * api_suites_delete_item            DELETE   ANY      ANY    /api/suites/{id}
  */
 class SuiteController extends AbstractController
@@ -127,6 +128,92 @@ class SuiteController extends AbstractController
         return new JsonResponse(
             $suite,
             JsonResponse::HTTP_CREATED
+        );
+    }
+
+    /**
+     * Update all properties action
+     *
+     * @Route("/api/suites/{id}", name="api_suites_put_item", requirements={"id"="\d+"})
+     * @Method({"PUT"})
+     *
+     * @param Request $request
+     * @param Suite   $suite
+     *
+     * @return JsonResponse
+     */
+    public function updateAllProperties(Request $request, Suite $suite):JsonResponse
+    {
+
+        $data = json_decode(
+            $request->getContent(),
+            true
+        );
+
+        $form = $this->createForm(SuiteType::class, $suite);
+        $form->submit($data);
+
+        if (false === $form->isValid()) {
+            return new JsonResponse(
+                [
+                    'status' => 'error',
+                    'errors' => $this->formErrorSerializer
+                        ->convertFormToArray($form),
+                ],
+                JsonResponse::HTTP_BAD_REQUEST
+            );
+        }
+
+        $suite = $form->getData();
+
+        $this->entityManager->flush();
+
+        return new JsonResponse(
+            $suite,
+            JsonResponse::HTTP_OK
+        );
+    }
+
+    /**
+     * Update selected properties action
+     *
+     * @Route("/api/suites/{id}", name="api_suites_patch_item", requirements={"id"="\d+"})
+     * @Method({"PATCH"})
+     *
+     * @param Request $request
+     * @param Suite   $suite
+     *
+     * @return JsonResponse
+     */
+    public function updateSelectedProperties(Request $request, Suite $suite):JsonResponse
+    {
+
+        $data = json_decode(
+            $request->getContent(),
+            true
+        );
+
+        $form = $this->createForm(SuiteType::class, $suite);
+        $form->submit($data, false);
+
+        if (false === $form->isValid()) {
+            return new JsonResponse(
+                [
+                    'status' => 'error',
+                    'errors' => $this->formErrorSerializer
+                        ->convertFormToArray($form),
+                ],
+                JsonResponse::HTTP_BAD_REQUEST
+            );
+        }
+
+        $suite = $form->getData();
+
+        $this->entityManager->flush();
+
+        return new JsonResponse(
+            $suite,
+            JsonResponse::HTTP_OK
         );
     }
 }
