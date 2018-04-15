@@ -1,7 +1,7 @@
 @suite
 Feature: CRUD functionality for the Suite, available via JSON Api
     In order to Create, Read, Update, Delete the Suite
-    As a Customer
+    As a Developer
     I wan to be able to Create, Read, Update, Delete the Suite via JSON Api
 
     Background:

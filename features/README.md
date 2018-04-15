@@ -14,11 +14,12 @@ Feature: {custom_title}
 
 ---
 
-## User
+## Users
  
 - Visitor
 - Customer
 - Administrator
+- Developer
 
 ---
 
@@ -42,4 +43,5 @@ Feature: {custom_title}
 
 - @suite
 
+- @edge_case
 ---

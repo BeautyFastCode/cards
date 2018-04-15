@@ -4,11 +4,13 @@ namespace App\Controller\Api;
 
 use App\Entity\Suite;
 use App\Form\SuiteType;
+use App\Serializer\FormErrorSerializer;
+use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /*
   api_suites_get_collection         GET      ANY      ANY    /api/suites
@@ -18,8 +20,30 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
   api_suites_delete_item            DELETE   ANY      ANY    /api/suites/{id}
  */
 
-class SuiteController extends Controller
+class SuiteController extends AbstractController
 {
+    /**
+     * @var EntityManagerInterface
+     */
+    private $entityManager;
+
+    /**
+     * @var FormErrorSerializer
+     */
+    private $formErrorSerializer;
+
+    /**
+     * Class constructor
+     *
+     * @param EntityManagerInterface $entityManager
+     * @param FormErrorSerializer    $formErrorSerializer
+     */
+    public function __construct(EntityManagerInterface $entityManager, FormErrorSerializer $formErrorSerializer)
+    {
+        $this->entityManager = $entityManager;
+        $this->formErrorSerializer = $formErrorSerializer;
+    }
+
     /**
      * Read action
      *
@@ -33,7 +57,7 @@ class SuiteController extends Controller
     public function read(Suite $suite): JsonResponse
     {
         return new JsonResponse(
-            $suite->asArray(),
+            $suite->toArray(),
             JsonResponse::HTTP_OK
         );
     }
@@ -55,7 +79,7 @@ class SuiteController extends Controller
         $suitesArray = [];
         foreach ($suites as $suite) {
             /** @var Suite $suite */
-            $suitesArray[] = $suite->asArray();
+            $suitesArray[] = $suite->toArray();
         }
 
         return new JsonResponse(
@@ -86,19 +110,21 @@ class SuiteController extends Controller
         if (false === $form->isValid()) {
             return new JsonResponse(
                 [
-                    'status' => 'Form is not valid',
-                ]
+                    'status' => 'error',
+                    'errors' => $this->formErrorSerializer
+                        ->convertFormToArray($form),
+                ],
+                JsonResponse::HTTP_BAD_REQUEST
             );
         }
 
         $suite = $form->getData();
 
-        $manager = $this->getDoctrine()->getManager();
-        $manager->persist($suite);
-        $manager->flush();
+        $this->entityManager->persist($suite);
+        $this->entityManager->flush();
 
         return new JsonResponse(
-            $suite->asArray(),
+            $suite->toArray(),
             JsonResponse::HTTP_CREATED
         );
     }
