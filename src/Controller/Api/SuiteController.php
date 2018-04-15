@@ -216,4 +216,25 @@ class SuiteController extends AbstractController
             JsonResponse::HTTP_OK
         );
     }
+
+    /**
+     * Delete action
+     *
+     * @Route("/api/suites/{id}", name="api_suites_delete_item", requirements={"id"="\d+"})
+     * @Method({"DELETE"})
+     *
+     * @param Suite $suite
+     *
+     * @return JsonResponse
+     */
+    public function delete(Suite $suite): JsonResponse
+    {
+        $this->entityManager->remove($suite);
+        $this->entityManager->flush();
+
+        return new JsonResponse(
+            null,
+            JsonResponse::HTTP_NO_CONTENT
+        );
+    }
 }

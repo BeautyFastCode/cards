@@ -100,4 +100,4 @@ Feature: Edge cases for Suite data
         Given I send a "GET" request to "/api/suites/1000"
         Then the response status code should be 404
 
-        # todo: responses in JSON
+        # todo: responses body in JSON ??

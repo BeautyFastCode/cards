@@ -111,3 +111,12 @@ Feature: CRUD functionality for the Suite, available via JSON Api
     "name": "Suite A, version 3"
 }
 """
+
+    @api
+    Scenario: Delete an existing Suite - delete action
+        Given I send a "GET" request to "/api/suites/1"
+        Then the response status code should be 200
+        When I send a "DELETE" request to "/api/suites/1"
+        Then the response status code should be 204
+        When I send a "GET" request to "/api/suites/1"
+        Then the response status code should be 404
