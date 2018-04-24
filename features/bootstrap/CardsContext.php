@@ -1,5 +1,6 @@
 <?php
 
+use App\Entity\Deck;
 use App\Entity\Suite;
 use Behat\Behat\Context\Context;
 use Behat\Gherkin\Node\TableNode;
@@ -36,16 +37,7 @@ class CardsContext implements Context
      */
     public function thereAreSuitesWithTheFollowingDetails(TableNode $suitesTable)
     {
-        /*
-         * Delete all previous records.
-         */
-        $queryBuilder = $this->entityManager->createQueryBuilder();
-
-        $query = $queryBuilder
-            ->delete('App:Suite', 's')
-            ->getQuery();
-
-        $query->execute();
+        $this->emptyEntity(Suite::class);
 
         /*
          * New records.
@@ -59,5 +51,45 @@ class CardsContext implements Context
         }
 
         $this->entityManager->flush();
+    }
+
+    /**
+     * @Given /^there are Decks with the following details:$/
+     * @param TableNode $decksTable
+     */
+    public function thereAreDecksWithTheFollowingDetails(TableNode $decksTable)
+    {
+        $this->emptyEntity(Deck::class);
+
+        /*
+         * New records.
+         */
+        foreach ($decksTable->getColumnsHash() as $key => $value) {
+
+            $deck = new Deck();
+            $deck->setName($value['name']);
+
+            $this->entityManager->persist($deck);
+        }
+
+        $this->entityManager->flush();
+
+    }
+
+    /**
+     * @param string $entityClassName The class/type whose instances are subject to the deletion.
+     */
+    private function emptyEntity($entityClassName)
+    {
+        /*
+         * Delete all previous records.
+         */
+        $queryBuilder = $this->entityManager->createQueryBuilder();
+
+        $query = $queryBuilder
+            ->delete($entityClassName)
+            ->getQuery();
+
+        $query->execute();
     }
 }

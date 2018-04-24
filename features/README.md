@@ -42,6 +42,7 @@ Feature: {custom_title}
 - @learning
 
 - @suite
+- @deck
 
 - @edge_case
 ---
