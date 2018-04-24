@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CardRepository")
@@ -18,11 +19,15 @@ class Card implements \JsonSerializable
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     *
+     * @Assert\Length(min=6, max=255)
      */
     private $question;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     *
+     * @Assert\Length(min=6, max=255)
      */
     private $answer;
 
