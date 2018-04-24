@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\DeckRepository")
  */
-class Deck
+class Deck implements \JsonSerializable
 {
     /**
      * @ORM\Id()
@@ -36,5 +36,16 @@ class Deck
         $this->name = $name;
 
         return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    function jsonSerialize(): array
+    {
+        return [
+            'id'   => $this->id,
+            'name' => $this->name,
+        ];
     }
 }
