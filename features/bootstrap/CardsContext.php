@@ -1,5 +1,6 @@
 <?php
 
+use App\Entity\Card;
 use App\Entity\Deck;
 use App\Entity\Suite;
 use Behat\Behat\Context\Context;
@@ -74,6 +75,29 @@ class CardsContext implements Context
 
         $this->entityManager->flush();
 
+    }
+
+    /**
+     * @Given /^there are Cards with the following details:$/
+     * @param TableNode $cardTable
+     */
+    public function thereAreCardsWithTheFollowingDetails(TableNode $cardTable)
+    {
+        $this->emptyEntity(Card::class);
+
+        /*
+         * New records.
+         */
+        foreach ($cardTable->getColumnsHash() as $key => $value) {
+
+            $card = new Card();
+            $card->setQuestion($value['question']);
+            $card->setAnswer($value['answer']);
+
+            $this->entityManager->persist($card);
+        }
+
+        $this->entityManager->flush();
     }
 
     /**

@@ -43,6 +43,7 @@ Feature: {custom_title}
 
 - @suite
 - @deck
+- @card
 
 - @edge_case
 ---
