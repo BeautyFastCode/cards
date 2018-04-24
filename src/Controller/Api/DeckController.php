@@ -3,12 +3,14 @@
 namespace App\Controller\Api;
 
 use App\Entity\Deck;
+use App\Form\DeckType;
 use App\Repository\DeckRepository;
 use App\Serializer\FormErrorSerializer;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -87,4 +89,66 @@ class DeckController extends AbstractController
             JsonResponse::HTTP_OK
         );
     }
+    
+    /**
+     * Create action
+     *
+     * @Route("/api/decks", name="api_decks_post_item")
+     * @Method({"Post"})
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function create(Request $request): JsonResponse
+    {
+        $data = json_decode(
+            $request->getContent(),
+            true
+        );
+
+        $form = $this->createForm(DeckType::class, new Deck());
+        $form->submit($data);
+
+        if (false === $form->isValid()) {
+            return new JsonResponse(
+                [
+                    'status' => 'error',
+                    'errors' => $this->formErrorSerializer
+                        ->convertFormToArray($form),
+                ],
+                JsonResponse::HTTP_BAD_REQUEST
+            );
+        }
+
+        $suite = $form->getData();
+
+        $this->entityManager->persist($suite);
+        $this->entityManager->flush();
+
+        return new JsonResponse(
+            $suite,
+            JsonResponse::HTTP_CREATED
+        );
+    }
+
+    /**
+     * Delete action
+     *
+     * @Route("/api/decks/{id}", name="api_decks_delete_item", requirements={"id"="\d+"})
+     * @Method({"DELETE"})
+     *
+     * @param Deck $deck
+     *
+     * @return JsonResponse
+     */
+    public function delete(Deck $deck): JsonResponse
+    {
+        $this->entityManager->remove($deck);
+        $this->entityManager->flush();
+
+        return new JsonResponse(
+            null,
+            JsonResponse::HTTP_NO_CONTENT
+        );
+    }    
 }
