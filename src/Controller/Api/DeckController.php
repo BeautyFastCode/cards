@@ -120,17 +120,103 @@ class DeckController extends AbstractController
             );
         }
 
-        $suite = $form->getData();
+        $deck = $form->getData();
 
-        $this->entityManager->persist($suite);
+        $this->entityManager->persist($deck);
         $this->entityManager->flush();
 
         return new JsonResponse(
-            $suite,
+            $deck,
             JsonResponse::HTTP_CREATED
         );
     }
 
+    /**
+     * Update all properties action
+     *
+     * @Route("/api/decks/{id}", name="api_decks_put_item", requirements={"id"="\d+"})
+     * @Method({"PUT"})
+     *
+     * @param Request $request
+     * @param Deck    $deck
+     *
+     * @return JsonResponse
+     */
+    public function updateAllProperties(Request $request, Deck $deck):JsonResponse
+    {
+
+        $data = json_decode(
+            $request->getContent(),
+            true
+        );
+
+        $form = $this->createForm(DeckType::class, $deck);
+        $form->submit($data);
+
+        if (false === $form->isValid()) {
+            return new JsonResponse(
+                [
+                    'status' => 'error',
+                    'errors' => $this->formErrorSerializer
+                        ->convertFormToArray($form),
+                ],
+                JsonResponse::HTTP_BAD_REQUEST
+            );
+        }
+
+        $deck = $form->getData();
+
+        $this->entityManager->flush();
+
+        return new JsonResponse(
+            $deck,
+            JsonResponse::HTTP_OK
+        );
+    }
+
+    /**
+     * Update selected properties action
+     *
+     * @Route("/api/decks/{id}", name="api_decks_patch_item", requirements={"id"="\d+"})
+     * @Method({"PATCH"})
+     *
+     * @param Request $request
+     * @param Deck   $deck
+     *
+     * @return JsonResponse
+     */
+    public function updateSelectedProperties(Request $request, Deck $deck):JsonResponse
+    {
+
+        $data = json_decode(
+            $request->getContent(),
+            true
+        );
+
+        $form = $this->createForm(DeckType::class, $deck);
+        $form->submit($data, false);
+
+        if (false === $form->isValid()) {
+            return new JsonResponse(
+                [
+                    'status' => 'error',
+                    'errors' => $this->formErrorSerializer
+                        ->convertFormToArray($form),
+                ],
+                JsonResponse::HTTP_BAD_REQUEST
+            );
+        }
+
+        $deck = $form->getData();
+
+        $this->entityManager->flush();
+
+        return new JsonResponse(
+            $deck,
+            JsonResponse::HTTP_OK
+        );
+    }
+  
     /**
      * Delete action
      *

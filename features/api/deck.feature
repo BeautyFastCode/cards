@@ -69,7 +69,49 @@ Feature: CRUD functionality for the Deck, available via JSON Api
     "name": "New Deck"
 }
 """
-        
+
+    @api
+    Scenario: Update an existing Deck - update all properties action - PUT
+        When I add "Content-Type" header equal to "application/json"
+        And I add "Accept" header equal to "application/json"
+        And I send a "PUT" request to "/api/decks/1" with body:
+"""
+{
+    "name": "Deck A, version 2"
+}
+"""
+        Then the response status code should be 200
+        And the response should be in JSON
+        And the header "Content-Type" should be equal to "application/json"
+        And the JSON should be equal to:
+"""
+{
+    "id": 1,
+    "name": "Deck A, version 2"
+}
+"""
+
+    @api
+    Scenario: Update an existing Deck - update selected properties action - PATCH
+        When I add "Content-Type" header equal to "application/json"
+        And I add "Accept" header equal to "application/json"
+        And I send a "PATCH" request to "/api/decks/1" with body:
+"""
+{
+    "name": "Deck A, version 3"
+}
+"""
+        Then the response status code should be 200
+        And the response should be in JSON
+        And the header "Content-Type" should be equal to "application/json"
+        And the JSON should be equal to:
+"""
+{
+    "id": 1,
+    "name": "Deck A, version 3"
+}
+"""
+     
     @api
     Scenario: Delete an existing Deck - delete action
         Given I send a "GET" request to "/api/decks/1"
