@@ -6,11 +6,14 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
+ * @ORM\Table(name="cards")
  * @ORM\Entity(repositoryClass="App\Repository\CardRepository")
  */
 class Card implements \JsonSerializable
 {
     /**
+     * @var integer
+     *
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
@@ -18,6 +21,8 @@ class Card implements \JsonSerializable
     private $id;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=255, nullable=true)
      *
      * @Assert\Length(min=6, max=255)
@@ -25,22 +30,35 @@ class Card implements \JsonSerializable
     private $question;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=255, nullable=true)
      *
      * @Assert\Length(min=6, max=255)
      */
     private $answer;
 
-    public function getId()
+    /**
+     * @return int
+     */
+    public function getId(): int
     {
         return $this->id;
     }
 
+    /**
+     * @return null|string
+     */
     public function getQuestion(): ?string
     {
         return $this->question;
     }
 
+    /**
+     * @param null|string $question
+     *
+     * @return Card
+     */
     public function setQuestion(?string $question): self
     {
         $this->question = $question;
@@ -48,11 +66,19 @@ class Card implements \JsonSerializable
         return $this;
     }
 
+    /**
+     * @return null|string
+     */
     public function getAnswer(): ?string
     {
         return $this->answer;
     }
 
+    /**
+     * @param null|string $answer
+     *
+     * @return Card
+     */
     public function setAnswer(?string $answer): self
     {
         $this->answer = $answer;
