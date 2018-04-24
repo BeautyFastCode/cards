@@ -21,7 +21,8 @@ Feature: CRUD functionality for the Card, available via JSON Api
 """
 {
     "id": 1,
-    "name": "Card A"
+    "question": "Front Card",
+    "answer": "Back Card"
 }
 """
 
@@ -36,15 +37,18 @@ Feature: CRUD functionality for the Card, available via JSON Api
 [
     {
         "id": 1,
-        "name": "Card A"
+        "question": "Front Card",
+        "answer": "Back Card"
     },
     {
         "id": 2,
-        "name": "Calendar"
+        "question": "How are you?",
+        "answer": "I'm fine."
     },
     {
         "id": 3,
-        "name": "Empty Card"
+        "question": "What colour do you like?",
+        "answer": "I like the red cherry."
     }
 ]
 """
@@ -56,7 +60,8 @@ Feature: CRUD functionality for the Card, available via JSON Api
         And I send a "POST" request to "/api/cards" with body:
 """
 {
-    "name": "New Card"
+    "question": "Where are you?",
+    "answer": "I'm here."
 }
 """
         Then the response status code should be 201
@@ -66,7 +71,8 @@ Feature: CRUD functionality for the Card, available via JSON Api
 """
 {
     "id": 4,
-    "name": "New Card"
+    "question": "Where are you?",
+    "answer": "I'm here."
 }
 """
 
@@ -77,7 +83,8 @@ Feature: CRUD functionality for the Card, available via JSON Api
         And I send a "PUT" request to "/api/cards/1" with body:
 """
 {
-    "name": "Card A, version 2"
+    "question": "Super Front Card",
+    "answer": "Super Back Card"
 }
 """
         Then the response status code should be 200
@@ -87,7 +94,8 @@ Feature: CRUD functionality for the Card, available via JSON Api
 """
 {
     "id": 1,
-    "name": "Card A, version 2"
+    "question": "Super Front Card",
+    "answer": "Super Back Card"
 }
 """
 
@@ -98,7 +106,7 @@ Feature: CRUD functionality for the Card, available via JSON Api
         And I send a "PATCH" request to "/api/cards/1" with body:
 """
 {
-    "name": "Card A, version 3"
+    "answer": "Only the answer has changed."
 }
 """
         Then the response status code should be 200
@@ -108,7 +116,8 @@ Feature: CRUD functionality for the Card, available via JSON Api
 """
 {
     "id": 1,
-    "name": "Card A, version 3"
+    "question": "Front Card",
+    "answer": "Only the answer has changed."
 }
 """
 

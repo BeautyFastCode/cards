@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CardRepository")
  */
-class Card
+class Card implements \JsonSerializable
 {
     /**
      * @ORM\Id()
@@ -53,5 +53,17 @@ class Card
         $this->answer = $answer;
 
         return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    function jsonSerialize(): array
+    {
+        return [
+            'id'       => $this->id,
+            'question' => $this->question,
+            'answer'   => $this->answer,
+        ];
     }
 }
