@@ -4,11 +4,17 @@ namespace App\DataFixtures;
 
 use App\Entity\Deck;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
-class DeckFixtures extends Fixture
+class DeckFixtures extends Fixture implements DependentFixtureInterface
 {
-    public function load(ObjectManager $manager)
+    public const DECK_REFERENCE = 'deck_';
+
+    /**
+     * {@inheritdoc}
+     */
+    public function load(ObjectManager $manager): void
     {
         $countDecks = 5;
 
@@ -25,8 +31,22 @@ class DeckFixtures extends Fixture
             $suite->setName($names[$i]);
 
             $manager->persist($suite);
+
+            $this->addReference(sprintf('%s%s', self::DECK_REFERENCE, $i), $suite);
         }
 
         $manager->flush();
+
+        return;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getDependencies(): array
+    {
+        return [
+            CardFixtures::class,
+        ];
     }
 }

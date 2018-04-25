@@ -2,29 +2,71 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Deck;
 use App\Entity\Suite;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
-class SuiteFixtures extends Fixture
+class SuiteFixtures extends Fixture implements DependentFixtureInterface
 {
-    public function load(ObjectManager $manager)
+    /**
+     * {@inheritdoc}
+     */
+    public function load(ObjectManager $manager): void
     {
         $countSuites = 3;
 
-        $names = [
-            'Suite A',
-            'Calendar',
-            'Empty Suite',
+        $suites = [
+            [
+                'name'  => 'Suite A',
+                'decks' => [
+                    1,
+                    0,
+                    2,
+                ],
+            ],
+            [
+                'name'  => 'Calendar',
+                'decks' => [
+                    3,
+                    4,
+                ],
+            ],
+            [
+                'name' => 'Empty Suite',
+            ],
         ];
 
         for ($i = 0; $i < $countSuites; $i++) {
+
             $suite = new Suite();
-            $suite->setName($names[$i]);
+            $suite->setName($suites[$i]['name']);
+
+            if (array_key_exists('decks', $suites[$i])) {
+                foreach ($suites[$i]['decks'] as $deckId) {
+
+                    /** @var Deck $deck */
+                    $deck = $this->getReference(sprintf('%s%s', DeckFixtures::DECK_REFERENCE, $deckId));
+                    $suite->addDeck($deck);
+                }
+            }
 
             $manager->persist($suite);
         }
 
         $manager->flush();
+
+        return;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getDependencies(): array
+    {
+        return [
+            DeckFixtures::class,
+        ];
     }
 }

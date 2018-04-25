@@ -8,7 +8,12 @@ use Doctrine\Common\Persistence\ObjectManager;
 
 class CardFixtures extends Fixture
 {
-    public function load(ObjectManager $manager)
+    public const CARD_REFERENCE = 'card_';
+
+    /**
+     * {@inheritdoc}
+     */
+    public function load(ObjectManager $manager): void
     {
         $countCards = 3;
 
@@ -30,8 +35,12 @@ class CardFixtures extends Fixture
             $card->setAnswer($answers[$i]);
 
             $manager->persist($card);
+
+            $this->addReference(sprintf('%s%s', self::CARD_REFERENCE, $i), $card);
         }
 
         $manager->flush();
+
+        return;
     }
 }
