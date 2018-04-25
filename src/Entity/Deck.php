@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\ManyToMany;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -35,7 +36,7 @@ class Deck implements \JsonSerializable
     /**
      * Many Decks has Many Suites.
      *
-     * @var ArrayCollection
+     * @var Collection
      *
      * @ManyToMany(targetEntity="Suite", mappedBy="decks")
      */
@@ -84,7 +85,12 @@ class Deck implements \JsonSerializable
      */
     public function addSuite(Suite $suite): self
     {
-        $this->suites[] = $suite;
+        if($this->suites->contains($suite)) {
+            return $this;
+        }
+
+        $this->suites->add($suite);
+        $suite->addDeck($this);
 
         return $this;
     }
@@ -96,15 +102,20 @@ class Deck implements \JsonSerializable
      */
     public function removeSuite(Suite $suite): self
     {
+        if(!$this->suites->contains($suite)) {
+            return $this;
+        }
+
         $this->suites->removeElement($suite);
+        $suite->removeDeck($this);
 
         return $this;
     }
 
     /**
-     * @return ArrayCollection
+     * @return Collection
      */
-    public function getSuites(): ArrayCollection
+    public function getSuites(): Collection
     {
         return $this->suites;
     }

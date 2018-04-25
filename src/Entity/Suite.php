@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinTable;
 use Doctrine\ORM\Mapping\ManyToMany;
@@ -36,7 +37,7 @@ class Suite implements \JsonSerializable
     /**
      * Many Suites has Many Decks.
      *
-     * @var ArrayCollection
+     * @var Collection
      *
      * @ManyToMany(targetEntity="Deck", inversedBy="suites")
      * @JoinTable(name="suites_decks")
@@ -86,7 +87,12 @@ class Suite implements \JsonSerializable
      */
     public function addDeck(Deck $deck): Suite
     {
-        $this->decks[] = $deck;
+        if($this->decks->contains($deck)) {
+            return $this;
+        }
+
+        $this->decks->add($deck);
+        $deck->addSuite($this);
 
         return $this;
     }
@@ -98,15 +104,20 @@ class Suite implements \JsonSerializable
      */
     public function removeDeck(Deck $deck): Suite
     {
+        if(!$this->decks->contains($deck)) {
+            return $this;
+        }
+
         $this->decks->removeElement($deck);
+        $deck->removeSuite($this);
 
         return $this;
     }
 
     /**
-     * @return ArrayCollection
+     * @return Collection
      */
-    public function getDecks(): ArrayCollection
+    public function getDecks(): Collection
     {
         return $this->decks;
     }
