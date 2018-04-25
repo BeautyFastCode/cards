@@ -38,7 +38,7 @@ class CardsContext implements Context
      */
     public function thereAreSuitesWithTheFollowingDetails(TableNode $suitesTable)
     {
-        $this->emptyEntity(Suite::class);
+        $this->emptySuite();
 
         /*
          * New records.
@@ -47,6 +47,32 @@ class CardsContext implements Context
 
             $suite = new Suite();
             $suite->setName($value['name']);
+
+            if (array_key_exists('decks', $value)) {
+
+                /*
+                 * Find and add a Deck if it exists.
+                 */
+                $deckNames = explode(',', $value['decks']);
+
+                foreach ($deckNames as $deckName) {
+
+                    $deckName = trim($deckName);
+
+                    if (!empty($deckName)) {
+
+                        $deck = $this->entityManager
+                            ->getRepository(Deck::class)
+                            ->findOneBy([
+                                'name' => $deckName,
+                            ]);
+
+                        if ($deck) {
+                            $suite->addDeck($deck);
+                        }
+                    }
+                }
+            }
 
             $this->entityManager->persist($suite);
         }
@@ -115,5 +141,33 @@ class CardsContext implements Context
             ->getQuery();
 
         $query->execute();
+    }
+
+    /**
+     * Remove all Suites without deleting Decks.
+     */
+    private function emptySuite()
+    {
+        $suites = $this->entityManager
+            ->getRepository(Suite::class)
+            ->findAll();
+
+        /** @var Suite $suite */
+        foreach ($suites as $suite) {
+
+            /*
+             * Delete only relationship to Deck (join table), not Deck.
+             */
+            foreach ($suite->getDecks() as $deck) {
+                $suite->removeDeck($deck);
+            }
+            $this->entityManager->flush();
+
+            /*
+             * Delete Suite.
+             */
+            $this->entityManager->remove($suite);
+            $this->entityManager->flush();
+        }
     }
 }

@@ -87,7 +87,7 @@ class Suite implements \JsonSerializable
      */
     public function addDeck(Deck $deck): Suite
     {
-        if($this->decks->contains($deck)) {
+        if ($this->decks->contains($deck)) {
             return $this;
         }
 
@@ -104,7 +104,7 @@ class Suite implements \JsonSerializable
      */
     public function removeDeck(Deck $deck): Suite
     {
-        if(!$this->decks->contains($deck)) {
+        if (!$this->decks->contains($deck)) {
             return $this;
         }
 
@@ -127,9 +127,20 @@ class Suite implements \JsonSerializable
      */
     function jsonSerialize(): array
     {
+        $paths = [];
+
+        if (!$this->decks->isEmpty()) {
+
+            /** @var Deck $deck */
+            foreach ($this->getDecks() as $deck) {
+                $paths[] = sprintf('/api/decks/%s', $deck->getId());
+            }
+        }
+
         return [
-            'id'   => $this->id,
-            'name' => $this->name,
+            'id'    => $this->id,
+            'name'  => $this->name,
+            'decks' => $paths,
         ];
     }
 }
