@@ -229,6 +229,17 @@ class SuiteController extends AbstractController
      */
     public function delete(Suite $suite): JsonResponse
     {
+        /*
+         * Delete only relationship to Deck (join table), not Deck.
+         */
+        foreach ($suite->getDecks() as $deck) {
+            $suite->removeDeck($deck);
+        }
+        $this->entityManager->flush();
+
+        /*
+         * Delete Suite.
+         */
         $this->entityManager->remove($suite);
         $this->entityManager->flush();
 
