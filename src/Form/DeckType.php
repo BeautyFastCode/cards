@@ -13,6 +13,7 @@ class DeckType extends AbstractType
     {
         $builder
             ->add('name')
+            ->add('suites')
         ;
     }
 

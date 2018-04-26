@@ -13,7 +13,8 @@ class SuiteType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('decks');
+            ->add('decks')
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver)

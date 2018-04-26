@@ -229,6 +229,17 @@ class DeckController extends AbstractController
      */
     public function delete(Deck $deck): JsonResponse
     {
+        /*
+         * Delete only relationship to Suite (join table), not Suite.
+         */
+        foreach ($deck->getSuites() as $suite) {
+            $deck->removeSuite($suite);
+        }
+        $this->entityManager->flush();
+
+        /*
+         * Delete Deck.
+         */
         $this->entityManager->remove($deck);
         $this->entityManager->flush();
 

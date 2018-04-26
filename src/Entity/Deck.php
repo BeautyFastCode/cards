@@ -68,7 +68,7 @@ class Deck implements \JsonSerializable
 
     /**
      * @param string $name
-     * 
+     *
      * @return Deck
      */
     public function setName(string $name): self
@@ -85,7 +85,7 @@ class Deck implements \JsonSerializable
      */
     public function addSuite(Suite $suite): self
     {
-        if($this->suites->contains($suite)) {
+        if ($this->suites->contains($suite)) {
             return $this;
         }
 
@@ -102,7 +102,7 @@ class Deck implements \JsonSerializable
      */
     public function removeSuite(Suite $suite): self
     {
-        if(!$this->suites->contains($suite)) {
+        if (!$this->suites->contains($suite)) {
             return $this;
         }
 
@@ -121,13 +121,32 @@ class Deck implements \JsonSerializable
     }
 
     /**
+     * @return array
+     */
+    public function getSuitesIds(): array
+    {
+        $suitesIds = [];
+
+        if (!$this->suites->isEmpty()) {
+
+            /** @var Suite $suite */
+            foreach ($this->getSuites() as $suite) {
+                $suitesIds[] = $suite->getId();
+            }
+        }
+
+        return $suitesIds;
+    }
+
+    /**
      * {@inheritdoc}
      */
     function jsonSerialize(): array
     {
         return [
-            'id'   => $this->id,
-            'name' => $this->name,
+            'id'     => $this->id,
+            'name'   => $this->name,
+            'suites' => $this->getSuitesIds(),
         ];
     }
 }
