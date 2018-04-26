@@ -123,24 +123,32 @@ class Suite implements \JsonSerializable
     }
 
     /**
-     * {@inheritdoc}
+     * @return array
      */
-    function jsonSerialize(): array
+    public function getDecksIds(): array
     {
-        $paths = [];
+        $decksIds = [];
 
         if (!$this->decks->isEmpty()) {
 
             /** @var Deck $deck */
             foreach ($this->getDecks() as $deck) {
-                $paths[] = sprintf('/api/decks/%s', $deck->getId());
+                $decksIds[] = $deck->getId();
             }
         }
 
+        return $decksIds;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function jsonSerialize(): array
+    {
         return [
             'id'    => $this->id,
             'name'  => $this->name,
-            'decks' => $paths,
+            'decks' => $this->getDecksIds(),
         ];
     }
 }

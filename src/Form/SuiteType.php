@@ -13,13 +13,13 @@ class SuiteType extends AbstractType
     {
         $builder
             ->add('name')
-        ;
+            ->add('decks');
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Suite::class,
+            'data_class'      => Suite::class,
             'csrf_protection' => false,
         ]);
     }
