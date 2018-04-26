@@ -5,11 +5,17 @@ Feature: CRUD functionality for the Card, available via JSON Api
     I wan to be able to Create, Read, Update, Delete the Card via JSON Api
 
     Background:
+        Given there are Decks with the following details:
+            | name        |
+            | Welcome     |
+            | Untitled    |
+            | Information |
         Given there are Cards with the following details:
-            | question                 | answer                 |
-            | Front Card               | Back Card              |
-            | How are you?             | I'm fine.              |
-            | What colour do you like? | I like the red cherry. |
+            | question                  | answer                     | deck        |
+            | Front Card                | Back Card                  | Welcome     |
+            | How are you?              | I'm fine.                  | Welcome     |
+            | What colour do you like?  | I like the red cherry.     | Welcome     |
+            | What project is the this? | This is the Cards Project. | Information |
 
     @api
     Scenario: Get only one card - read action
@@ -22,7 +28,8 @@ Feature: CRUD functionality for the Card, available via JSON Api
 {
     "id": 1,
     "question": "Front Card",
-    "answer": "Back Card"
+    "answer": "Back Card",
+    "deck": 1
 }
 """
 
@@ -35,21 +42,30 @@ Feature: CRUD functionality for the Card, available via JSON Api
         And the JSON should be equal to:
 """
 [
-    {
-        "id": 1,
-        "question": "Front Card",
-        "answer": "Back Card"
-    },
-    {
-        "id": 2,
-        "question": "How are you?",
-        "answer": "I'm fine."
-    },
-    {
-        "id": 3,
-        "question": "What colour do you like?",
-        "answer": "I like the red cherry."
-    }
+  {
+      "id": 1,
+      "question": "Front Card",
+      "answer": "Back Card",
+      "deck": 1
+  },
+  {
+      "id": 2,
+      "question": "How are you?",
+      "answer": "I'm fine.",
+      "deck": 1
+  },
+  {
+      "id": 3,
+      "question": "What colour do you like?",
+      "answer": "I like the red cherry.",
+      "deck": 1
+  },
+  {
+      "id": 4,
+      "question": "What project is the this?",
+      "answer": "This is the Cards Project.",
+      "deck": 3
+  }
 ]
 """
 
@@ -61,7 +77,8 @@ Feature: CRUD functionality for the Card, available via JSON Api
 """
 {
     "question": "Where are you?",
-    "answer": "I'm here."
+    "answer": "I'm here.",
+    "deck": 1
 }
 """
         Then the response status code should be 201
@@ -70,9 +87,10 @@ Feature: CRUD functionality for the Card, available via JSON Api
         And the JSON should be equal to:
 """
 {
-    "id": 4,
+    "id": 5,
     "question": "Where are you?",
-    "answer": "I'm here."
+    "answer": "I'm here.",
+    "deck": 1
 }
 """
 
@@ -84,7 +102,8 @@ Feature: CRUD functionality for the Card, available via JSON Api
 """
 {
     "question": "Super Front Card",
-    "answer": "Super Back Card"
+    "answer": "Super Back Card",
+    "deck": 2
 }
 """
         Then the response status code should be 200
@@ -95,7 +114,8 @@ Feature: CRUD functionality for the Card, available via JSON Api
 {
     "id": 1,
     "question": "Super Front Card",
-    "answer": "Super Back Card"
+    "answer": "Super Back Card",
+    "deck": 2
 }
 """
 
@@ -117,15 +137,28 @@ Feature: CRUD functionality for the Card, available via JSON Api
 {
     "id": 1,
     "question": "Front Card",
-    "answer": "Only the answer has changed."
+    "answer": "Only the answer has changed.",
+    "deck": 1
 }
 """
 
     @api
-    Scenario: Delete an existing Card - delete action
+    Scenario: Delete an existing Card without deleting Deck - delete action
         Given I send a "GET" request to "/api/cards/1"
         Then the response status code should be 200
         When I send a "DELETE" request to "/api/cards/1"
         Then the response status code should be 204
         When I send a "GET" request to "/api/cards/1"
         Then the response status code should be 404
+        When I send a "GET" request to "/api/decks/1"
+        Then the response status code should be 200
+        And the JSON should be equal to:
+"""
+{
+    "id": 1,
+    "name": "Welcome",
+    "suites": [
+        1
+    ]
+}
+"""

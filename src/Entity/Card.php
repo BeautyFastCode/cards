@@ -101,9 +101,9 @@ class Card implements \JsonSerializable
     }
 
     /**
-     * @return Deck
+     * @return null|Deck
      */
-    public function getDeck(): Deck
+    public function getDeck(): ?Deck
     {
         return $this->deck;
     }
@@ -129,6 +129,7 @@ class Card implements \JsonSerializable
             'id'       => $this->id,
             'question' => $this->question,
             'answer'   => $this->answer,
+            'deck'     => $this->deck->getId()
         ];
     }
 }

@@ -14,6 +14,7 @@ class CardType extends AbstractType
         $builder
             ->add('question')
             ->add('answer')
+            ->add('deck')
         ;
     }
 

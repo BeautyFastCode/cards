@@ -120,6 +120,20 @@ class CardsContext implements Context
             $card->setQuestion($value['question']);
             $card->setAnswer($value['answer']);
 
+            if(array_key_exists('deck', $value)) {
+
+                $deck = $this->entityManager
+                    ->getRepository(Deck::class)
+                    ->findOneBy([
+                        'name' => sprintf('%s', $value['deck']),
+                    ]);
+
+                if ($deck) {
+                    $card->setDeck($deck);
+                }
+
+            }
+
             $this->entityManager->persist($card);
         }
 
