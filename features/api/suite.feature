@@ -192,6 +192,7 @@ Feature: CRUD functionality for the Suite, available via JSON Api
 {
     "id": 1,
     "name": "Welcome",
-    "suites": []
+    "suites": [],
+    "cards": []
 }
 """

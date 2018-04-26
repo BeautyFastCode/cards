@@ -131,6 +131,24 @@ class Deck implements \JsonSerializable
     }
 
     /**
+     * @return array
+     */
+    public function getCardsIds(): array
+    {
+        $cardsIds = [];
+
+        if (!$this->cards->isEmpty()) {
+
+            /** @var Card $card */
+            foreach ($this->getCards() as $card) {
+                $cardsIds[] = $card->getId();
+            }
+        }
+
+        return $cardsIds;
+    }
+
+    /**
      * @param Suite $suite
      *
      * @return Deck
@@ -199,6 +217,7 @@ class Deck implements \JsonSerializable
             'id'     => $this->id,
             'name'   => $this->name,
             'suites' => $this->getSuitesIds(),
+            'cards'  => $this->getCardsIds(),
         ];
     }
 }

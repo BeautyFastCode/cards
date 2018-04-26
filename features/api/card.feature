@@ -157,8 +157,10 @@ Feature: CRUD functionality for the Card, available via JSON Api
 {
     "id": 1,
     "name": "Welcome",
-    "suites": [
-        1
+    "suites": [],
+    "cards": [
+      2,
+      3
     ]
 }
 """
