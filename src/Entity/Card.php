@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\ManyToOne;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -37,6 +39,18 @@ class Card implements \JsonSerializable
      * @Assert\Length(min=6, max=255)
      */
     private $answer;
+
+    /**
+     * Many Cards have One Deck.
+     *
+     * @var Deck
+     *
+     * @ManyToOne(targetEntity="Deck", inversedBy="cards")
+     * @JoinColumn(name="deck_id", referencedColumnName="id", nullable=false)
+     *
+     * @Assert\NotNull()
+     */
+    private $deck;
 
     /**
      * @return int
@@ -82,6 +96,26 @@ class Card implements \JsonSerializable
     public function setAnswer(?string $answer): self
     {
         $this->answer = $answer;
+
+        return $this;
+    }
+
+    /**
+     * @return Deck
+     */
+    public function getDeck(): Deck
+    {
+        return $this->deck;
+    }
+
+    /**
+     * @param Deck $deck
+     *
+     * @return Card
+     */
+    public function setDeck(Deck $deck): Card
+    {
+        $this->deck = $deck;
 
         return $this;
     }

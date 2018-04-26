@@ -4,10 +4,9 @@ namespace App\DataFixtures;
 
 use App\Entity\Deck;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
-class DeckFixtures extends Fixture implements DependentFixtureInterface
+class DeckFixtures extends Fixture
 {
     public const DECK_REFERENCE = 'deck_';
 
@@ -38,15 +37,5 @@ class DeckFixtures extends Fixture implements DependentFixtureInterface
         $manager->flush();
 
         return;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getDependencies(): array
-    {
-        return [
-            CardFixtures::class,
-        ];
     }
 }

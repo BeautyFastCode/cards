@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\ManyToMany;
+use Doctrine\ORM\Mapping\OneToMany;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -34,6 +35,15 @@ class Deck implements \JsonSerializable
     private $name;
 
     /**
+     * One Deck has Many Cards.
+     *
+     * @var Collection
+     *
+     * @OneToMany(targetEntity="Card", mappedBy="deck", cascade={"persist", "remove"})
+     */
+    private $cards;
+
+    /**
      * Many Decks has Many Suites.
      *
      * @var Collection
@@ -48,6 +58,7 @@ class Deck implements \JsonSerializable
     public function __construct()
     {
         $this->suites = new ArrayCollection();
+        $this->cards = new ArrayCollection();
     }
 
     /**
@@ -76,6 +87,47 @@ class Deck implements \JsonSerializable
         $this->name = $name;
 
         return $this;
+    }
+
+    /**
+     * @param Card $card
+     *
+     * @return Deck
+     */
+    public function addCard(Card $card): self
+    {
+        if ($this->cards->contains($card)) {
+            return $this;
+        }
+
+        $this->cards->add($card);
+        $card->setDeck($this);
+
+        return $this;
+    }
+
+    /**
+     * @param Card $card
+     *
+     * @return Deck
+     */
+    public function removeCard(Card $card): self
+    {
+        if (!$this->cards->contains($card)) {
+            return $this;
+        }
+
+        $this->cards->removeElement($card);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getCards(): Collection
+    {
+        return $this->cards;
     }
 
     /**

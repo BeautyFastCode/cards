@@ -3,13 +3,13 @@
 namespace App\DataFixtures;
 
 use App\Entity\Card;
+use App\Entity\Deck;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
-class CardFixtures extends Fixture
+class CardFixtures extends Fixture implements DependentFixtureInterface
 {
-    public const CARD_REFERENCE = 'card_';
-
     /**
      * {@inheritdoc}
      */
@@ -34,13 +34,25 @@ class CardFixtures extends Fixture
             $card->setQuestion($questions[$i]);
             $card->setAnswer($answers[$i]);
 
-            $manager->persist($card);
+            /** @var Deck $deck */
+            $deck = $this->getReference(sprintf('%s%s', DeckFixtures::DECK_REFERENCE, 0));
+            $card->setDeck($deck);
 
-            $this->addReference(sprintf('%s%s', self::CARD_REFERENCE, $i), $card);
+            $manager->persist($card);
         }
 
         $manager->flush();
 
         return;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getDependencies(): array
+    {
+        return [
+            DeckFixtures::class,
+        ];
     }
 }
