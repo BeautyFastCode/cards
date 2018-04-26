@@ -101,10 +101,10 @@ Feature: CRUD functionality for the Suite, available via JSON Api
 """
 {
     "name": "New Suite",
-        "decks": [
-            3,
-            5
-        ]
+    "decks": [
+        3,
+        5
+    ]
 }
 """
         Then the response status code should be 201
@@ -115,10 +115,10 @@ Feature: CRUD functionality for the Suite, available via JSON Api
 {
     "id": 4,
     "name": "New Suite",
-        "decks": [
-            3,
-            5
-        ]
+    "decks": [
+        3,
+        5
+    ]
 }
 """
 

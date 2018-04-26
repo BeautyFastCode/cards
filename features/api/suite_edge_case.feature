@@ -64,7 +64,7 @@ Feature: Edge cases for Suite data
                   "This value is too short. It should have 6 characters or more."
               ]
           },
-        "decks": []
+      "decks": []
       }
     }
 }
@@ -90,7 +90,7 @@ Feature: Edge cases for Suite data
                   "This value is too long. It should have 64 characters or less."
               ]
           },
-        "decks": []
+      "decks": []
       }
     }
 }
@@ -112,15 +112,41 @@ Feature: Edge cases for Suite data
         Then the response status code should be 404
 
     @api @edge_case
+    Scenario: The Suite property must be exist
+        Given I send a "POST" request to "/api/suites" with body:
+"""
+{
+    "name": "New Suite",
+    "surprise": "Hello"
+}
+"""
+        Then the response status code should be 400
+        And the JSON should be equal to:
+"""
+{
+    "status": "error",
+    "errors": {
+      "errors": [
+          "This form should not contain extra fields."
+      ],
+      "children": {
+          "name": [],
+          "decks": []
+      }
+    }
+}
+"""
+
+    @api @edge_case
     Scenario: Deck Id must be numeric (Deck assigned to Suite)
         Given I send a "POST" request to "/api/suites" with body:
 """
 {
     "name": "New Suite",
-        "decks": [
-            "a",
-            "bcd"
-        ]
+    "decks": [
+        "a",
+        "bcd"
+    ]
 }
 """
         Then the response status code should be 400
@@ -147,10 +173,10 @@ Feature: Edge cases for Suite data
 """
 {
     "name": "New Suite",
-        "decks": [
-            -1,
-            -3
-        ]
+    "decks": [
+        -1,
+        -3
+    ]
 }
 """
         Then the response status code should be 400
@@ -177,10 +203,10 @@ Feature: Edge cases for Suite data
 """
 {
     "name": "New Suite",
-        "decks": [
-            6,
-            7
-        ]
+    "decks": [
+        6,
+        7
+    ]
 }
 """
         Then the response status code should be 400
@@ -207,26 +233,10 @@ Feature: Edge cases for Suite data
 """
 {
     "name": "New Suite",
-        "decks": [
-            8,
-            8
-        ]
+    "decks": [
+        1,
+        1
+    ]
 }
 """
-        Then the response status code should be 400
-        And the JSON should be equal to:
-"""
-{
-    "status": "error",
-    "errors": {
-        "children": {
-            "name": [],
-            "decks": {
-                "errors": [
-                    "This value is not valid."
-                ]
-            }
-        }
-    }
-}
-"""
+        Then the response status code should be 500
