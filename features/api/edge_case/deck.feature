@@ -38,7 +38,8 @@ Feature: Edge cases for Deck data
                   "This value should not be blank."
               ]
           },
-          "suites": []
+          "suites": [],
+          "cards": []
       }
     }
 }
@@ -64,7 +65,8 @@ Feature: Edge cases for Deck data
                   "This value is too short. It should have 6 characters or more."
               ]
           },
-          "suites": []
+          "suites": [],
+          "cards": []
       }
     }
 }
@@ -90,7 +92,8 @@ Feature: Edge cases for Deck data
                   "This value is too long. It should have 64 characters or less."
               ]
           },
-           "suites": []
+           "suites": [],
+           "cards": []
       }
     }
 }
@@ -131,111 +134,9 @@ Feature: Edge cases for Deck data
       ],
       "children": {
           "name": [],
-          "suites": []
+          "suites": [],
+          "cards": []
       }
     }
 }
 """
-
-    @api @edge_case
-    Scenario: Suite Id must be numeric (Suite assigned to Deck)
-        Given I send a "POST" request to "/api/decks" with body:
-"""
-{
-    "name": "New Deck",
-    "suites": [
-        "a",
-        "bcd"
-    ]
-}
-"""
-        Then the response status code should be 400
-        And the JSON should be equal to:
-"""
-{
-    "status": "error",
-    "errors": {
-        "children": {
-            "name": [],
-            "suites": {
-                "errors": [
-                    "This value is not valid."
-                ]
-            }
-        }
-    }
-}
-"""
-
-    @api @edge_case
-    Scenario: Suite Id must be positive (Suite assigned to Deck)
-        Given I send a "POST" request to "/api/decks" with body:
-"""
-{
-    "name": "New Deck",
-    "suites": [
-        -1
-    ]
-}
-"""
-        Then the response status code should be 400
-        And the JSON should be equal to:
-"""
-{
-    "status": "error",
-    "errors": {
-        "children": {
-            "name": [],
-            "suites": {
-                "errors": [
-                    "This value is not valid."
-                ]
-            }
-        }
-    }
-}
-"""
-
-    @api @edge_case
-    Scenario: Suite Id must be exist (Suite assigned to Deck)
-        Given I send a "POST" request to "/api/decks" with body:
-"""
-{
-    "name": "New Deck",
-    "suites": [
-        4,
-        6
-    ]
-}
-"""
-        Then the response status code should be 400
-        And the JSON should be equal to:
-"""
-{
-    "status": "error",
-    "errors": {
-        "children": {
-            "name": [],
-            "suites": {
-                "errors": [
-                    "This value is not valid."
-                ]
-            }
-        }
-    }
-}
-"""
-
-    @api @edge_case
-    Scenario: Suite Id must be unique (Suite assigned to Deck)
-        Given I send a "POST" request to "/api/decks" with body:
-"""
-{
-    "name": "New Deck",
-    "suites": [
-        2,
-        2
-    ]
-}
-"""
-#        Then the response status code should be 500

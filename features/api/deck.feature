@@ -39,10 +39,13 @@ Feature: CRUD functionality for the Deck, available via JSON Api
         1,
         2
     ],
-    "cards": []
+    "cards": [
+        1,
+        2,
+        3
+    ]
 }
 """
-# todo: "cards": [1,2,3]
 
     @api
     Scenario: Get a collection of all decks - list action
