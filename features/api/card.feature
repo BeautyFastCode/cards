@@ -95,7 +95,7 @@ Feature: CRUD functionality for the Card, available via JSON Api
 """
 
     @api
-    Scenario: Update an existing Card - update all properties action - PUT
+    Scenario: Update an existing Card - update all properties - action PUT
         When I add "Content-Type" header equal to "application/json"
         And I add "Accept" header equal to "application/json"
         And I send a "PUT" request to "/api/cards/1" with body:
@@ -120,7 +120,7 @@ Feature: CRUD functionality for the Card, available via JSON Api
 """
 
     @api
-    Scenario: Update an existing Card - update selected properties action - PATCH
+    Scenario: Update an existing Card - update selected properties - action PATCH
         When I add "Content-Type" header equal to "application/json"
         And I add "Accept" header equal to "application/json"
         And I send a "PATCH" request to "/api/cards/1" with body:
@@ -139,28 +139,5 @@ Feature: CRUD functionality for the Card, available via JSON Api
     "question": "Front Card",
     "answer": "Only the answer has changed.",
     "deck": 1
-}
-"""
-
-    @api
-    Scenario: Delete an existing Card without deleting Deck - delete action
-        Given I send a "GET" request to "/api/cards/1"
-        Then the response status code should be 200
-        When I send a "DELETE" request to "/api/cards/1"
-        Then the response status code should be 204
-        When I send a "GET" request to "/api/cards/1"
-        Then the response status code should be 404
-        When I send a "GET" request to "/api/decks/1"
-        Then the response status code should be 200
-        And the JSON should be equal to:
-"""
-{
-    "id": 1,
-    "name": "Welcome",
-    "suites": [],
-    "cards": [
-      2,
-      3
-    ]
 }
 """
