@@ -211,6 +211,10 @@ class SuiteController extends AbstractController
 
         $this->entityManager->flush();
 
+        /*
+         * todo: in response select $suite from Repository, in ALL controllers
+         */
+
         return new JsonResponse(
             $suite,
             JsonResponse::HTTP_OK

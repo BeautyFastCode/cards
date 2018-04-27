@@ -127,85 +127,6 @@ Feature: CRUD functionality for the Deck, available via JSON Api
 """
 
     @api
-    Scenario: Add a new Deck with the Suite assigned - create action
-        Given I add "Content-Type" header equal to "application/json"
-        And I add "Accept" header equal to "application/json"
-        And I send a "POST" request to "/api/decks" with body:
-"""
-{
-    "name": "New Deck",
-    "suites": [
-      1,
-      2
-    ]
-}
-"""
-        Then the response status code should be 201
-        And the response should be in JSON
-        And the header "Content-Type" should be equal to "application/json"
-        And the JSON should be equal to:
-"""
-{
-    "id": 6,
-    "name": "New Deck",
-    "suites": [
-      1,
-      2
-    ],
-    "cards": []
-}
-"""
-
-    @api
-    Scenario: Add a new Deck and then a new Card assign to this deck - create action
-        Given I send a "POST" request to "/api/decks" with body:
-"""
-{
-    "name": "New Deck"
-}
-"""
-        Then the response status code should be 201
-        And the JSON should be equal to:
-"""
-{
-    "id": 6,
-    "name": "New Deck",
-    "suites": [],
-    "cards": []
-}
-"""
-        When I send a "POST" request to "/api/cards" with body:
-"""
-{
-    "question": "Where are you?",
-    "answer": "I'm here.",
-    "deck": 6
-}
-"""
-        Then the response status code should be 201
-        And the JSON should be equal to:
-"""
-{
-    "id": 5,
-    "question": "Where are you?",
-    "answer": "I'm here.",
-    "deck": 6
-}
-"""
-        Then I send a "GET" request to "/api/decks/6"
-        And the JSON should be equal to:
-"""
-{
-    "id": 6,
-    "name": "New Deck",
-    "suites": [],
-    "cards": [
-        5
-    ]
-}
-"""
-
-    @api
     Scenario: Update an existing Deck - update all properties - action PUT
         Given I add "Content-Type" header equal to "application/json"
         And I add "Accept" header equal to "application/json"
@@ -218,7 +139,6 @@ Feature: CRUD functionality for the Deck, available via JSON Api
     ],
     "cards": [
       1,
-      2,
       3
     ]
 }
@@ -236,7 +156,6 @@ Feature: CRUD functionality for the Deck, available via JSON Api
     ],
     "cards": [
       1,
-      2,
       3
     ]
 }
@@ -271,39 +190,6 @@ Feature: CRUD functionality for the Deck, available via JSON Api
     ]
 }
 """
-
-    @api
-    Scenario: Update an existing Deck - delete Card form Deck - action PATCH
-        Given I add "Content-Type" header equal to "application/json"
-        And I add "Accept" header equal to "application/json"
-        And I send a "PATCH" request to "/api/decks/1" with body:
-"""
-{
-    "cards": [
-        2,
-        3
-    ]
-}
-"""
-        Then the response status code should be 200
-        And the JSON should be equal to:
-"""
-{
-    "id": 1,
-    "name": "Welcome",
-    "suites": [
-      1,
-      2
-    ],
-    "cards": [
-      2,
-      3
-    ]
-}
-"""
-#    When I send a "GET" request to "/api/cards/1"
-#    Then the response status code should be 404
-#    todo: delete Card
 
     @api
     Scenario: Delete an existing Deck and Cards, without deleting Suite - delete action
