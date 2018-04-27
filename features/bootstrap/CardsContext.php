@@ -38,7 +38,7 @@ class CardsContext implements Context
      */
     public function thereAreSuitesWithTheFollowingDetails(TableNode $suitesTable)
     {
-        $this->emptySuite();
+        $this->emptySuites();
 
         /*
          * New records.
@@ -86,7 +86,7 @@ class CardsContext implements Context
      */
     public function thereAreDecksWithTheFollowingDetails(TableNode $decksTable)
     {
-        $this->emptyEntity(Deck::class);
+        $this->emptyDecks();
 
         /*
          * New records.
@@ -160,7 +160,7 @@ class CardsContext implements Context
     /**
      * Remove all Suites without deleting Decks.
      */
-    private function emptySuite()
+    private function emptySuites()
     {
         $suites = $this->entityManager
             ->getRepository(Suite::class)
@@ -183,5 +183,20 @@ class CardsContext implements Context
             $this->entityManager->remove($suite);
             $this->entityManager->flush();
         }
+    }
+
+    /**
+     * Remove all Deck with assigned Cards.
+     */
+    private function emptyDecks()
+    {
+        $decks = $this->entityManager
+            ->getRepository(Deck::class)
+            ->findAll();
+
+        foreach ($decks as $deck) {
+            $this->entityManager->remove($deck);
+        }
+        $this->entityManager->flush();
     }
 }
