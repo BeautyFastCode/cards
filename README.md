@@ -11,6 +11,13 @@
 > vendor/bin/behat
 ```
 
+2. BDDWizard
+
+```
+> wget https://github.com/Halleck45/BDDWizard/raw/master/build/bdd-wizard.phar
+> php bdd-wizard.phar --features=features --reports=var/bdd-wizard
+```
+
 ---
 
 
