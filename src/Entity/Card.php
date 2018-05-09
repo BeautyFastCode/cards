@@ -53,9 +53,9 @@ class Card implements \JsonSerializable
     private $deck;
 
     /**
-     * @return int
+     * @return null|int
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -125,11 +125,17 @@ class Card implements \JsonSerializable
      */
     function jsonSerialize(): array
     {
+        $deckId = null;
+
+        if($this->deck !== null) {
+            $deckId = $this->deck->getId();
+        }
+
         return [
             'id'       => $this->id,
             'question' => $this->question,
             'answer'   => $this->answer,
-            'deck'     => $this->deck->getId()
+            'deck'     => $deckId
         ];
     }
 }
