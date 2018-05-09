@@ -53,9 +53,9 @@ class Suite implements \JsonSerializable
     }
 
     /**
-     * @return int
+     * @return null|int
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -83,11 +83,25 @@ class Suite implements \JsonSerializable
     /**
      * @param Deck $deck
      *
+     * @return bool
+     */
+    public function hasDeck(Deck $deck): bool
+    {
+        if ($this->decks->contains($deck)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * @param Deck $deck
+     *
      * @return Suite
      */
     public function addDeck(Deck $deck): Suite
     {
-        if ($this->decks->contains($deck)) {
+        if ($this->hasDeck($deck)) {
             return $this;
         }
 
@@ -104,12 +118,11 @@ class Suite implements \JsonSerializable
      */
     public function removeDeck(Deck $deck): Suite
     {
-        if (!$this->decks->contains($deck)) {
-            return $this;
-        }
+        if ($this->hasDeck($deck)) {
 
-        $this->decks->removeElement($deck);
-        $deck->removeSuite($this);
+            $this->decks->removeElement($deck);
+            $deck->removeSuite($this);
+        }
 
         return $this;
     }
