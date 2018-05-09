@@ -1,0 +1,5 @@
+extensions:
+  LeanPHP\PhpSpec\CodeCoverage\CodeCoverageExtension:
+    format: [html]
+    output:
+      html: var/coverage
