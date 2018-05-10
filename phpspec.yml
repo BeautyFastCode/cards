@@ -3,3 +3,10 @@ extensions:
     format: [html]
     output:
       html: var/coverage
+    # Blacklist directories for which code generation should NOT be done
+    blacklist:
+      - src/Migrations
+    #
+    # Blacklist files for which code generation should NOT be done
+    blacklist_files:
+      - src/Kernel.php
