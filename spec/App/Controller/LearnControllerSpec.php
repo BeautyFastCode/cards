@@ -1,32 +1,62 @@
 <?php
 
-namespace App\Controller;
+namespace spec\App\Controller;
 
+use App\Controller\LearnController;
+use PhpSpec\ObjectBehavior;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 
-class LearnController
+class LearnControllerSpec extends ObjectBehavior
 {
-    /**
-     * @var EngineInterface
-     */
-    private $templating;
-
-    public function __construct(EngineInterface $templating)
+    function let(EngineInterface $templating)
     {
-        $this->templating = $templating;
+        $this->beConstructedWith($templating);
     }
 
-    /**
-     * @Route("/learn/{card}/{state}", name="learn", defaults={"card"=0,"state"="question"})
-     *
-     * @param string $card
-     * @param string $state
-     *
-     * @return Response
-     */
-    public function index(string $card, string $state)
+    function it_is_initializable()
+    {
+        $this->shouldHaveType(LearnController::class);
+    }
+
+    function it_should_respond_to_index_action(EngineInterface $templating, Response $response)
+    {
+        $deck = [
+            'name'       => 'Welcome Deck',
+            'background' => 'bg-success',
+            'cards'      => [
+                [
+                    'front' => 'Front Card',
+                    'back'  => 'Back Card',
+                ],
+                [
+                    'front' => 'How are you?',
+                    'back'  => 'I\'m fine.',
+                ],
+                [
+                    'front' => 'What colour do you like?',
+                    'back'  => 'I like the red cherry.',
+                ],
+            ],
+        ];
+        $card = 0;
+        $state = 'question';
+
+        $templating
+            ->renderResponse('learn/index.html.twig',
+                [
+                    'deck'  => $deck,
+                    'card' => $card,
+                    'state' => $state,
+                ])
+            ->willReturn($response);
+
+        $this
+            ->index($card, $state)
+            ->shouldHaveType(Response::class);
+    }
+
+    function it_should_respond_to_learn_summary_action(EngineInterface $templating, Response $response)
     {
         $deck = [
             'name'       => 'Welcome Deck',
@@ -47,41 +77,12 @@ class LearnController
             ],
         ];
 
-        return $this->templating->renderResponse('learn/index.html.twig',
-            [
-                'deck'  => $deck,
-                'card' => $card,
-                'state' => $state,
-            ]);
-    }
+        $templating
+            ->renderResponse('learn/summary.html.twig', ['deck' => $deck])
+            ->willReturn($response);
 
-    /**
-     * @Route("/learn-summary", name="learn-summary")
-     */
-    public function learnSummary()
-    {
-        $deck = [
-            'name'       => 'Welcome Deck',
-            'background' => 'bg-success',
-            'cards'      => [
-                [
-                    'front' => 'Front Card',
-                    'back'  => 'Back Card',
-                ],
-                [
-                    'front' => 'How are you?',
-                    'back'  => 'I\'m fine.',
-                ],
-                [
-                    'front' => 'What colour do you like?',
-                    'back'  => 'I like the red cherry.',
-                ],
-            ],
-        ];
-
-        return $this->templating->renderResponse('learn/summary.html.twig',
-            [
-                'deck'  => $deck,
-            ]);
+        $this
+            ->learnSummary()
+            ->shouldHaveType(Response::class);
     }
 }
