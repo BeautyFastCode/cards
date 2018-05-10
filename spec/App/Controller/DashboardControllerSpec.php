@@ -1,27 +1,26 @@
 <?php
 
-namespace App\Controller;
+namespace spec\App\Controller;
 
+use App\Controller\DashboardController;
+use PhpSpec\ObjectBehavior;
+use Prophecy\Argument;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 
-class DashboardController
+class DashboardControllerSpec extends ObjectBehavior
 {
-    /**
-     * @var EngineInterface
-     */
-    private $templating;
-
-    public function __construct(EngineInterface $templating)
+    function let(EngineInterface $templating)
     {
-        $this->templating = $templating;
+        $this->beConstructedWith($templating);
     }
 
-    /**
-     * @Route("/dashboard", name="dashboard")
-     */
-    public function index()
+    function it_is_initializable()
+    {
+        $this->shouldHaveType(DashboardController::class);
+    }
+
+    function it_should_respond_to_index_action(EngineInterface $templating, Response $response)
     {
         $suites = [
             [
@@ -57,18 +56,16 @@ class DashboardController
             ['name' => 'Empty Suite'],
         ];
 
-        return $this->templating->renderResponse('dashboard/index.html.twig',
-            [
-                'suites' => $suites
-            ]);
+        $templating
+            ->renderResponse('dashboard/index.html.twig', ['suites' => $suites])
+            ->willReturn($response);
+
+        $this
+            ->index()
+            ->shouldHaveType(Response::class);
     }
 
-    /**
-     * @Route("/deck", name="show-deck")
-     *
-     * @return Response
-     */
-    public function showDeck()
+    function it_should_respond_to_show_deck_action(EngineInterface $templating, Response $response)
     {
         $deck = [
             'name'       => 'Welcome Deck',
@@ -89,9 +86,12 @@ class DashboardController
             ],
         ];
 
-        return $this->templating->renderResponse('dashboard/show-deck.html.twig',
-            [
-                'deck'  => $deck,
-            ]);
+        $templating
+            ->renderResponse('dashboard/show-deck.html.twig', ['deck' => $deck])
+            ->willReturn($response);
+
+        $this
+            ->showDeck()
+            ->shouldHaveType(Response::class);
     }
 }
