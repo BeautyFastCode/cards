@@ -66,6 +66,9 @@ class FormErrorSerializer
             );
         }
 
-        return $this->translator->trans($error->getMessageTemplate(), $error->getMessageParameters(), 'validators');
+        return $this->translator->trans(
+            $error->getMessageTemplate(),
+            $error->getMessageParameters(),
+            'validators');
     }
 }
