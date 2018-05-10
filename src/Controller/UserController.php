@@ -2,19 +2,29 @@
 
 namespace App\Controller;
 
+use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class UserController extends Controller
+class UserController
 {
+    /**
+     * @var EngineInterface
+     */
+    private $templating;
+
+    public function __construct(EngineInterface $templating)
+    {
+        $this->templating = $templating;
+    }
+
     /**
      * @Route("/login", name="login")
      */
     public function login()
     {
-        return $this->render('user/login.html.twig');
+        return $this->templating->renderResponse('user/login.html.twig');
     }
 
     /**
@@ -22,7 +32,7 @@ class UserController extends Controller
      */
     public function loggedOut()
     {
-        return $this->render('user/logged-out.html.twig');
+        return $this->templating->renderResponse('user/logged-out.html.twig');
     }
 
     /**
@@ -30,7 +40,7 @@ class UserController extends Controller
      */
     public function signUp()
     {
-        return $this->render('user/sign-up.html.twig');
+        return $this->templating->renderResponse('user/sign-up.html.twig');
     }
 
     /**
@@ -41,9 +51,9 @@ class UserController extends Controller
      */
     public function forgot(Request $request)
     {
-        return $this->render('user/forgot.html.twig',
+        return $this->templating->renderResponse('user/forgot.html.twig',
             [
-                'email' => $request->query->get('email')
+                'email' => $request->query->get('email'),
             ]);
     }
 
@@ -52,7 +62,7 @@ class UserController extends Controller
      */
     public function privacy()
     {
-        return $this->render('user/sign-up.html.twig');
+        return $this->templating->renderResponse('user/sign-up.html.twig');
     }
 
     /**
@@ -60,6 +70,6 @@ class UserController extends Controller
      */
     public function successfullyCreated()
     {
-        return $this->render('user/successfully-created.html.twig');
+        return $this->templating->renderResponse('user/successfully-created.html.twig');
     }
 }
