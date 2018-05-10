@@ -8,7 +8,7 @@ use App\Repository\CardRepository;
 use App\Serializer\FormErrorSerializer;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -23,7 +23,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * api_cards_patch_item             PATCH    ANY      ANY    /api/cards/{id}
  * api_cards_delete_item            DELETE   ANY      ANY    /api/cards/{id}
  */
-class CardController extends AbstractController
+class CardController
 {
     /**
      * @var EntityManagerInterface
@@ -41,19 +41,27 @@ class CardController extends AbstractController
     private $cardRepository;
 
     /**
+     * @var FormFactory
+     */
+    private $formFactory;
+
+    /**
      * Class constructor
      *
      * @param EntityManagerInterface $entityManager
      * @param FormErrorSerializer    $formErrorSerializer
      * @param CardRepository         $cardRepository
+     * @param FormFactory            $formFactory
      */
     public function __construct(EntityManagerInterface $entityManager,
                                 FormErrorSerializer $formErrorSerializer,
-                                CardRepository $cardRepository)
+                                CardRepository $cardRepository,
+                                FormFactory $formFactory)
     {
         $this->entityManager = $entityManager;
         $this->formErrorSerializer = $formErrorSerializer;
         $this->cardRepository = $cardRepository;
+        $this->formFactory = $formFactory;
     }
 
     /**
@@ -106,7 +114,7 @@ class CardController extends AbstractController
             true
         );
 
-        $form = $this->createForm(CardType::class, new Card());
+        $form = $this->formFactory->create(CardType::class, new Card());
         $form->submit($data);
 
         if (false === $form->isValid()) {
@@ -150,7 +158,7 @@ class CardController extends AbstractController
             true
         );
 
-        $form = $this->createForm(CardType::class, $card);
+        $form = $this->formFactory->create(CardType::class, $card);
         $form->submit($data);
 
         if (false === $form->isValid()) {
@@ -193,7 +201,7 @@ class CardController extends AbstractController
             true
         );
 
-        $form = $this->createForm(CardType::class, $card);
+        $form = $this->formFactory->create(CardType::class, $card);
         $form->submit($data, false);
 
         if (false === $form->isValid()) {
