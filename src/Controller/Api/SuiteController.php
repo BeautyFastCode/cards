@@ -8,7 +8,7 @@ use App\Repository\SuiteRepository;
 use App\Serializer\FormErrorSerializer;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -23,7 +23,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * api_suites_patch_item             PATCH    ANY      ANY    /api/suites/{id}
  * api_suites_delete_item            DELETE   ANY      ANY    /api/suites/{id}
  */
-class SuiteController extends AbstractController
+class SuiteController
 {
     /**
      * @var EntityManagerInterface
@@ -41,19 +41,28 @@ class SuiteController extends AbstractController
     private $suiteRepository;
 
     /**
+     * @var FormFactory
+     */
+    private $formFactory;
+
+    /**
      * Class constructor
      *
      * @param EntityManagerInterface $entityManager
      * @param FormErrorSerializer    $formErrorSerializer
      * @param SuiteRepository        $suiteRepository
+     * @param FormFactory            $formFactory
      */
     public function __construct(EntityManagerInterface $entityManager,
                                 FormErrorSerializer $formErrorSerializer,
-                                SuiteRepository $suiteRepository)
+                                SuiteRepository $suiteRepository,
+                                FormFactory $formFactory
+                                )
     {
         $this->entityManager = $entityManager;
         $this->formErrorSerializer = $formErrorSerializer;
         $this->suiteRepository = $suiteRepository;
+        $this->formFactory = $formFactory;
     }
 
     /**
@@ -106,7 +115,7 @@ class SuiteController extends AbstractController
             true
         );
 
-        $form = $this->createForm(SuiteType::class, new Suite());
+        $form = $this->formFactory->create(SuiteType::class, new Suite());
         $form->submit($data);
 
         if (false === $form->isValid()) {
@@ -150,7 +159,7 @@ class SuiteController extends AbstractController
             true
         );
 
-        $form = $this->createForm(SuiteType::class, $suite);
+        $form = $this->formFactory->create(SuiteType::class, $suite);
         $form->submit($data);
 
         if (false === $form->isValid()) {
@@ -193,7 +202,7 @@ class SuiteController extends AbstractController
             true
         );
 
-        $form = $this->createForm(SuiteType::class, $suite);
+        $form = $this->formFactory->create(SuiteType::class, $suite);
         $form->submit($data, false);
 
         if (false === $form->isValid()) {
