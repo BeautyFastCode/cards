@@ -8,7 +8,7 @@ use App\Repository\DeckRepository;
 use App\Serializer\FormErrorSerializer;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -23,7 +23,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * api_decks_patch_item             PATCH    ANY      ANY    /api/decks/{id}
  * api_decks_delete_item            DELETE   ANY      ANY    /api/decks/{id}
  */
-class DeckController extends AbstractController
+class DeckController
 {
     /**
      * @var EntityManagerInterface
@@ -41,19 +41,27 @@ class DeckController extends AbstractController
     private $deckRepository;
 
     /**
+     * @var FormFactory
+     */
+    private $formFactory;
+
+    /**
      * Class constructor
      *
      * @param EntityManagerInterface $entityManager
      * @param FormErrorSerializer    $formErrorSerializer
-     * @param DeckRepository        $deckRepository
+     * @param DeckRepository         $deckRepository
+     * @param FormFactory            $formFactory
      */
     public function __construct(EntityManagerInterface $entityManager,
                                 FormErrorSerializer $formErrorSerializer,
-                                DeckRepository $deckRepository)
+                                DeckRepository $deckRepository,
+                                FormFactory $formFactory)
     {
         $this->entityManager = $entityManager;
         $this->formErrorSerializer = $formErrorSerializer;
         $this->deckRepository = $deckRepository;
+        $this->formFactory = $formFactory;
     }
 
     /**
@@ -106,7 +114,7 @@ class DeckController extends AbstractController
             true
         );
 
-        $form = $this->createForm(DeckType::class, new Deck());
+        $form = $this->formFactory->create(DeckType::class, new Deck());
         $form->submit($data);
 
         if (false === $form->isValid()) {
@@ -150,7 +158,7 @@ class DeckController extends AbstractController
             true
         );
 
-        $form = $this->createForm(DeckType::class, $deck);
+        $form = $this->formFactory->create(DeckType::class, $deck);
         $form->submit($data);
 
         if (false === $form->isValid()) {
@@ -193,7 +201,7 @@ class DeckController extends AbstractController
             true
         );
 
-        $form = $this->createForm(DeckType::class, $deck);
+        $form = $this->formFactory->create(DeckType::class, $deck);
         $form->submit($data, false);
 
         if (false === $form->isValid()) {
