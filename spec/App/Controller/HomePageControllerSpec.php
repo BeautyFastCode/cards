@@ -5,25 +5,13 @@ namespace spec\App\Controller;
 use App\Controller\HomePageController;
 use PhpSpec\ObjectBehavior;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 class HomePageControllerSpec extends ObjectBehavior
 {
-    function let(
-        ContainerInterface $container,
-        EngineInterface $templating
-    )
+    function let(EngineInterface $templating)
     {
-        $this->setContainer($container);
-
-        $container
-            ->has('templating')
-            ->willReturn(true);
-
-        $container
-            ->get('templating')
-            ->willReturn($templating);
+        $this->beConstructedWith($templating);
     }
 
     function it_is_initializable()
@@ -31,15 +19,23 @@ class HomePageControllerSpec extends ObjectBehavior
         $this->shouldHaveType(HomePageController::class);
     }
 
-    function it_should_respond_to_index_action()
+    function it_should_respond_to_index_action(EngineInterface $templating, Response $response)
     {
+        $templating
+            ->renderResponse('homepage/index.html.twig')
+            ->willReturn($response);
+
         $this
             ->index()
             ->shouldHaveType(Response::class);
     }
 
-    function it_should_respond_to_theme_showcase_action()
+    function it_should_respond_to_theme_showcase_action(EngineInterface $templating, Response $response)
     {
+        $templating
+            ->renderResponse('homepage/theme-showcase.html.twig')
+            ->willReturn($response);
+
         $this
             ->themeShowcase()
             ->shouldHaveType(Response::class);

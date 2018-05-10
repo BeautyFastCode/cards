@@ -2,17 +2,27 @@
 
 namespace App\Controller;
 
+use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class HomePageController extends Controller
+class HomePageController
 {
+    /**
+     * @var EngineInterface
+     */
+    private $templating;
+
+    public function __construct(EngineInterface $templating)
+    {
+        $this->templating = $templating;
+    }
+
     /**
      * @Route("/", name="homepage")
      */
     public function index()
     {
-        return $this->render('homepage/index.html.twig');
+        return $this->templating->renderResponse('homepage/index.html.twig');
     }
 
     /**
@@ -20,6 +30,6 @@ class HomePageController extends Controller
      */
     public function themeShowcase()
     {
-        return $this->render('homepage/theme-showcase.html.twig');
+        return $this->templating->renderResponse('homepage/theme-showcase.html.twig');
     }
 }
