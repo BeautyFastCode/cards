@@ -64,5 +64,8 @@ class CardSpec extends ObjectBehavior
         $this->setDeck($deck)->shouldReturn($this);
 
         $this->jsonSerialize()->shouldHaveKey('deck');
+
+        // todo:
+//        $this->jsonSerialize()->shouldHaveKeyWithValue('deck', $deck);
     }
 }

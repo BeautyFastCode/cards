@@ -6,6 +6,8 @@ extensions:
     # Blacklist directories for which code generation should NOT be done
     blacklist:
       - src/Migrations
+      - src/DataFixtures
+      - src/Repository
     #
     # Blacklist files for which code generation should NOT be done
     blacklist_files:
