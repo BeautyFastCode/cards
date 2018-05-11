@@ -8,7 +8,7 @@ use App\Repository\CardRepository;
 use App\Serializer\FormErrorSerializer;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpSpec\ObjectBehavior;
-use Symfony\Component\Form\FormFactory;
+use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class CardControllerSpec extends ObjectBehavior
@@ -17,7 +17,7 @@ class CardControllerSpec extends ObjectBehavior
         EntityManagerInterface $entityManager,
         FormErrorSerializer $formErrorSerializer,
         CardRepository $cardRepository,
-        FormFactory $formFactory
+        FormFactoryInterface $formFactory
     )
     {
         $this->beConstructedWith(

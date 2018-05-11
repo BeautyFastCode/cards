@@ -10,7 +10,7 @@ use App\Serializer\FormErrorSerializer;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpSpec\ObjectBehavior;
-use Symfony\Component\Form\FormFactory;
+use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class DeckControllerSpec extends ObjectBehavior
@@ -19,7 +19,7 @@ class DeckControllerSpec extends ObjectBehavior
         EntityManagerInterface $entityManager,
         FormErrorSerializer $formErrorSerializer,
         DeckRepository $deckRepository,
-        FormFactory $formFactory
+        FormFactoryInterface $formFactory
     )
     {
         $this->beConstructedWith(

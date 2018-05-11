@@ -8,7 +8,7 @@ use App\Repository\CardRepository;
 use App\Serializer\FormErrorSerializer;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Symfony\Component\Form\FormFactory;
+use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -41,7 +41,7 @@ class CardController
     private $cardRepository;
 
     /**
-     * @var FormFactory
+     * @var FormFactoryInterface
      */
     private $formFactory;
 
@@ -51,12 +51,12 @@ class CardController
      * @param EntityManagerInterface $entityManager
      * @param FormErrorSerializer    $formErrorSerializer
      * @param CardRepository         $cardRepository
-     * @param FormFactory            $formFactory
+     * @param FormFactoryInterface   $formFactory
      */
     public function __construct(EntityManagerInterface $entityManager,
                                 FormErrorSerializer $formErrorSerializer,
                                 CardRepository $cardRepository,
-                                FormFactory $formFactory)
+                                FormFactoryInterface $formFactory)
     {
         $this->entityManager = $entityManager;
         $this->formErrorSerializer = $formErrorSerializer;

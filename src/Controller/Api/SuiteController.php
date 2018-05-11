@@ -8,7 +8,7 @@ use App\Repository\SuiteRepository;
 use App\Serializer\FormErrorSerializer;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Symfony\Component\Form\FormFactory;
+use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -41,7 +41,7 @@ class SuiteController
     private $suiteRepository;
 
     /**
-     * @var FormFactory
+     * @var FormFactoryInterface
      */
     private $formFactory;
 
@@ -51,13 +51,13 @@ class SuiteController
      * @param EntityManagerInterface $entityManager
      * @param FormErrorSerializer    $formErrorSerializer
      * @param SuiteRepository        $suiteRepository
-     * @param FormFactory            $formFactory
+     * @param FormFactoryInterface   $formFactory
      */
     public function __construct(EntityManagerInterface $entityManager,
                                 FormErrorSerializer $formErrorSerializer,
                                 SuiteRepository $suiteRepository,
-                                FormFactory $formFactory
-                                )
+                                FormFactoryInterface $formFactory
+    )
     {
         $this->entityManager = $entityManager;
         $this->formErrorSerializer = $formErrorSerializer;

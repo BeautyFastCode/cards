@@ -32,3 +32,6 @@ framework:
     assets:
         # Reads assets with hash added by the webpack encore (build process).
         json_manifest_path: '%kernel.project_dir%/public/build/manifest.json'
+
+    # Enable 'templating' service
+    templating: { engines: ['twig'] }

@@ -8,7 +8,7 @@ use App\Repository\DeckRepository;
 use App\Serializer\FormErrorSerializer;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Symfony\Component\Form\FormFactory;
+use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -41,7 +41,7 @@ class DeckController
     private $deckRepository;
 
     /**
-     * @var FormFactory
+     * @var FormFactoryInterface
      */
     private $formFactory;
 
@@ -51,12 +51,12 @@ class DeckController
      * @param EntityManagerInterface $entityManager
      * @param FormErrorSerializer    $formErrorSerializer
      * @param DeckRepository         $deckRepository
-     * @param FormFactory            $formFactory
+     * @param FormFactoryInterface   $formFactory
      */
     public function __construct(EntityManagerInterface $entityManager,
                                 FormErrorSerializer $formErrorSerializer,
                                 DeckRepository $deckRepository,
-                                FormFactory $formFactory)
+                                FormFactoryInterface $formFactory)
     {
         $this->entityManager = $entityManager;
         $this->formErrorSerializer = $formErrorSerializer;
@@ -81,7 +81,7 @@ class DeckController
             JsonResponse::HTTP_OK
         );
     }
-    
+
     /**
      * Collection of all the Decks
      *
@@ -97,7 +97,7 @@ class DeckController
             JsonResponse::HTTP_OK
         );
     }
-    
+
     /**
      * Create action
      *
@@ -189,7 +189,7 @@ class DeckController
      * @Method({"PATCH"})
      *
      * @param Request $request
-     * @param Deck   $deck
+     * @param Deck    $deck
      *
      * @return JsonResponse
      */
@@ -224,7 +224,7 @@ class DeckController
             JsonResponse::HTTP_OK
         );
     }
-  
+
     /**
      * Delete action
      *
@@ -255,5 +255,5 @@ class DeckController
             null,
             JsonResponse::HTTP_NO_CONTENT
         );
-    }    
+    }
 }
