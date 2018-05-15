@@ -162,6 +162,11 @@ class CardsContext implements Context
      */
     private function emptySuites()
     {
+        /*
+         * This will disable the SoftDeleteable filter, so entities which were "soft-deleted" will appear in results
+         */
+        $this->entityManager->getFilters()->disable('softdeleteable');
+
         $suites = $this->entityManager
             ->getRepository(Suite::class)
             ->findAll();
@@ -178,11 +183,14 @@ class CardsContext implements Context
             $this->entityManager->flush();
 
             /*
-             * Delete Suite.
+             * Hard Delete the Suite.
              */
+            $suite->setDeletedAt(new DateTime());
             $this->entityManager->remove($suite);
             $this->entityManager->flush();
         }
+
+        $this->entityManager->getFilters()->enable('softdeleteable');
     }
 
     /**
