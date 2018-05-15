@@ -32,7 +32,7 @@ trait TimestampableTrait
      *
      * @Gedmo\Timestampable(on="create")
      */
-    private $createdAt;
+    protected $createdAt;
 
     /**
      * Datetime when an entity has been updated
@@ -42,7 +42,7 @@ trait TimestampableTrait
      *
      * @Gedmo\Timestampable(on="update")
      */
-    private $updatedAt;
+    protected $updatedAt;
 
     /**
      * Returns date of the creation in readable format

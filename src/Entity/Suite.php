@@ -16,27 +16,8 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false, hardDelete=true)
  */
-class Suite implements \JsonSerializable, SoftDeletableInterface, TimestampableInterface
+class Suite extends Base implements \JsonSerializable
 {
-    /**
-     * SoftDeletable behavior - deletedAt field
-     */
-    use SoftDeletableTrait;
-
-    /**
-     * Timestampable behavior - createdAt and updatedAt fields
-     */
-    use TimestampableTrait;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
-
     /**
      * @var string
      *
@@ -63,14 +44,6 @@ class Suite implements \JsonSerializable, SoftDeletableInterface, TimestampableI
     public function __construct()
     {
         $this->decks = new ArrayCollection();
-    }
-
-    /**
-     * @return null|int
-     */
-    public function getId(): ?int
-    {
-        return $this->id;
     }
 
     /**
