@@ -16,12 +16,12 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * JSON Api for Suite entity:
  *
- * api_suites_get_item               GET      ANY      ANY    /api/suites/{id}
- * api_suites_get_collection         GET      ANY      ANY    /api/suites
- * api_suites_post_item              POST     ANY      ANY    /api/suites
- * api_suites_put_item               PUT      ANY      ANY    /api/suites/{id}
- * api_suites_patch_item             PATCH    ANY      ANY    /api/suites/{id}
- * api_suites_delete_item            DELETE   ANY      ANY    /api/suites/{id}
+ * old_suites_get_item               GET      ANY      ANY    /old/suites/{id}
+ * old_suites_get_collection         GET      ANY      ANY    /old/suites
+ * old_suites_post_item              POST     ANY      ANY    /old/suites
+ * old_suites_put_item               PUT      ANY      ANY    /old/suites/{id}
+ * old_suites_patch_item             PATCH    ANY      ANY    /old/suites/{id}
+ * old_suites_delete_item            DELETE   ANY      ANY    /old/suites/{id}
  */
 class SuiteController
 {
@@ -68,7 +68,7 @@ class SuiteController
     /**
      * Read action
      *
-     * @Route("/api/suites/{id}", name="api_suites_get_item", requirements={"id"="\d+"})
+     * @Route("/old/suites/{id}", name="old_suites_get_item", requirements={"id"="\d+"})
      * @Method({"GET"})
      *
      * @param Suite $suite
@@ -86,7 +86,7 @@ class SuiteController
     /**
      * Collection of all the Suites
      *
-     * @Route("/api/suites", name="api_suites_get_collection")
+     * @Route("/old/suites", name="old_suites_get_collection")
      * @Method({"GET"})
      *
      * @return JsonResponse
@@ -102,7 +102,7 @@ class SuiteController
     /**
      * Create action
      *
-     * @Route("/api/suites", name="api_suites_post_item")
+     * @Route("/old/suites", name="old_suites_post_item")
      * @Method({"Post"})
      *
      * @param Request $request
@@ -143,7 +143,7 @@ class SuiteController
     /**
      * Update all properties action
      *
-     * @Route("/api/suites/{id}", name="api_suites_put_item", requirements={"id"="\d+"})
+     * @Route("/old/suites/{id}", name="old_suites_put_item", requirements={"id"="\d+"})
      * @Method({"PUT"})
      *
      * @param Request $request
@@ -186,7 +186,7 @@ class SuiteController
     /**
      * Update selected properties action
      *
-     * @Route("/api/suites/{id}", name="api_suites_patch_item", requirements={"id"="\d+"})
+     * @Route("/old/suites/{id}", name="old_suites_patch_item", requirements={"id"="\d+"})
      * @Method({"PATCH"})
      *
      * @param Request $request
@@ -233,7 +233,7 @@ class SuiteController
     /**
      * Delete action
      *
-     * @Route("/api/suites/{id}", name="api_suites_delete_item", requirements={"id"="\d+"})
+     * @Route("/old/suites/{id}", name="old_suites_delete_item", requirements={"id"="\d+"})
      * @Method({"DELETE"})
      *
      * @param Suite $suite

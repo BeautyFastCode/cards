@@ -28,7 +28,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * api_suites_patch_item             PATCH    ANY      ANY    /api/suites/{id}
  * api_suites_delete_item            DELETE   ANY      ANY    /api/suites/{id}
  *
- * @Route("/test")
+ * @Route("/api/suites")
  *
  * @author    Bogumił Brzeziński <beautyfastcode@gmail.com>
  * @copyright BeautyFastCode.com
@@ -71,7 +71,7 @@ class SuiteNewController
     /**
      * List of all the Suites
      *
-     * @Route("/", name="api_suites_get_collection")
+     * @Route("", name="api_suites_get_collection")
      * @Method({"GET"})
      *
      * @return JsonResponse
@@ -87,7 +87,7 @@ class SuiteNewController
     /**
      * Create action
      *
-     * @Route("/c", name="api_suites_post_item")
+     * @Route("", name="api_suites_post_item")
      * @Method({"Post"})
      *
      * @param Request $request
@@ -115,6 +115,76 @@ class SuiteNewController
         return new JsonResponse(
             $suite,
             JsonResponse::HTTP_CREATED
+        );
+    }
+
+    /**
+     * Update all properties action
+     *
+     * @Route("/{id}", name="api_suites_put_item", requirements={"id"="\d+"})
+     * @Method({"PUT"})
+     *
+     * @param Request $request
+     * @param Suite   $suite
+     *
+     * @return JsonResponse
+     */
+    public function updateAllProperties(Request $request, Suite $suite):JsonResponse
+    {
+        $data = json_decode(
+            $request->getContent(),
+            true
+        );
+
+        $suite = $this->suiteManager->update($suite, $data);
+
+        if (!($suite instanceof Suite)) {
+            return new JsonResponse(
+                [
+                    'status' => 'error',
+                    'errors' => $this->suiteManager->getErrors(),
+                ],
+                JsonResponse::HTTP_BAD_REQUEST
+            );
+        }
+        return new JsonResponse(
+            $suite,
+            JsonResponse::HTTP_OK
+        );
+    }
+
+    /**
+     * Update selected properties action
+     *
+     * @Route("/{id}", name="api_suites_patch_item", requirements={"id"="\d+"})
+     * @Method({"PATCH"})
+     *
+     * @param Request $request
+     * @param Suite   $suite
+     *
+     * @return JsonResponse
+     */
+    public function updateSelectedProperties(Request $request, Suite $suite):JsonResponse
+    {
+        $data = json_decode(
+            $request->getContent(),
+            true
+        );
+
+        $suite = $this->suiteManager->update($suite, $data, false);
+
+        if (!($suite instanceof Suite)) {
+            return new JsonResponse(
+                [
+                    'status' => 'error',
+                    'errors' => $this->suiteManager->getErrors(),
+                ],
+                JsonResponse::HTTP_BAD_REQUEST
+            );
+        }
+        return new JsonResponse(
+            $suite,
+            JsonResponse::HTTP_OK
         );
     }
 

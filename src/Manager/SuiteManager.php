@@ -103,8 +103,41 @@ class SuiteManager
         }
 
         $suite = $form->getData();
-
         $this->entityManager->persist($suite);
+        $this->entityManager->flush();
+
+        return $suite;
+    }
+
+    /**
+     * Update one Suite.
+     *
+     * @param Suite $suite
+     * @param array $data
+     * @param bool  $allProperties
+     *
+     * @return Suite|null
+     */
+    public function update(Suite $suite, array $data, bool $allProperties = true): ?Suite
+    {
+        $form = $this->formFactory->create(SuiteType::class, $suite);
+
+        if($allProperties) {
+            $form->submit($data);
+        }
+        else {
+            $form->submit($data, false);
+        }
+
+        if (false === $form->isValid()) {
+            $this->formErrors = $this
+                ->formErrorSerializer
+                ->convertFormToArray($form);
+
+            return null;
+        }
+
+        $suite = $form->getData();
         $this->entityManager->flush();
 
         return $suite;
