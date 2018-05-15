@@ -3,7 +3,8 @@
 stof_doctrine_extensions:
     default_locale: en_US
 
-    # Enable listeners
+    # Activate the extensions - Enable listeners
     orm:
         default:
             softdeleteable: true
+            timestampable: true

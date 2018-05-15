@@ -16,12 +16,17 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false, hardDelete=true)
  */
-class Suite implements \JsonSerializable, SoftDeletableInterface
+class Suite implements \JsonSerializable, SoftDeletableInterface, TimestampableInterface
 {
     /**
      * SoftDeletable behavior - deletedAt field
      */
     use SoftDeletableTrait;
+
+    /**
+     * Timestampable behavior - createdAt and updatedAt fields
+     */
+    use TimestampableTrait;
 
     /**
      * @var integer
