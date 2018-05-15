@@ -8,13 +8,21 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinTable;
 use Doctrine\ORM\Mapping\ManyToMany;
 use Symfony\Component\Validator\Constraints as Assert;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Table(name="suites")
  * @ORM\Entity(repositoryClass="App\Repository\SuiteRepository")
+ *
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false, hardDelete=true)
  */
-class Suite implements \JsonSerializable
+class Suite implements \JsonSerializable, SoftDeletableInterface
 {
+    /**
+     * SoftDeletable behavior - deletedAt field
+     */
+    use SoftDeletableTrait;
+
     /**
      * @var integer
      *
