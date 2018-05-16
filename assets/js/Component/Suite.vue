@@ -20,7 +20,7 @@
 </template>
 
 <script>
-    import axios from 'axios';
+    import {HTTP} from '../Http/http-common';
 
     export default {
         data() {
@@ -34,9 +34,9 @@
          * Fetches suites when the component is created.
          */
         created() {
-            axios.get(`http://127.0.0.1:8000/api/suites`)
+            HTTP.get(`suites`)
                     .then(response => {
-                        console.log(response);
+
                         // JSON responses are automatically parsed.
                         this.suites = response.data
                     })
