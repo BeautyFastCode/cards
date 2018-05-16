@@ -1,14 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Vue{% endblock %}
+{% block title %}Vue | Cards{% endblock %}
+
+{% block main_navbar %}
+    {% include 'dashboard/_navbar.html.twig' %}
+{% endblock %}
 
 {% block main %}
 
     <div class="container">
-        <h1>Vue</h1>
-
-        <div id="app">
-        </div>
+        <div id="app"></div>
     </div>
 
 {% endblock %}

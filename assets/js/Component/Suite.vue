@@ -1,48 +1,33 @@
 <template>
-    <div>
-        <h1>Suites</h1>
-        <hr>
+    <section>
+        <suite-nav v-bind:suite="suite"></suite-nav>
+        <hr class="mb-2">
 
-        <ul v-if="suites && suites.length">
-            <li v-for="suite of suites">
-                <p><strong>{{suite.name}}</strong></p>
-            </li>
-        </ul>
+        <template v-if="suite.decks && suite.decks.length">
+            <div class="row">
 
-        <ul v-if="errors && errors.length">
-            <li v-for="error of errors">
-                {{error.message}}
-            </li>
-        </ul>
+                <deck
+                        v-for="deck of suite.decks"
+                        v-bind:deck="deck"
+                        v-bind:key="deck.id">
+                </deck>
 
-        <hr>
-    </div>
+            </div>
+        </template>
+
+    </section>
 </template>
 
 <script>
     import {HTTP} from '../Http/http-common';
+    import SuiteNav from './SuiteNav';
+    import Deck from './Deck';
 
     export default {
-        data() {
-            return {
-                suites: [],
-                errors: []
-            }
+        name: 'suite',
+        components: {
+            SuiteNav, Deck
         },
-
-        /**
-         * Fetches suites when the component is created.
-         */
-        created() {
-            HTTP.get(`suites`)
-                    .then(response => {
-
-                        // JSON responses are automatically parsed.
-                        this.suites = response.data
-                    })
-                    .catch(e => {
-                        this.errors.push(e)
-                    });
-        }
+        props: ['suite']
     }
 </script>

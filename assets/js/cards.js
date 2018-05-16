@@ -2,8 +2,7 @@
  * Vue test
  */
 import Vue from 'vue';
-import Example from './Component/Example';
-import Suite from './Component/Suite';
+import Dashboard from './Component/Dashboard';
 
 Vue.config.debug = true;
 Vue.config.devtools = true;
@@ -13,11 +12,6 @@ Vue.config.devtools = true;
  */
 var app = new Vue({
     el: '#app',
-    data: {
-        message: 'Hello Cards!'
-    },
-    template: '<div><p>{{ message }}</p><suite></suite><example></example></div>',
-    components: {Example, Suite}
+    template: '<dashboard></dashboard>',
+    components: {Dashboard}
 });
-
-//console.log('Starting the Cards.js');

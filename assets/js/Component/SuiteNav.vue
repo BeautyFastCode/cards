@@ -1,0 +1,38 @@
+<template>
+    <nav>
+        <ul class="nav">
+            <li class="nav-item ml-2">
+                <h2> {{ suite.name }} </h2>
+            </li>
+            <li class="nav-item ml-2">
+                <a href="#" class="btn btn-light btn-sm text-secondary">
+                    <i class="fa fa-pencil"></i>
+                    Change name
+                </a>
+            </li>
+            <li class="nav-item ml-2">
+                <a href="#" class="btn btn-light btn-sm text-secondary">
+                    <i class="fa fa-cog"></i>
+                    Settings
+                </a>
+            </li>
+            <li class="nav-item ml-auto">
+                <a href="#" class="btn btn-light btn-sm text-secondary">
+                    <i class="fa fa-list"></i>
+                </a>
+            </li>
+            <li class="nav-item ml-2">
+                <a href="#" class="btn btn-light btn-sm text-secondary">
+                    <i class="fa fa-th"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</template>
+
+<script>
+    export default {
+        name: 'suite-nav',
+        props: ['suite']
+    }
+</script>
