@@ -131,6 +131,26 @@ class SuiteNewController
     }
 
     /**
+     * Delete action
+     *
+     * @Route("/{id}", name="api_suites_delete_item", requirements={"id"="\d+"})
+     * @Method({"DELETE"})
+     *
+     * @param Suite $suite
+     *
+     * @return JsonResponse
+     */
+    public function delete(Suite $suite): JsonResponse
+    {
+        $this->suiteManager->delete($suite);
+
+        return new JsonResponse(
+            null,
+            JsonResponse::HTTP_NO_CONTENT
+        );
+    }
+
+    /**
      * @param Request $request
      * @param Suite   $suite
      * @param bool    $allProperties
@@ -184,26 +204,6 @@ class SuiteNewController
         return new JsonResponse(
             $responseData,
             $responseStatus
-        );
-    }
-
-    /**
-     * Delete action
-     *
-     * @Route("/{id}", name="api_suites_delete_item", requirements={"id"="\d+"})
-     * @Method({"DELETE"})
-     *
-     * @param Suite $suite
-     *
-     * @return JsonResponse
-     */
-    public function delete(Suite $suite): JsonResponse
-    {
-        $this->suiteManager->delete($suite);
-
-        return new JsonResponse(
-            null,
-            JsonResponse::HTTP_NO_CONTENT
         );
     }
 }
