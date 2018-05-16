@@ -3,6 +3,7 @@
  */
 import Vue from 'vue';
 import Example from './Component/Example';
+import Suite from './Component/Suite';
 
 Vue.config.debug = true;
 Vue.config.devtools = true;
@@ -15,8 +16,8 @@ var app = new Vue({
     data: {
         message: 'Hello Cards!'
     },
-    template: '<div><p>{{ message }}</p><example></example></div>',
-    components: {Example}
+    template: '<div><p>{{ message }}</p><suite></suite><example></example></div>',
+    components: {Example, Suite}
 });
 
 //console.log('Starting the Cards.js');
