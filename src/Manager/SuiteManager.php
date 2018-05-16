@@ -73,6 +73,18 @@ class SuiteManager
     }
 
     /**
+     * Read one Suite
+     *
+     * @param int $id
+     *
+     * @return Suite
+     */
+    public function read(int $id): Suite
+    {
+        return $this->suiteRepository->findOneBy(['id' => $id]);
+    }
+
+    /**
      * List of all suites in the repository.
      *
      * @return array The suites
@@ -106,21 +118,22 @@ class SuiteManager
         $this->entityManager->persist($suite);
         $this->entityManager->flush();
 
+        //todo: get data from repository, not from form!!!
         return $suite;
     }
 
     /**
      * Update one Suite.
      *
-     * @param Suite $suite
+     * @param int $id
      * @param array $data
      * @param bool  $allProperties
      *
      * @return Suite|null
      */
-    public function update(Suite $suite, array $data, bool $allProperties = true): ?Suite
+    public function update(int $id, array $data, bool $allProperties = true): ?Suite
     {
-        $form = $this->formFactory->create(SuiteType::class, $suite);
+        $form = $this->formFactory->create(SuiteType::class, $this->read($id));
 
         if($allProperties) {
             $form->submit($data);
@@ -137,21 +150,23 @@ class SuiteManager
             return null;
         }
 
-        $suite = $form->getData();
         $this->entityManager->flush();
 
-        return $suite;
+        //todo: get data from repository, not from form!!!
+        return $form->getData();
     }
 
     /**
      * Delete one Suite.
      *
-     * @param Suite $suite
+     * @param int $id
      *
      * @return void
      */
-    public function delete(Suite $suite):void
+    public function delete(int $id):void
     {
+        $suite = $this->read($id);
+
         /*
         * Delete only relationship to Deck (join table), not Deck.
         */

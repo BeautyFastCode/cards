@@ -56,14 +56,14 @@ class SuiteNewController
      * @Route("/{id}", name="api_suites_get_item", requirements={"id"="\d+"})
      * @Method({"GET"})
      *
-     * @param Suite $suite
+     * @param int $id
      *
      * @return JsonResponse
      */
-    public function read(Suite $suite): JsonResponse
+    public function read(int $id): JsonResponse
     {
         return new JsonResponse(
-            $suite,
+            $this->suiteManager->read($id),
             JsonResponse::HTTP_OK
         );
     }
@@ -105,13 +105,13 @@ class SuiteNewController
      * @Method({"PUT"})
      *
      * @param Request $request
-     * @param Suite   $suite
+     * @param int   $id
      *
      * @return JsonResponse
      */
-    public function updateAllProperties(Request $request, Suite $suite):JsonResponse
+    public function updateAllProperties(Request $request, int $id):JsonResponse
     {
-        return $this->update($request, $suite);
+        return $this->update($request, $id);
     }
 
     /**
@@ -121,13 +121,13 @@ class SuiteNewController
      * @Method({"PATCH"})
      *
      * @param Request $request
-     * @param Suite   $suite
+     * @param int   $id
      *
      * @return JsonResponse
      */
-    public function updateSelectedProperties(Request $request, Suite $suite):JsonResponse
+    public function updateSelectedProperties(Request $request, int $id):JsonResponse
     {
-        return $this->update($request, $suite, false);
+        return $this->update($request, $id, false);
     }
 
     /**
@@ -136,13 +136,13 @@ class SuiteNewController
      * @Route("/{id}", name="api_suites_delete_item", requirements={"id"="\d+"})
      * @Method({"DELETE"})
      *
-     * @param Suite $suite
+     * @param int $id
      *
      * @return JsonResponse
      */
-    public function delete(Suite $suite): JsonResponse
+    public function delete(int $id): JsonResponse
     {
-        $this->suiteManager->delete($suite);
+        $this->suiteManager->delete($id);
 
         return new JsonResponse(
             null,
@@ -152,12 +152,12 @@ class SuiteNewController
 
     /**
      * @param Request $request
-     * @param Suite   $suite
+     * @param int   $id
      * @param bool    $allProperties
      *
      * @return JsonResponse
      */
-    private function update(Request $request, Suite $suite = null, bool $allProperties = true):JsonResponse
+    private function update(Request $request, int $id = null, bool $allProperties = true):JsonResponse
     {
         /*
          * Get data from request.
@@ -167,15 +167,15 @@ class SuiteNewController
             true
         );
 
-        if ($suite instanceof Suite and $suite !== null) {
+        if ($id !== null) {
             /*
              * Update an existing Suite.
              */
             if($allProperties) {
-                $responseData = $this->suiteManager->update($suite, $data);
+                $responseData = $this->suiteManager->update($id, $data);
             }
             else {
-                $responseData = $this->suiteManager->update($suite, $data, false);
+                $responseData = $this->suiteManager->update($id, $data, false);
             }
             $responseStatus = JsonResponse::HTTP_OK;
 
