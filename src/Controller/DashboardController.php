@@ -96,7 +96,7 @@ class DashboardController
     }
 
     /**
-     * @Route("/vue", name="vue-test")
+     * @Route("/vue", name="vue-dashboard")
      *
      * @return Response
      */
