@@ -5,3 +5,6 @@ __start__:
 
 fixtures:
 	bin/console doctrine:fixtures:load -n
+
+cc:
+	bin/console cache:clear

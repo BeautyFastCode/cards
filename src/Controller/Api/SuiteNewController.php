@@ -105,7 +105,7 @@ class SuiteNewController
      * @Method({"PUT"})
      *
      * @param Request $request
-     * @param int   $id
+     * @param int     $id
      *
      * @return JsonResponse
      */
@@ -121,7 +121,7 @@ class SuiteNewController
      * @Method({"PATCH"})
      *
      * @param Request $request
-     * @param int   $id
+     * @param int     $id
      *
      * @return JsonResponse
      */
@@ -152,7 +152,7 @@ class SuiteNewController
 
     /**
      * @param Request $request
-     * @param int   $id
+     * @param int     $id
      * @param bool    $allProperties
      *
      * @return JsonResponse
@@ -171,10 +171,9 @@ class SuiteNewController
             /*
              * Update an existing Suite.
              */
-            if($allProperties) {
+            if ($allProperties) {
                 $responseData = $this->suiteManager->update($id, $data);
-            }
-            else {
+            } else {
                 $responseData = $this->suiteManager->update($id, $data, false);
             }
             $responseStatus = JsonResponse::HTTP_OK;
@@ -191,7 +190,7 @@ class SuiteNewController
          * Failed update or create the Suite.
          */
         if (!($responseData instanceof Suite)) {
-            $responseData =                 [
+            $responseData = [
                 'status' => 'error',
                 'errors' => $this->suiteManager->getErrors(),
             ];
@@ -201,6 +200,7 @@ class SuiteNewController
         /*
          * Response
          */
+
         return new JsonResponse(
             $responseData,
             $responseStatus

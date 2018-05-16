@@ -12,6 +12,7 @@ declare(strict_types = 1);
 namespace App\Manager;
 
 use App\Entity\Suite;
+use App\Exception\EntityNotFoundException;
 use App\Form\SuiteType;
 use App\Repository\SuiteRepository;
 use App\Serializer\FormErrorSerializer;
@@ -81,7 +82,13 @@ class SuiteManager
      */
     public function read(int $id): Suite
     {
-        return $this->suiteRepository->findOneBy(['id' => $id]);
+        $suite = $this->suiteRepository->findOneBy(['id' => $id]);
+
+        if ($suite === null or !($suite instanceof Suite)) {
+            throw new EntityNotFoundException('Suite', $id);
+        }
+
+        return $suite;
     }
 
     /**
@@ -125,7 +132,7 @@ class SuiteManager
     /**
      * Update one Suite.
      *
-     * @param int $id
+     * @param int   $id
      * @param array $data
      * @param bool  $allProperties
      *
@@ -135,10 +142,9 @@ class SuiteManager
     {
         $form = $this->formFactory->create(SuiteType::class, $this->read($id));
 
-        if($allProperties) {
+        if ($allProperties) {
             $form->submit($data);
-        }
-        else {
+        } else {
             $form->submit($data, false);
         }
 
