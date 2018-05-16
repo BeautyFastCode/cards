@@ -6,6 +6,9 @@
         "google-fonts-webpack-plugin": "^0.4.4",
         "node-sass": "^4.8.3",
         "sass-loader": "^6.0.7",
+        "vue": "^2.5.16",
+        "vue-loader": "^14.2.2",
+        "vue-template-compiler": "^2.5.16",
         "webpack-notifier": "^1.6.0"
     },
     "license": "UNLICENSED",

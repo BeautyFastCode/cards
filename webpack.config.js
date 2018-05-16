@@ -1,6 +1,8 @@
 var Encore = require('@symfony/webpack-encore');
 const GoogleFontsPlugin = require("google-fonts-webpack-plugin");
 
+// noinspection JSUnresolvedFunction
+
 /**
  * The Encore helps generate the Webpack configuration.
  */
@@ -29,7 +31,7 @@ Encore
      * Enable versioning - each filename will now include a hash,
      * that changes whenever the contents of that file change.
      *
-     * uncomment to create hashed filenames (e.g. app.abc123.css)
+     * uncomment to create hashed filename's (e.g. app.abc123.css)
      */
     // .enableVersioning(Encore.isProduction())
 
@@ -40,6 +42,11 @@ Encore
     .addStyleEntry('css/cards', './assets/scss/cards.scss')
     .addEntry('images/cards-logo.svg', './assets/svg/cards-logo.svg')
     .addEntry('images/cards-logo-white.svg', './assets/svg/cards-logo-white.svg')
+
+    /*
+     * Enable loader for Vue.js
+     */
+    .enableVueLoader()
 
     /*
      * Sass/SCSS
@@ -66,5 +73,7 @@ Encore
         })
     )
 ;
+
+// noinspection JSUnresolvedFunction
 
 module.exports = Encore.getWebpackConfig();

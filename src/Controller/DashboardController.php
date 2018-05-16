@@ -94,4 +94,14 @@ class DashboardController
                 'deck'  => $deck,
             ]);
     }
+
+    /**
+     * @Route("/vue", name="vue-test")
+     *
+     * @return Response
+     */
+    public function vueTest()
+    {
+        return $this->templating->renderResponse('vue/index.html.twig');
+    }
 }
