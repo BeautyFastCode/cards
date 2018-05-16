@@ -95,27 +95,7 @@ class SuiteNewController
      */
     public function create(Request $request): JsonResponse
     {
-        $data = json_decode(
-            $request->getContent(),
-            true
-        );
-
-        $suite = $this->suiteManager->create($data);
-
-        if (!($suite instanceof Suite)) {
-            return new JsonResponse(
-                [
-                    'status' => 'error',
-                    'errors' => $this->suiteManager->getErrors(),
-                ],
-                JsonResponse::HTTP_BAD_REQUEST
-            );
-        }
-
-        return new JsonResponse(
-            $suite,
-            JsonResponse::HTTP_CREATED
-        );
+        return $this->update($request);
     }
 
     /**
@@ -131,26 +111,7 @@ class SuiteNewController
      */
     public function updateAllProperties(Request $request, Suite $suite):JsonResponse
     {
-        $data = json_decode(
-            $request->getContent(),
-            true
-        );
-
-        $suite = $this->suiteManager->update($suite, $data);
-
-        if (!($suite instanceof Suite)) {
-            return new JsonResponse(
-                [
-                    'status' => 'error',
-                    'errors' => $this->suiteManager->getErrors(),
-                ],
-                JsonResponse::HTTP_BAD_REQUEST
-            );
-        }
-        return new JsonResponse(
-            $suite,
-            JsonResponse::HTTP_OK
-        );
+        return $this->update($request, $suite);
     }
 
     /**
@@ -166,25 +127,63 @@ class SuiteNewController
      */
     public function updateSelectedProperties(Request $request, Suite $suite):JsonResponse
     {
+        return $this->update($request, $suite, false);
+    }
+
+    /**
+     * @param Request $request
+     * @param Suite   $suite
+     * @param bool    $allProperties
+     *
+     * @return JsonResponse
+     */
+    private function update(Request $request, Suite $suite = null, bool $allProperties = true):JsonResponse
+    {
+        /*
+         * Get data from request.
+         */
         $data = json_decode(
             $request->getContent(),
             true
         );
 
-        $suite = $this->suiteManager->update($suite, $data, false);
+        if ($suite instanceof Suite and $suite !== null) {
+            /*
+             * Update an existing Suite.
+             */
+            if($allProperties) {
+                $responseData = $this->suiteManager->update($suite, $data);
+            }
+            else {
+                $responseData = $this->suiteManager->update($suite, $data, false);
+            }
+            $responseStatus = JsonResponse::HTTP_OK;
 
-        if (!($suite instanceof Suite)) {
-            return new JsonResponse(
-                [
-                    'status' => 'error',
-                    'errors' => $this->suiteManager->getErrors(),
-                ],
-                JsonResponse::HTTP_BAD_REQUEST
-            );
+        } else {
+            /*
+             * Create the new Suite.
+             */
+            $responseData = $this->suiteManager->create($data);
+            $responseStatus = JsonResponse::HTTP_CREATED;
         }
+
+        /*
+         * Failed update or create the Suite.
+         */
+        if (!($responseData instanceof Suite)) {
+            $responseData =                 [
+                'status' => 'error',
+                'errors' => $this->suiteManager->getErrors(),
+            ];
+            $responseStatus = JsonResponse::HTTP_BAD_REQUEST;
+        }
+
+        /*
+         * Response
+         */
         return new JsonResponse(
-            $suite,
-            JsonResponse::HTTP_OK
+            $responseData,
+            $responseStatus
         );
     }
 
