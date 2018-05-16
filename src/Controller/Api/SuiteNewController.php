@@ -197,10 +197,6 @@ class SuiteNewController
             $responseStatus = JsonResponse::HTTP_BAD_REQUEST;
         }
 
-        /*
-         * Response
-         */
-
         return new JsonResponse(
             $responseData,
             $responseStatus
