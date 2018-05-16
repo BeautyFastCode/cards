@@ -49,6 +49,10 @@ class ExceptionSubscriber implements EventSubscriberInterface
          */
         $exception = $event->getException();
 
+        /*
+         * todo: handle all exceptions for /api/
+         * see: https://symfony.com/doc/current/event_dispatcher.html
+         */
         if ($exception instanceof EntityNotFoundException) {
 
             /*

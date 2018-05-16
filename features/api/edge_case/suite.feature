@@ -110,6 +110,13 @@ Feature: Edge cases for Suite data
     Scenario: Suite Id must be exist
         Given I send a "GET" request to "/api/suites/1000"
         Then the response status code should be 404
+        And the JSON should be equal to:
+"""
+{
+    "status": "error",
+    "errors": "Not found entity Suite with id='1000'."
+}
+"""
 
     @api @edge_case
     Scenario: The Suite property must be exist

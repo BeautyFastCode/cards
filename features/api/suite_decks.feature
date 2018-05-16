@@ -86,6 +86,13 @@ Feature: CRUD functionality for the Suite with with relations to the Decks, avai
         Then the response status code should be 204
         When I send a "GET" request to "/api/suites/1"
         Then the response status code should be 404
+        And the JSON should be equal to:
+"""
+{
+    "status": "error",
+    "errors": "Not found entity Suite with id='1'."
+}
+"""
         When I send a "GET" request to "/api/decks/1"
         Then the response status code should be 200
         And the JSON should be equal to:
