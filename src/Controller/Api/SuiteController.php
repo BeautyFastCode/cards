@@ -1,14 +1,20 @@
 <?php
 
+declare(strict_types = 1);
+
+/*
+ * (c) BeautyFastCode.com
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace App\Controller\Api;
 
 use App\Entity\Suite;
-use App\Form\SuiteType;
-use App\Repository\SuiteRepository;
-use App\Serializer\FormErrorSerializer;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Helper\JsonHelper;
+use App\Manager\SuiteManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,77 +22,64 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * JSON Api for Suite entity:
  *
- * old_suites_get_item               GET      ANY      ANY    /old/suites/{id}
- * old_suites_get_collection         GET      ANY      ANY    /old/suites
- * old_suites_post_item              POST     ANY      ANY    /old/suites
- * old_suites_put_item               PUT      ANY      ANY    /old/suites/{id}
- * old_suites_patch_item             PATCH    ANY      ANY    /old/suites/{id}
- * old_suites_delete_item            DELETE   ANY      ANY    /old/suites/{id}
+ * api_suites_get_item               GET      ANY      ANY    /api/suites/{id}
+ * api_suites_get_collection         GET      ANY      ANY    /api/suites
+ * api_suites_post_item              POST     ANY      ANY    /api/suites
+ * api_suites_put_item               PUT      ANY      ANY    /api/suites/{id}
+ * api_suites_patch_item             PATCH    ANY      ANY    /api/suites/{id}
+ * api_suites_delete_item            DELETE   ANY      ANY    /api/suites/{id}
+ *
+ * @Route("/api/suites")
+ *
+ * @author    Bogumił Brzeziński <beautyfastcode@gmail.com>
+ * @copyright BeautyFastCode.com
  */
 class SuiteController
 {
     /**
-     * @var EntityManagerInterface
+     * @var SuiteManager
      */
-    private $entityManager;
+    private $suiteManager;
 
     /**
-     * @var FormErrorSerializer
+     * @var JsonHelper
      */
-    private $formErrorSerializer;
-
-    /**
-     * @var SuiteRepository
-     */
-    private $suiteRepository;
-
-    /**
-     * @var FormFactoryInterface
-     */
-    private $formFactory;
+    private $jsonHelper;
 
     /**
      * Class constructor
      *
-     * @param EntityManagerInterface $entityManager
-     * @param FormErrorSerializer    $formErrorSerializer
-     * @param SuiteRepository        $suiteRepository
-     * @param FormFactoryInterface   $formFactory
+     * @param SuiteManager $suiteManager
+     * @param JsonHelper   $jsonHelper
      */
-    public function __construct(EntityManagerInterface $entityManager,
-                                FormErrorSerializer $formErrorSerializer,
-                                SuiteRepository $suiteRepository,
-                                FormFactoryInterface $formFactory
-    )
+    public function __construct(SuiteManager $suiteManager, JsonHelper $jsonHelper)
     {
-        $this->entityManager = $entityManager;
-        $this->formErrorSerializer = $formErrorSerializer;
-        $this->suiteRepository = $suiteRepository;
-        $this->formFactory = $formFactory;
+        $this->suiteManager = $suiteManager;
+        $this->jsonHelper = $jsonHelper;
     }
 
     /**
      * Read action
      *
-     * @Route("/old/suites/{id}", name="old_suites_get_item", requirements={"id"="\d+"})
+     * @Route("/{id}", name="api_suites_get_item", requirements={"id"="\d+"})
      * @Method({"GET"})
      *
-     * @param Suite $suite
+     * @param int $id
      *
      * @return JsonResponse
      */
-    public function read(Suite $suite): JsonResponse
+    public function read(int $id): JsonResponse
     {
         return new JsonResponse(
-            $suite,
+            $this->suiteManager->read($id),
             JsonResponse::HTTP_OK
         );
     }
 
     /**
-     * Collection of all the Suites
+     * List of all the Suites
      *
-     * @Route("/old/suites", name="old_suites_get_collection")
+     * @Route("", name="api_suites_get_collection")
      * @Method({"GET"})
      *
      * @return JsonResponse
@@ -94,7 +87,7 @@ class SuiteController
     public function list(): JsonResponse
     {
         return new JsonResponse(
-            $this->suiteRepository->findAll(),
+            $this->suiteManager->list(),
             JsonResponse::HTTP_OK
         );
     }
@@ -102,7 +95,7 @@ class SuiteController
     /**
      * Create action
      *
-     * @Route("/old/suites", name="old_suites_post_item")
+     * @Route("", name="api_suites_post_item")
      * @Method({"Post"})
      *
      * @param Request $request
@@ -110,155 +103,110 @@ class SuiteController
      */
     public function create(Request $request): JsonResponse
     {
-        $data = json_decode(
-            $request->getContent(),
-            true
-        );
-
-        $form = $this->formFactory->create(SuiteType::class, new Suite());
-        $form->submit($data);
-
-        if (false === $form->isValid()) {
-            return new JsonResponse(
-                [
-                    'status' => 'error',
-                    'errors' => $this->formErrorSerializer
-                        ->convertFormToArray($form),
-                ],
-                JsonResponse::HTTP_BAD_REQUEST
-            );
-        }
-
-        $suite = $form->getData();
-
-        $this->entityManager->persist($suite);
-        $this->entityManager->flush();
-
-        return new JsonResponse(
-            $suite,
-            JsonResponse::HTTP_CREATED
-        );
+        return $this->update($request);
     }
 
     /**
      * Update all properties action
      *
-     * @Route("/old/suites/{id}", name="old_suites_put_item", requirements={"id"="\d+"})
+     * @Route("/{id}", name="api_suites_put_item", requirements={"id"="\d+"})
      * @Method({"PUT"})
      *
      * @param Request $request
-     * @param Suite   $suite
+     * @param int     $id
      *
      * @return JsonResponse
      */
-    public function updateAllProperties(Request $request, Suite $suite):JsonResponse
+    public function updateAllProperties(Request $request, int $id):JsonResponse
     {
-
-        $data = json_decode(
-            $request->getContent(),
-            true
-        );
-
-        $form = $this->formFactory->create(SuiteType::class, $suite);
-        $form->submit($data);
-
-        if (false === $form->isValid()) {
-            return new JsonResponse(
-                [
-                    'status' => 'error',
-                    'errors' => $this->formErrorSerializer
-                        ->convertFormToArray($form),
-                ],
-                JsonResponse::HTTP_BAD_REQUEST
-            );
-        }
-
-        $suite = $form->getData();
-
-        $this->entityManager->flush();
-
-        return new JsonResponse(
-            $suite,
-            JsonResponse::HTTP_OK
-        );
+        return $this->update($request, $id);
     }
 
     /**
      * Update selected properties action
      *
-     * @Route("/old/suites/{id}", name="old_suites_patch_item", requirements={"id"="\d+"})
+     * @Route("/{id}", name="api_suites_patch_item", requirements={"id"="\d+"})
      * @Method({"PATCH"})
      *
      * @param Request $request
-     * @param Suite   $suite
+     * @param int     $id
      *
      * @return JsonResponse
      */
-    public function updateSelectedProperties(Request $request, Suite $suite):JsonResponse
+    public function updateSelectedProperties(Request $request, int $id):JsonResponse
     {
-
-        $data = json_decode(
-            $request->getContent(),
-            true
-        );
-
-        $form = $this->formFactory->create(SuiteType::class, $suite);
-        $form->submit($data, false);
-
-        if (false === $form->isValid()) {
-            return new JsonResponse(
-                [
-                    'status' => 'error',
-                    'errors' => $this->formErrorSerializer
-                        ->convertFormToArray($form),
-                ],
-                JsonResponse::HTTP_BAD_REQUEST
-            );
-        }
-
-        $suite = $form->getData();
-
-        $this->entityManager->flush();
-
-        /*
-         * todo: in response select $suite from Repository, in ALL controllers
-         */
-
-        return new JsonResponse(
-            $suite,
-            JsonResponse::HTTP_OK
-        );
+        return $this->update($request, $id, false);
     }
 
     /**
      * Delete action
      *
-     * @Route("/old/suites/{id}", name="old_suites_delete_item", requirements={"id"="\d+"})
+     * @Route("/{id}", name="api_suites_delete_item", requirements={"id"="\d+"})
      * @Method({"DELETE"})
      *
-     * @param Suite $suite
+     * @param int $id
      *
      * @return JsonResponse
      */
-    public function delete(Suite $suite): JsonResponse
+    public function delete(int $id): JsonResponse
     {
-        /*
-         * Delete only relationship to Deck (join table), not Deck.
-         */
-        foreach ($suite->getDecks() as $deck) {
-            $suite->removeDeck($deck);
-        }
-        $this->entityManager->flush();
-
-        /*
-         * Delete Suite.
-         */
-        $this->entityManager->remove($suite);
-        $this->entityManager->flush();
+        $this->suiteManager->delete($id);
 
         return new JsonResponse(
             null,
             JsonResponse::HTTP_NO_CONTENT
+        );
+    }
+
+    /**
+     * @param Request $request
+     * @param int     $id
+     * @param bool    $allProperties
+     *
+     * @return JsonResponse
+     */
+    private function update(Request $request, int $id = null, bool $allProperties = true):JsonResponse
+    {
+        /*
+         * Get data from request.
+         */
+        $data = $this
+            ->jsonHelper
+            ->decode($request->getContent());
+
+        if ($id !== null) {
+            /*
+             * Update an existing Suite.
+             */
+            if ($allProperties) {
+                $responseData = $this->suiteManager->update($id, $data);
+            } else {
+                $responseData = $this->suiteManager->update($id, $data, false);
+            }
+            $responseStatus = JsonResponse::HTTP_OK;
+
+        } else {
+            /*
+             * Create the new Suite.
+             */
+            $responseData = $this->suiteManager->create($data);
+            $responseStatus = JsonResponse::HTTP_CREATED;
+        }
+
+        /*
+         * Failed update or create the Suite.
+         */
+        if (!($responseData instanceof Suite)) {
+            $responseData = [
+                'status' => 'error',
+                'errors' => $this->suiteManager->getErrors(),
+            ];
+            $responseStatus = JsonResponse::HTTP_BAD_REQUEST;
+        }
+
+        return new JsonResponse(
+            $responseData,
+            $responseStatus
         );
     }
 }
