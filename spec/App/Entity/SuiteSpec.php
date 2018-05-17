@@ -13,11 +13,8 @@ class SuiteSpec extends ObjectBehavior
     function it_is_initializable()
     {
         $this->shouldHaveType(Suite::class);
-    }
 
-    function it_have_id_property()
-    {
-        $this->getId()->shouldReturn(null);
+        //todo: it have traits, interfaces
     }
 
     function it_have_name_property()

@@ -9,18 +9,21 @@ declare(strict_types = 1);
  * file that was distributed with this source code.
  */
 
-namespace App\Entity;
+namespace App\Entity\Stubs;
+
+use App\Entity\Traits\SoftDeletableInterface;
+use App\Entity\Traits\SoftDeletableTrait;
 
 /**
- * BaseInterface
+ * SoftDeletableStub
  *
  * @author    Bogumił Brzeziński <beautyfastcode@gmail.com>
  * @copyright BeautyFastCode.com
  */
-interface BaseInterface
+class SoftDeletableStub implements SoftDeletableInterface
 {
     /**
-     * @return null|int
+     * SoftDeletable behavior - deletedAt field
      */
-    public function getId(): ?int;
+    use SoftDeletableTrait;
 }

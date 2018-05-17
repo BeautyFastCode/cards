@@ -11,6 +11,12 @@ declare(strict_types = 1);
 
 namespace App\Entity;
 
+use App\Entity\Traits\BaseInterface;
+use App\Entity\Traits\BaseTrait;
+use App\Entity\Traits\SoftDeletableInterface;
+use App\Entity\Traits\SoftDeletableTrait;
+use App\Entity\Traits\TimestampableInterface;
+use App\Entity\Traits\TimestampableTrait;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
