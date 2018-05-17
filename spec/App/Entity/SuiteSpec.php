@@ -4,6 +4,9 @@ namespace spec\App\Entity;
 
 use App\Entity\Deck;
 use App\Entity\Suite;
+use App\Entity\Traits\BaseInterface;
+use App\Entity\Traits\SoftDeletableInterface;
+use App\Entity\Traits\TimestampableInterface;
 use Doctrine\Common\Collections\Collection;
 use JsonSerializable;
 use PhpSpec\ObjectBehavior;
@@ -13,8 +16,13 @@ class SuiteSpec extends ObjectBehavior
     function it_is_initializable()
     {
         $this->shouldHaveType(Suite::class);
+    }
 
-        //todo: it have traits, interfaces
+    function it_have_behaviors()
+    {
+        $this->shouldImplement(BaseInterface::class);
+        $this->shouldImplement(SoftDeletableInterface::class);
+        $this->shouldImplement(TimestampableInterface::class);
     }
 
     function it_have_name_property()

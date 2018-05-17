@@ -12,6 +12,7 @@ declare(strict_types = 1);
 namespace spec\App\Entity\Traits;
 
 use App\Entity\Stubs\SoftDeletableStub;
+use App\Entity\Traits\SoftDeletableInterface;
 use PhpSpec\ObjectBehavior;
 use DateTime;
 
@@ -26,6 +27,11 @@ class SoftDeletableTraitSpec extends ObjectBehavior
     function let()
     {
         $this->beAnInstanceOf(SoftDeletableStub::class);
+    }
+
+    function it_is_soft_deletable()
+    {
+        $this->shouldImplement(SoftDeletableInterface::class);
     }
 
     function it_have_deleted_at_property()
