@@ -94,4 +94,15 @@ class DashboardControllerSpec extends ObjectBehavior
             ->showDeck()
             ->shouldHaveType(Response::class);
     }
+
+    function it_should_respond_to_vue_test_action(EngineInterface $templating, Response $response)
+    {
+        $templating
+            ->renderResponse('vue/index.html.twig')
+            ->willReturn($response);
+
+        $this
+            ->vueTest()
+            ->shouldHaveType(Response::class);
+    }
 }
