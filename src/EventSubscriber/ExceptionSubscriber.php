@@ -12,8 +12,8 @@ declare(strict_types = 1);
 namespace App\EventSubscriber;
 
 use App\Exception\EntityNotFoundException;
+use App\Helper\JsonResponseHelper;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
@@ -25,6 +25,21 @@ use Symfony\Component\HttpKernel\KernelEvents;
  */
 class ExceptionSubscriber implements EventSubscriberInterface
 {
+    /**
+     * @var JsonResponseHelper
+     */
+    private $jsonResponseHelper;
+
+    /**
+     * Class constructor
+     *
+     * @param JsonResponseHelper $jsonResponseHelper
+     */
+    public function __construct(JsonResponseHelper $jsonResponseHelper)
+    {
+        $this->jsonResponseHelper = $jsonResponseHelper;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -58,18 +73,14 @@ class ExceptionSubscriber implements EventSubscriberInterface
             /*
              * Customize response object to display the exception in Json format
              */
-            $response = new JsonResponse(
-                [
-                    'status' => 'error',
-                    'errors' => $exception->getMessage(),
-                ],
-                JsonResponse::HTTP_NOT_FOUND
-            );
+            $jsonResponse = $this
+                ->jsonResponseHelper
+                ->notFoundResponse($exception->getMessage());
 
             /*
              * Sends the modified response object to the event
              */
-            $event->setResponse($response);
+            $event->setResponse($jsonResponse);
         }
 
         return;
