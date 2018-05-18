@@ -22,30 +22,75 @@ class FormErrorSerializerSpec extends ObjectBehavior
 
     function it_can_convert_form_errors_to_array(FormInterface $data)
     {
-        //
-        $data->getErrors()->willReturn([]);
-        $data->all()->willReturn([]);
+        $data
+            ->getErrors()
+            ->willReturn([]);
 
-        //
-        $this->convertFormToArray($data)->shouldReturn([]);
+        $data
+            ->all()
+            ->willReturn([]);
+
+        $this
+            ->convertFormToArray($data)
+            ->shouldReturn([]);
+    }
+
+    function it_can_convert_child_errors(FormInterface $data, FormError $error)
+    {
+        $data
+            ->getErrors()
+            ->willReturn([]);
+
+        $data
+            ->all()
+            ->willReturn([$error]);
+
+        /*
+         * Expectation
+         */
+        $this
+            ->convertFormToArray($data)
+            ->shouldReturn([]);
     }
 
     function it_can_convert_form_errors_to_array_2(FormInterface $data, FormError $error)
     {
         //
-        $data->getErrors()->willReturn([$error]);
-        $data->all()->willReturn([]);
+        $data
+            ->getErrors()
+            ->willReturn([$error]);
+
+        $data
+            ->all()
+            ->willReturn([]);
+
+        /*
+         * getErrorMessage - without pluralization
+         */
+        $error
+            ->getMessagePluralization()
+            ->shouldBeCalled();
+
+        $error
+            ->getMessageTemplate()
+            ->shouldBeCalled();
+
+        $error
+            ->getMessageParameters()
+            ->shouldBeCalled();
 
         //
-        $error->getMessagePluralization()->shouldBeCalled();
-        $error->getMessageTemplate()->shouldBeCalled();
-        $error->getMessageParameters()->shouldBeCalled();
+        $error
+            ->getMessagePluralization()
+            ->willReturn(null);
 
-        //
-        $error->getMessagePluralization()->willReturn(null);
-        $error->getMessageParameters()->willReturn([]);
+        $error
+            ->getMessageParameters()
+            ->willReturn([]);
 
-        //
+        /*
+         * Expectation
+         */
         $this
             ->convertFormToArray($data)
             ->shouldReturn([
@@ -55,24 +100,68 @@ class FormErrorSerializerSpec extends ObjectBehavior
             ]);
     }
 
-    // with child
-
-    function it_can_get_error_message_with_pluralization_from_translator(FormInterface $data, FormError $error)
+    function it_can_convert_form_errors_to_array_3(
+        FormInterface $data,
+        TranslatorInterface $translator
+    )
     {
-        //
-        $data->getErrors()->willReturn([$error]);
-        $data->all()->willReturn([]);
+        $error = new FormError("This value should not be blank.");
+        $data->addError($error);
 
-        //
-        $error->getMessagePluralization()->shouldBeCalled();
-        $error->getMessageTemplate()->shouldBeCalled();
-        $error->getMessageParameters()->shouldBeCalled();
+        $data
+            ->getErrors()
+            ->willReturn([$error]);
 
-        //
-        $error->getMessagePluralization()->willReturn(1);
-        $error->getMessageParameters()->willReturn([]);
+        $data
+            ->all()
+            ->willReturn([]);
 
-        //
+        $translator->trans($error->getMessageTemplate(), $error->getMessageParameters(), 'validators')
+            ->willReturn("This value should not be blank.");
+
+        /*
+         * Expectation
+         */
+        $this
+            ->convertFormToArray($data)
+            ->shouldReturn([
+                'errors' => [
+                    'This value should not be blank.',
+                ],
+            ]);
+    }
+
+    function it_can_get_error_message_with_pluralization_from_translator(
+        FormInterface $data,
+        FormError $error
+    )
+    {
+        $data
+            ->getErrors()
+            ->willReturn([$error]);
+
+        $data
+            ->all()
+            ->willReturn([]);
+
+        /*
+         * getErrorMessage - with pluralization
+         */
+        $error
+            ->getMessagePluralization()
+            ->willReturn(1);
+
+        $error
+            ->getMessageTemplate()
+            ->shouldBeCalled();
+
+        $error
+            ->getMessageParameters()
+            ->willReturn([]);
+
+        /*
+         * Expectation
+         */
         $this
             ->convertFormToArray($data)
             ->shouldReturn([
