@@ -26,7 +26,10 @@ class SuiteControllerSpec extends ObjectBehavior
     {
         $id = 1;
 
-        $suiteManager->read($id)->willReturn($suite);
+        $suiteManager
+            ->read($id)
+            ->willReturn($suite);
+
         $suite->jsonSerialize()->willReturn([
             'id'    => 1,
             'name'  => 'Suite A',
@@ -43,7 +46,9 @@ class SuiteControllerSpec extends ObjectBehavior
 
     function it_should_respond_to_list_action(SuiteManager $suiteManager)
     {
-        $suiteManager->list()->shouldBeCalledTimes(1);
+        $suiteManager
+            ->list()
+            ->shouldBeCalledTimes(1);
 
         $this
             ->list()
@@ -189,7 +194,7 @@ class SuiteControllerSpec extends ObjectBehavior
             ]);
 
         $this
-            ->updateSelectedProperties($request, 1)
+            ->updateSelectedProperties($request, $id)
             ->shouldHaveType(JsonResponse::class);
     }
 

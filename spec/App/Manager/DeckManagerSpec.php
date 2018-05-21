@@ -164,4 +164,16 @@ class DeckManagerSpec extends ObjectBehavior
 
         $this->delete(1);
     }
+
+    function it_can_get_form_errors(FormHelper $formHelper)
+    {
+        $formHelper
+            ->getErrors()
+            ->willReturn([]);
+
+        $this
+            ->getErrors()
+            ->shouldBeArray();
+
+    }
 }

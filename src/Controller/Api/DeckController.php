@@ -3,12 +3,9 @@
 namespace App\Controller\Api;
 
 use App\Entity\Deck;
-use App\Form\DeckType;
-use App\Repository\DeckRepository;
-use App\Serializer\FormErrorSerializer;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Helper\JsonHelper;
+use App\Manager\DeckManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -26,42 +23,26 @@ use Symfony\Component\Routing\Annotation\Route;
 class DeckController
 {
     /**
-     * @var EntityManagerInterface
+     * @var DeckManager
      */
-    private $entityManager;
+    private $deckManager;
 
     /**
-     * @var FormErrorSerializer
+     * @var JsonHelper
      */
-    private $formErrorSerializer;
-
-    /**
-     * @var DeckRepository
-     */
-    private $deckRepository;
-
-    /**
-     * @var FormFactoryInterface
-     */
-    private $formFactory;
+    private $jsonHelper;
 
     /**
      * Class constructor
      *
-     * @param EntityManagerInterface $entityManager
-     * @param FormErrorSerializer    $formErrorSerializer
-     * @param DeckRepository         $deckRepository
-     * @param FormFactoryInterface   $formFactory
+     * @param DeckManager $deckManager
+     * @param JsonHelper  $jsonHelper
      */
-    public function __construct(EntityManagerInterface $entityManager,
-                                FormErrorSerializer $formErrorSerializer,
-                                DeckRepository $deckRepository,
-                                FormFactoryInterface $formFactory)
+    public function __construct(DeckManager $deckManager, JsonHelper $jsonHelper)
     {
-        $this->entityManager = $entityManager;
-        $this->formErrorSerializer = $formErrorSerializer;
-        $this->deckRepository = $deckRepository;
-        $this->formFactory = $formFactory;
+
+        $this->deckManager = $deckManager;
+        $this->jsonHelper = $jsonHelper;
     }
 
     /**
@@ -70,14 +51,14 @@ class DeckController
      * @Route("/api/decks/{id}", name="api_decks_get_item", requirements={"id"="\d+"})
      * @Method({"GET"})
      *
-     * @param Deck $deck
+     * @param int $id
      *
      * @return JsonResponse
      */
-    public function read(Deck $deck): JsonResponse
+    public function read(int $id): JsonResponse
     {
         return new JsonResponse(
-            $deck,
+            $this->deckManager->read($id),
             JsonResponse::HTTP_OK
         );
     }
@@ -93,7 +74,7 @@ class DeckController
     public function list(): JsonResponse
     {
         return new JsonResponse(
-            $this->deckRepository->findAll(),
+            $this->deckManager->list(),
             JsonResponse::HTTP_OK
         );
     }
@@ -109,34 +90,7 @@ class DeckController
      */
     public function create(Request $request): JsonResponse
     {
-        $data = json_decode(
-            $request->getContent(),
-            true
-        );
-
-        $form = $this->formFactory->create(DeckType::class, new Deck());
-        $form->submit($data);
-
-        if (false === $form->isValid()) {
-            return new JsonResponse(
-                [
-                    'status' => 'error',
-                    'errors' => $this->formErrorSerializer
-                        ->convertFormToArray($form),
-                ],
-                JsonResponse::HTTP_BAD_REQUEST
-            );
-        }
-
-        $deck = $form->getData();
-
-        $this->entityManager->persist($deck);
-        $this->entityManager->flush();
-
-        return new JsonResponse(
-            $deck,
-            JsonResponse::HTTP_CREATED
-        );
+        return $this->update($request);
     }
 
     /**
@@ -146,40 +100,13 @@ class DeckController
      * @Method({"PUT"})
      *
      * @param Request $request
-     * @param Deck    $deck
+     * @param int $id
      *
      * @return JsonResponse
      */
-    public function updateAllProperties(Request $request, Deck $deck):JsonResponse
+    public function updateAllProperties(Request $request, int $id):JsonResponse
     {
-
-        $data = json_decode(
-            $request->getContent(),
-            true
-        );
-
-        $form = $this->formFactory->create(DeckType::class, $deck);
-        $form->submit($data);
-
-        if (false === $form->isValid()) {
-            return new JsonResponse(
-                [
-                    'status' => 'error',
-                    'errors' => $this->formErrorSerializer
-                        ->convertFormToArray($form),
-                ],
-                JsonResponse::HTTP_BAD_REQUEST
-            );
-        }
-
-        $deck = $form->getData();
-
-        $this->entityManager->flush();
-
-        return new JsonResponse(
-            $deck,
-            JsonResponse::HTTP_OK
-        );
+        return $this->update($request, $id);
     }
 
     /**
@@ -189,39 +116,64 @@ class DeckController
      * @Method({"PATCH"})
      *
      * @param Request $request
-     * @param Deck    $deck
+     * @param int $id
      *
      * @return JsonResponse
      */
-    public function updateSelectedProperties(Request $request, Deck $deck):JsonResponse
+    public function updateSelectedProperties(Request $request, int $id):JsonResponse
     {
+        return $this->update($request, $id, false);
+    }
 
-        $data = json_decode(
-            $request->getContent(),
-            true
-        );
+    /**
+     * @param Request $request
+     * @param int     $id
+     * @param bool    $allProperties
+     *
+     * @return JsonResponse
+     */
+    private function update(Request $request, int $id = null, bool $allProperties = true):JsonResponse
+    {
+        /*
+         * Get data from request.
+         */
+        $data = $this
+            ->jsonHelper
+            ->decode($request->getContent());
 
-        $form = $this->formFactory->create(DeckType::class, $deck);
-        $form->submit($data, false);
+        if ($id !== null) {
+            /*
+             * Update an existing Deck.
+             */
+            if ($allProperties) {
+                $responseData = $this->deckManager->update($id, $data);
+            } else {
+                $responseData = $this->deckManager->update($id, $data, false);
+            }
+            $responseStatus = JsonResponse::HTTP_OK;
 
-        if (false === $form->isValid()) {
-            return new JsonResponse(
-                [
-                    'status' => 'error',
-                    'errors' => $this->formErrorSerializer
-                        ->convertFormToArray($form),
-                ],
-                JsonResponse::HTTP_BAD_REQUEST
-            );
+        } else {
+            /*
+             * Create the new Deck.
+             */
+            $responseData = $this->deckManager->create($data);
+            $responseStatus = JsonResponse::HTTP_CREATED;
         }
 
-        $deck = $form->getData();
-
-        $this->entityManager->flush();
+        /*
+         * Failed update or create the Deck.
+         */
+        if (!($responseData instanceof Deck)) {
+            $responseData = [
+                'status' => 'error',
+                'errors' => $this->deckManager->getErrors(),
+            ];
+            $responseStatus = JsonResponse::HTTP_BAD_REQUEST;
+        }
 
         return new JsonResponse(
-            $deck,
-            JsonResponse::HTTP_OK
+            $responseData,
+            $responseStatus
         );
     }
 
@@ -231,25 +183,13 @@ class DeckController
      * @Route("/api/decks/{id}", name="api_decks_delete_item", requirements={"id"="\d+"})
      * @Method({"DELETE"})
      *
-     * @param Deck $deck
+     * @param int $id
      *
      * @return JsonResponse
      */
-    public function delete(Deck $deck): JsonResponse
+    public function delete(int $id): JsonResponse
     {
-        /*
-         * Delete only relationship to Suite (join table), not Suite.
-         */
-        foreach ($deck->getSuites() as $suite) {
-            $deck->removeSuite($suite);
-        }
-        $this->entityManager->flush();
-
-        /*
-         * Delete Deck.
-         */
-        $this->entityManager->remove($deck);
-        $this->entityManager->flush();
+        $this->deckManager->delete($id);
 
         return new JsonResponse(
             null,

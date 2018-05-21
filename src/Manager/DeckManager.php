@@ -161,4 +161,14 @@ class DeckManager
 
         return;
     }
+
+    /**
+     * Get errors.
+     *
+     * @return array
+     */
+    public function getErrors(): array
+    {
+        return $this->formHelper->getErrors();
+    }
 }
