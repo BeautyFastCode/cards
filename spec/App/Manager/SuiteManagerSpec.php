@@ -73,7 +73,8 @@ class SuiteManagerSpec extends ObjectBehavior
         EntityManagerInterface $entityManager,
         FormFactoryInterface $formFactory,
         FormInterface $form,
-        Suite $suite)
+        Suite $suite,
+        SuiteRepository $suiteRepository)
     {
         $data = ['name' => 'New Suite'];
 
@@ -100,6 +101,14 @@ class SuiteManagerSpec extends ObjectBehavior
         $entityManager
             ->flush()
             ->shouldBeCalledTimes(1);
+
+        $suite
+            ->getId()
+            ->willReturn(1);
+
+        $suiteRepository
+            ->findOneBy(['id' => 1])
+            ->willReturn($suite);
 
         $this
             ->create($data);
@@ -172,6 +181,14 @@ class SuiteManagerSpec extends ObjectBehavior
             ->flush()
             ->shouldBeCalledTimes(1);
 
+        $suite
+            ->getId()
+            ->willReturn(1);
+
+        $suiteRepository
+            ->findOneBy(['id' => 1])
+            ->willReturn($suite);
+
         $this
             ->update($id, $data);
     }
@@ -210,6 +227,14 @@ class SuiteManagerSpec extends ObjectBehavior
         $entityManager
             ->flush()
             ->shouldBeCalledTimes(1);
+
+        $suite
+            ->getId()
+            ->willReturn(1);
+
+        $suiteRepository
+            ->findOneBy(['id' => 1])
+            ->willReturn($suite);
 
         $this
             ->update($id, $data, false);

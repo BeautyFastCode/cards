@@ -118,12 +118,15 @@ class SuiteManager
             return null;
         }
 
+        /** @var Suite $suite */
         $suite = $form->getData();
         $this->entityManager->persist($suite);
         $this->entityManager->flush();
 
-        //todo: get data from repository, not from form!!!
-        return $suite;
+        /*
+         * Get data from repository, not from form.
+         */
+        return $this->read($suite->getId());
     }
 
     /**
@@ -157,8 +160,13 @@ class SuiteManager
 
         $this->entityManager->flush();
 
-        //todo: get data from repository, not from form!!!
-        return $form->getData();
+        /** @var Suite $suite */
+        $suite = $form->getData();
+
+        /*
+         * Get data from repository, not from form.
+         */
+        return $this->read($suite->getId());
     }
 
     /**
