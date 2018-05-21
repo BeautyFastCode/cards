@@ -14,11 +14,9 @@ namespace App\Manager;
 use App\Entity\Suite;
 use App\Exception\EntityNotFoundException;
 use App\Form\SuiteType;
+use App\Helper\FormHelper;
 use App\Repository\SuiteRepository;
-use App\Serializer\FormErrorSerializer;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Form\FormFactoryInterface;
-use Symfony\Component\Form\FormInterface;
 
 /**
  * SuiteManager
@@ -39,39 +37,24 @@ class SuiteManager
     private $entityManager;
 
     /**
-     * @var FormFactoryInterface
+     * @var FormHelper
      */
-    private $formFactory;
-
-    /**
-     * @var FormErrorSerializer
-     */
-    private $formErrorSerializer;
-
-    /**
-     * @var array
-     */
-    private $formErrors;
+    private $formHelper;
 
     /**
      * Class constructor
      *
      * @param SuiteRepository        $suiteRepository
      * @param EntityManagerInterface $entityManager
-     * @param FormFactoryInterface   $formFactory
-     * @param FormErrorSerializer    $formErrorSerializer
+     * @param FormHelper             $formHelper
      */
     public function __construct(SuiteRepository $suiteRepository,
                                 EntityManagerInterface $entityManager,
-                                FormFactoryInterface $formFactory,
-                                FormErrorSerializer $formErrorSerializer)
+                                FormHelper $formHelper)
     {
         $this->suiteRepository = $suiteRepository;
         $this->entityManager = $entityManager;
-        $this->formFactory = $formFactory;
-        $this->formErrorSerializer = $formErrorSerializer;
-
-        $this->formErrors = [];
+        $this->formHelper = $formHelper;
     }
 
     /**
@@ -111,15 +94,10 @@ class SuiteManager
      */
     public function create(array $data): ?Suite
     {
-        $form = $this->formFactory->create(SuiteType::class, new Suite());
-        $form->submit($data);
+        $suite = $this
+            ->formHelper
+            ->submitEntity(SuiteType::class, new Suite(), $data);
 
-        if ($this->formIsNotValid($form)) {
-            return null;
-        }
-
-        /** @var Suite $suite */
-        $suite = $form->getData();
         $this->entityManager->persist($suite);
         $this->entityManager->flush();
 
@@ -140,28 +118,13 @@ class SuiteManager
      */
     public function update(int $id, array $data, bool $allProperties = true): ?Suite
     {
-        $form = $this->formFactory->create(SuiteType::class, $this->read($id));
+        $suite = $this->read($id);
 
-        if ($allProperties) {
-            /*
-             * Update all properties
-             */
-            $form->submit($data);
-        } else {
-            /*
-             * update selected properties
-             */
-            $form->submit($data, false);
-        }
-
-        if ($this->formIsNotValid($form)) {
-            return null;
-        }
+        $this
+            ->formHelper
+            ->submitEntity(SuiteType::class, $suite, $data, $allProperties);
 
         $this->entityManager->flush();
-
-        /** @var Suite $suite */
-        $suite = $form->getData();
 
         /*
          * Get data from repository, not from form.
@@ -204,24 +167,6 @@ class SuiteManager
      */
     public function getErrors(): array
     {
-        return $this->formErrors;
-    }
-
-    /**
-     * @param FormInterface $form
-     *
-     * @return bool
-     */
-    private function formIsNotValid(FormInterface $form): bool
-    {
-        if (false === $form->isValid()) {
-            $this->formErrors = $this
-                ->formErrorSerializer
-                ->convertFormToArray($form);
-
-            return true;
-        }
-
-        return false;
+        return $this->formHelper->getErrors();
     }
 }
