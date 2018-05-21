@@ -18,6 +18,7 @@ use App\Repository\SuiteRepository;
 use App\Serializer\FormErrorSerializer;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\Form\FormInterface;
 
 /**
  * SuiteManager
@@ -113,11 +114,7 @@ class SuiteManager
         $form = $this->formFactory->create(SuiteType::class, new Suite());
         $form->submit($data);
 
-        if (false === $form->isValid()) {
-            $this->formErrors = $this
-                ->formErrorSerializer
-                ->convertFormToArray($form);
-
+        if ($this->formIsNotValid($form)) {
             return null;
         }
 
@@ -143,16 +140,18 @@ class SuiteManager
         $form = $this->formFactory->create(SuiteType::class, $this->read($id));
 
         if ($allProperties) {
+            /*
+             * Update all properties
+             */
             $form->submit($data);
         } else {
+            /*
+             * update selected properties
+             */
             $form->submit($data, false);
         }
 
-        if (false === $form->isValid()) {
-            $this->formErrors = $this
-                ->formErrorSerializer
-                ->convertFormToArray($form);
-
+        if ($this->formIsNotValid($form)) {
             return null;
         }
 
@@ -198,5 +197,23 @@ class SuiteManager
     public function getErrors(): array
     {
         return $this->formErrors;
+    }
+
+    /**
+     * @param FormInterface $form
+     *
+     * @return bool
+     */
+    private function formIsNotValid(FormInterface $form): bool
+    {
+        if (false === $form->isValid()) {
+            $this->formErrors = $this
+                ->formErrorSerializer
+                ->convertFormToArray($form);
+
+            return true;
+        }
+
+        return false;
     }
 }
