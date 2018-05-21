@@ -11,7 +11,10 @@ declare(strict_types = 1);
 
 namespace App\Helper;
 
+use App\Entity\Deck;
 use App\Serializer\FormErrorSerializer;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 
 /**
@@ -28,6 +31,11 @@ class FormHelper
     private $formErrors;
 
     /**
+     * @var FormFactoryInterface
+     */
+    private $formFactory;
+
+    /**
      * @var FormErrorSerializer
      */
     private $formErrorSerializer;
@@ -35,12 +43,47 @@ class FormHelper
     /**
      * Class constructor
      *
-     * @param FormErrorSerializer $formErrorSerializer
+     * @param FormFactoryInterface $formFactory
+     * @param FormErrorSerializer  $formErrorSerializer
      */
-    public function __construct(FormErrorSerializer $formErrorSerializer)
+    public function __construct(FormFactoryInterface $formFactory,
+                                FormErrorSerializer $formErrorSerializer)
     {
         $this->formErrors = [];
+        $this->formFactory = $formFactory;
         $this->formErrorSerializer = $formErrorSerializer;
+    }
+
+    /**
+     * @param string $type
+     * @param Deck   $entity
+     * @param        $data
+     * @param bool   $allProperties
+     *
+     * @return Deck|null
+     */
+    public function submitEntity(string $type = FormType::class, Deck $entity,
+                           array $data, bool $allProperties = true): ?Deck
+    {
+        $form = $this->formFactory->create($type, $entity);
+
+        if ($allProperties) {
+            /*
+             * Update all properties
+             */
+            $form->submit($data);
+        } else {
+            /*
+             * update selected properties
+             */
+            $form->submit($data, false);
+        }
+
+        if ($this->formIsNotValid($form)) {
+            return null;
+        }
+
+        return $form->getData();
     }
 
     /**

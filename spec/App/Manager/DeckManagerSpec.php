@@ -12,22 +12,18 @@ use App\Repository\DeckRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpSpec\ObjectBehavior;
-use Symfony\Component\Form\FormFactoryInterface;
-use Symfony\Component\Form\FormInterface;
 
 class DeckManagerSpec extends ObjectBehavior
 {
     function let(DeckRepository $deckRepository,
                  EntityManagerInterface $entityManager,
-                 FormHelper $formHelper,
-                 FormFactoryInterface $formFactory
+                 FormHelper $formHelper
     )
     {
         $this
             ->beConstructedWith(
                 $deckRepository,
                 $entityManager,
-                $formFactory,
                 $formHelper
             );
     }
@@ -72,28 +68,14 @@ class DeckManagerSpec extends ObjectBehavior
 
     function it_can_create_deck(
         EntityManagerInterface $entityManager,
-        FormFactoryInterface $formFactory,
-        FormInterface $form,
-        Deck $deck,
         DeckRepository $deckRepository,
+        Deck $deck,
         FormHelper $formHelper)
     {
         $data = ['name' => 'New Deck'];
 
-        $formFactory
-            ->create(DeckType::class, new Deck())
-            ->willReturn($form);
-
-        $form
-            ->submit($data)
-            ->shouldBeCalledTimes(1);
-
         $formHelper
-            ->formIsNotValid($form)
-            ->willReturn(false);
-
-        $form
-            ->getData()
+            ->submitEntity(DeckType::class, new Deck(), $data)
             ->willReturn($deck);
 
         $entityManager
@@ -117,37 +99,11 @@ class DeckManagerSpec extends ObjectBehavior
 
     }
 
-    function it_can_validate_new_data_for_the_create_the_deck(
-        FormFactoryInterface $formFactory,
+    function it_can_update_properties_in_the_deck(
+        EntityManagerInterface $entityManager,
+        DeckRepository $deckRepository,
         FormHelper $formHelper,
-        FormInterface $form
-    )
-    {
-        $data = [];
-
-        $formFactory
-            ->create(DeckType::class, new Deck())
-            ->willReturn($form);
-
-        $form
-            ->submit($data)
-            ->shouldBeCalledTimes(1);
-
-        $formHelper
-            ->formIsNotValid($form)
-            ->willReturn(true);
-
-        $this
-            ->create($data);
-    }
-    
-    function it_can_update_all_properties_in_the_deck(
-        DeckRepository $deckRepository,
-        FormFactoryInterface $formFactory,
-        Deck $deck,
-        FormInterface $form,
-        EntityManagerInterface $entityManager,
-        FormHelper $formHelper
+        Deck $deck
     )
     {
         $id = 1;
@@ -157,22 +113,10 @@ class DeckManagerSpec extends ObjectBehavior
             ->findOneBy(['id' => 1])
             ->willReturn($deck);
 
-        $formFactory
-            ->create(DeckType::class, $deck)
-            ->willReturn($form);
-
-        $form
-            ->submit($data)
-            ->shouldBeCalledTimes(1);
-
-        $formHelper
-            ->formIsNotValid($form)
-            ->willReturn(false);
-
-        $form
-            ->getData()
-            ->willReturn($deck);
-
+//        $formHelper
+//            ->submitEntity(DeckType::class, $deck, $data)
+//            ->willReturn($deck);
+//
         $entityManager
             ->flush()
             ->shouldBeCalledTimes(1);
@@ -184,86 +128,6 @@ class DeckManagerSpec extends ObjectBehavior
         $deckRepository
             ->findOneBy(['id' => 1])
             ->willReturn($deck);
-
-        $this
-            ->update($id, $data);
-    }
-
-     function it_can_update_selected_properties_in_the_deck(
-        DeckRepository $deckRepository,
-        FormFactoryInterface $formFactory,
-        Deck $deck,
-        FormInterface $form,
-        EntityManagerInterface $entityManager,
-        FormHelper $formHelper
-    )
-    {
-        $id = 1;
-        $data = ['name' => 'Deck A, version 2'];
-
-        $deckRepository
-            ->findOneBy(['id' => 1])
-            ->willReturn($deck);
-
-        $formFactory
-            ->create(DeckType::class, $deck)
-            ->willReturn($form);
-
-        $form
-            ->submit($data, false)
-            ->shouldBeCalledTimes(1);
-
-        $formHelper
-            ->formIsNotValid($form)
-            ->willReturn(false);
-
-        $form
-            ->getData()
-            ->willReturn($deck);
-
-        $entityManager
-            ->flush()
-            ->shouldBeCalledTimes(1);
-
-        $deck
-            ->getId()
-            ->willReturn(1);
-
-        $deckRepository
-            ->findOneBy(['id' => 1])
-            ->willReturn($deck);
-
-        $this
-            ->update($id, $data, false);
-    }
-
-      function it_can_validate_new_data_for_the_update_the_deck(
-        DeckRepository $deckRepository,
-        FormFactoryInterface $formFactory,
-        Deck $deck,
-        FormInterface $form,
-        EntityManagerInterface $entityManager,
-        FormHelper $formHelper
-    )
-    {
-        $id = 1;
-        $data = ['name' => 'Deck A, version 2'];
-
-        $deckRepository
-            ->findOneBy(['id' => 1])
-            ->willReturn($deck);
-
-        $formFactory
-            ->create(DeckType::class, $deck)
-            ->willReturn($form);
-
-        $form
-            ->submit($data)
-            ->shouldBeCalledTimes(1);
-
-        $formHelper
-            ->formIsNotValid($form)
-            ->willReturn(true);
 
         $this
             ->update($id, $data);
