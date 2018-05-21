@@ -2,11 +2,11 @@
 
 namespace spec\App\Helper;
 
-use App\Entity\Deck;
-use App\Form\DeckType;
+use App\Entity\Traits\BaseInterface;
 use App\Helper\FormHelper;
 use App\Serializer\FormErrorSerializer;
 use PhpSpec\ObjectBehavior;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 
@@ -28,13 +28,13 @@ class FormHelperSpec extends ObjectBehavior
     function it_can_submit_an_entity(
         FormFactoryInterface $formFactory,
         FormInterface $form,
-        Deck $deck
+        BaseInterface $baseEntity
     )
     {
         $data = ['name' => 'New Entity'];
 
         $formFactory
-            ->create(DeckType::class, new Deck())
+            ->create(FormType::class, $baseEntity)
             ->willReturn($form);
 
         $form
@@ -47,24 +47,24 @@ class FormHelperSpec extends ObjectBehavior
 
         $form
             ->getData()
-            ->willReturn($deck);
+            ->willReturn($baseEntity);
 
         $this
-            ->submitEntity(DeckType::class, new Deck(), $data)
-            ->shouldReturn($deck);
+            ->submitEntity(FormType::class, $baseEntity, $data)
+            ->shouldReturn($baseEntity);
     }
 
     function it_can_submit_an_entity_selected_properties(
         FormFactoryInterface $formFactory,
         FormInterface $form,
-        Deck $deck
+        BaseInterface $baseEntity
     )
     {
         $data = ['name' => 'New Entity'];
         $allProperties = false;
 
         $formFactory
-            ->create(DeckType::class, new Deck())
+            ->create(FormType::class, $baseEntity)
             ->willReturn($form);
 
         $form
@@ -77,23 +77,24 @@ class FormHelperSpec extends ObjectBehavior
 
         $form
             ->getData()
-            ->willReturn($deck);
+            ->willReturn($baseEntity);
 
         $this
-            ->submitEntity(DeckType::class, new Deck(), $data, $allProperties)
-            ->shouldReturn($deck);
+            ->submitEntity(FormType::class, $baseEntity, $data, $allProperties)
+            ->shouldReturn($baseEntity);
     }
 
     function it_can_submit_and_validate_an_entity(
         FormErrorSerializer $formErrorSerializer,
         FormFactoryInterface $formFactory,
-        FormInterface $form
+        FormInterface $form,
+        BaseInterface $baseEntity
     )
     {
         $data = ['name' => 'New Entity'];
 
         $formFactory
-            ->create(DeckType::class, new Deck())
+            ->create(FormType::class, $baseEntity)
             ->willReturn($form);
 
         $form
@@ -109,7 +110,7 @@ class FormHelperSpec extends ObjectBehavior
             ->willReturn([]);
 
         $this
-            ->submitEntity(DeckType::class, new Deck(), $data)
+            ->submitEntity(FormType::class, $baseEntity, $data)
             ->shouldReturn(null);
     }
 

@@ -11,7 +11,7 @@ declare(strict_types = 1);
 
 namespace App\Helper;
 
-use App\Entity\Deck;
+use App\Entity\Traits\BaseInterface;
 use App\Serializer\FormErrorSerializer;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormFactoryInterface;
@@ -55,15 +55,15 @@ class FormHelper
     }
 
     /**
-     * @param string $type
-     * @param Deck   $entity
-     * @param        $data
-     * @param bool   $allProperties
+     * @param string        $type
+     * @param BaseInterface $entity
+     * @param               $data
+     * @param bool          $allProperties
      *
-     * @return Deck|null
+     * @return BaseInterface|null
      */
-    public function submitEntity(string $type = FormType::class, Deck $entity,
-                           array $data, bool $allProperties = true): ?Deck
+    public function submitEntity(string $type = FormType::class, BaseInterface $entity,
+                                 array $data, bool $allProperties = true): ?BaseInterface
     {
         $form = $this->formFactory->create($type, $entity);
 
