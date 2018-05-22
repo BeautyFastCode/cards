@@ -10,7 +10,7 @@ declare(strict_types = 1);
  */
 namespace App\Manager\Stubs;
 
-use App\Entity\Stubs\BaseStub;
+use App\Entity\Stubs\BaseEntityStub;
 use App\Manager\BaseEntityManager;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 
@@ -24,7 +24,7 @@ class BaseEntityManagerStub extends BaseEntityManager
 {
     protected function getEntity()
     {
-        return new BaseStub();
+        return new BaseEntityStub();
     }
 
     protected function getEntityFormType()
@@ -34,6 +34,6 @@ class BaseEntityManagerStub extends BaseEntityManager
 
     protected function getEntityClassName(): string
     {
-        return BaseStub::class;
+        return BaseEntityStub::class;
     }
 }

@@ -2,20 +2,20 @@
 
 namespace spec\App\Entity\Traits;
 
-use App\Entity\Stubs\BaseStub;
-use App\Entity\Traits\BaseInterface;
+use App\Entity\Stubs\BaseEntityStub;
+use App\Entity\Traits\BaseEntityInterface;
 use PhpSpec\ObjectBehavior;
 
-class BaseTraitSpec extends ObjectBehavior
+class BaseEntityTraitSpec extends ObjectBehavior
 {
     function let()
     {
-        $this->beAnInstanceOf(BaseStub::class);
+        $this->beAnInstanceOf(BaseEntityStub::class);
     }
 
     function it_have_base_interface()
     {
-        $this->shouldImplement(BaseInterface::class);
+        $this->shouldImplement(BaseEntityInterface::class);
     }
 
     function it_have_id_property()

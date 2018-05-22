@@ -11,7 +11,7 @@ declare(strict_types = 1);
 
 namespace App\Manager;
 
-use App\Entity\Traits\BaseInterface;
+use App\Entity\Traits\BaseEntityInterface;
 use App\Exception\EntityNotFoundException;
 use App\Helper\FormHelper;
 use Doctrine\Common\Persistence\ObjectRepository;
@@ -65,17 +65,17 @@ abstract class BaseEntityManager implements BaseEntityManagerInterface
      *
      * @param int $id
      *
-     * @return BaseInterface
+     * @return BaseEntityInterface
      */
-    public function read(int $id): BaseInterface
+    public function read(int $id): BaseEntityInterface
     {
-        $entity = $this->entityRepository->findOneBy(['id' => $id]);
+        $baseEntity = $this->entityRepository->findOneBy(['id' => $id]);
 
-        if ($entity === null or !($entity instanceof BaseInterface)) {
+        if ($baseEntity === null or !($baseEntity instanceof BaseEntityInterface)) {
             throw new EntityNotFoundException($this->getEntityClassName(), $id);
         }
 
-        return $entity;
+        return $baseEntity;
     }
 
     /**
@@ -93,26 +93,26 @@ abstract class BaseEntityManager implements BaseEntityManagerInterface
      *
      * @param array $data
      *
-     * @return BaseInterface|null
+     * @return BaseEntityInterface|null
      */
-    public function create(array $data): ?BaseInterface
+    public function create(array $data): ?BaseEntityInterface
     {
-        /**@var BaseInterface $entity */
-        $entity = $this
+        /**@var BaseEntityInterface $baseEntity */
+        $baseEntity = $this
             ->formHelper
             ->submitEntity($this->getEntityFormType(), $this->getEntity(), $data);
 
-        if($entity === null) {
+        if($baseEntity === null) {
             return null;
         }
 
-        $this->entityManager->persist($entity);
+        $this->entityManager->persist($baseEntity);
         $this->entityManager->flush();
 
         /*
          * Get data from repository, not from form.
          */
-        return $this->read($entity->getId());
+        return $this->read($baseEntity->getId());
     }
 
     /**
@@ -122,22 +122,22 @@ abstract class BaseEntityManager implements BaseEntityManagerInterface
      * @param array $data
      * @param bool  $allProperties
      *
-     * @return BaseInterface|null
+     * @return BaseEntityInterface|null
      */
-    public function update(int $id, array $data, bool $allProperties = true): ?BaseInterface
+    public function update(int $id, array $data, bool $allProperties = true): ?BaseEntityInterface
     {
-        $suite = $this->read($id);
+        $baseEntity = $this->read($id);
 
         $this
             ->formHelper
-            ->submitEntity($this->getEntityFormType(), $suite, $data, $allProperties);
+            ->submitEntity($this->getEntityFormType(), $baseEntity, $data, $allProperties);
 
         $this->entityManager->flush();
 
         /*
          * Get data from repository, not from form.
          */
-        return $this->read($suite->getId());
+        return $this->read($baseEntity->getId());
     }
 
     /**
@@ -149,9 +149,9 @@ abstract class BaseEntityManager implements BaseEntityManagerInterface
      */
     public function delete(int $id):void
     {
-        $entity = $this->read($id);
+        $baseEntity = $this->read($id);
 
-        $this->entityManager->remove($entity);
+        $this->entityManager->remove($baseEntity);
         $this->entityManager->flush();
 
         return;

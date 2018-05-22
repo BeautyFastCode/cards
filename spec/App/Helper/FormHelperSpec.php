@@ -2,7 +2,7 @@
 
 namespace spec\App\Helper;
 
-use App\Entity\Traits\BaseInterface;
+use App\Entity\Traits\BaseEntityInterface;
 use App\Helper\FormHelper;
 use App\Serializer\FormErrorSerializer;
 use PhpSpec\ObjectBehavior;
@@ -28,7 +28,7 @@ class FormHelperSpec extends ObjectBehavior
     function it_can_submit_an_entity(
         FormFactoryInterface $formFactory,
         FormInterface $form,
-        BaseInterface $baseEntity
+        BaseEntityInterface $baseEntity
     )
     {
         $data = ['name' => 'New Entity'];
@@ -57,7 +57,7 @@ class FormHelperSpec extends ObjectBehavior
     function it_can_submit_an_entity_selected_properties(
         FormFactoryInterface $formFactory,
         FormInterface $form,
-        BaseInterface $baseEntity
+        BaseEntityInterface $baseEntity
     )
     {
         $data = ['name' => 'New Entity'];
@@ -88,7 +88,7 @@ class FormHelperSpec extends ObjectBehavior
         FormErrorSerializer $formErrorSerializer,
         FormFactoryInterface $formFactory,
         FormInterface $form,
-        BaseInterface $baseEntity
+        BaseEntityInterface $baseEntity
     )
     {
         $data = ['name' => 'New Entity'];

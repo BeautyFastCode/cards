@@ -22,6 +22,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class JsonResponseHelper
 {
     /**
+     * todo: add another response, check usage new JsonResponse
      * @param string $message
      *
      * @return JsonResponse

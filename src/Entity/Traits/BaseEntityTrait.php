@@ -14,12 +14,12 @@ namespace App\Entity\Traits;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * BaseTrait
+ * BaseEntityTrait
  *
  * @author    Bogumił Brzeziński <beautyfastcode@gmail.com>
  * @copyright BeautyFastCode.com
  */
-trait BaseTrait
+trait BaseEntityTrait
 {
     /**
      * @var integer

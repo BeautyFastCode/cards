@@ -9,21 +9,18 @@ declare(strict_types = 1);
  * file that was distributed with this source code.
  */
 
-namespace App\Entity\Stubs;
-
-use App\Entity\Traits\BaseInterface;
-use App\Entity\Traits\BaseTrait;
+namespace App\Entity\Traits;
 
 /**
- * BaseStub
+ * BaseEntityInterface
  *
  * @author    Bogumił Brzeziński <beautyfastcode@gmail.com>
  * @copyright BeautyFastCode.com
  */
-class BaseStub implements BaseInterface
+interface BaseEntityInterface
 {
     /**
-     * Unique identifier - id field
+     * @return null|int
      */
-    use BaseTrait;
+    public function getId(): ?int;
 }

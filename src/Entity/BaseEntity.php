@@ -11,8 +11,8 @@ declare(strict_types = 1);
 
 namespace App\Entity;
 
-use App\Entity\Traits\BaseInterface;
-use App\Entity\Traits\BaseTrait;
+use App\Entity\Traits\BaseEntityInterface;
+use App\Entity\Traits\BaseEntityTrait;
 use App\Entity\Traits\SoftDeletableInterface;
 use App\Entity\Traits\SoftDeletableTrait;
 use App\Entity\Traits\TimestampableInterface;
@@ -27,12 +27,12 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @author    Bogumił Brzeziński <beautyfastcode@gmail.com>
  * @copyright BeautyFastCode.com
  */
-abstract class Base implements BaseInterface, SoftDeletableInterface, TimestampableInterface
+abstract class BaseEntity implements BaseEntityInterface, SoftDeletableInterface, TimestampableInterface
 {
     /**
      * Unique identifier - id field
      */
-    use BaseTrait;
+    use BaseEntityTrait;
 
     /**
      * SoftDeletable behavior - deletedAt field

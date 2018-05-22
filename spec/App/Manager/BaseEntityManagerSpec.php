@@ -11,8 +11,8 @@ declare(strict_types = 1);
 
 namespace spec\App\Manager;
 
-use App\Entity\Stubs\BaseStub;
-use App\Entity\Traits\BaseInterface;
+use App\Entity\Stubs\BaseEntityStub;
+use App\Entity\Traits\BaseEntityInterface;
 use App\Exception\EntityNotFoundException;
 use App\Helper\FormHelper;
 use App\Manager\BaseEntityManagerInterface;
@@ -51,15 +51,15 @@ class BaseEntityManagerSpec extends ObjectBehavior
 
     function it_can_read_an_entity(
         ObjectRepository $entityRepository,
-        BaseInterface $entity)
+        BaseEntityInterface $baseEntity)
     {
         $entityRepository
             ->findOneBy(['id' => 1])
-            ->willReturn($entity);
+            ->willReturn($baseEntity);
 
         $this
             ->read(1)
-            ->shouldReturn($entity);
+            ->shouldReturn($baseEntity);
     }
 
     function it_can_trow_exception_when_not_find_an_entity(
@@ -88,30 +88,30 @@ class BaseEntityManagerSpec extends ObjectBehavior
     function it_can_create_an_entity(
         EntityManagerInterface $entityManager,
         FormHelper $formHelper,
-        BaseInterface $entity,
+        BaseEntityInterface $baseEntity,
         ObjectRepository $entityRepository)
     {
         $data = [];
 
         $formHelper
-            ->submitEntity(FormType::class, new BaseStub(), $data)
-            ->willReturn($entity);
+            ->submitEntity(FormType::class, new BaseEntityStub(), $data)
+            ->willReturn($baseEntity);
 
         $entityManager
-            ->persist($entity)
+            ->persist($baseEntity)
             ->shouldBeCalledTimes(1);
 
         $entityManager
             ->flush()
             ->shouldBeCalledTimes(1);
 
-        $entity
+        $baseEntity
             ->getId()
             ->willReturn(1);
 
         $entityRepository
             ->findOneBy(['id' => 1])
-            ->willReturn($entity);
+            ->willReturn($baseEntity);
 
         $this
             ->create($data);
@@ -122,7 +122,7 @@ class BaseEntityManagerSpec extends ObjectBehavior
         $data = [];
 
         $formHelper
-            ->submitEntity(FormType::class, new BaseStub(), $data)
+            ->submitEntity(FormType::class, new BaseEntityStub(), $data)
             ->willReturn(null);
 
         $this
@@ -131,7 +131,7 @@ class BaseEntityManagerSpec extends ObjectBehavior
 
     function it_can_update_properties_in_an_entity(
         ObjectRepository $entityRepository,
-        BaseInterface $entity,
+        BaseEntityInterface $baseEntity,
         EntityManagerInterface $entityManager)
     {
         $id = 1;
@@ -139,7 +139,7 @@ class BaseEntityManagerSpec extends ObjectBehavior
 
         $entityRepository
             ->findOneBy(['id' => 1])
-            ->willReturn($entity);
+            ->willReturn($baseEntity);
 
 //        $formHelper
 //            ->submitEntity(SuiteType::class, $suite, $data)
@@ -149,13 +149,13 @@ class BaseEntityManagerSpec extends ObjectBehavior
             ->flush()
             ->shouldBeCalledTimes(1);
 
-        $entity
+        $baseEntity
             ->getId()
             ->willReturn(1);
 
         $entityRepository
             ->findOneBy(['id' => 1])
-            ->willReturn($entity);
+            ->willReturn($baseEntity);
 
         $this
             ->update($id, $data);
@@ -164,15 +164,15 @@ class BaseEntityManagerSpec extends ObjectBehavior
     function it_can_delete_an_entity(
         EntityManagerInterface $entityManager,
         ObjectRepository $entityRepository,
-        BaseInterface $entity)
+        BaseEntityInterface $baseEntity)
     {
 
         $entityRepository
             ->findOneBy(['id' => 1])
-            ->willReturn($entity);
+            ->willReturn($baseEntity);
 
         $entityManager
-            ->remove($entity)
+            ->remove($baseEntity)
             ->shouldBeCalledTimes(1);
 
         $entityManager

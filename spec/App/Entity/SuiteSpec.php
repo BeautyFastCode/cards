@@ -4,7 +4,7 @@ namespace spec\App\Entity;
 
 use App\Entity\Deck;
 use App\Entity\Suite;
-use App\Entity\Traits\BaseInterface;
+use App\Entity\Traits\BaseEntityInterface;
 use App\Entity\Traits\SoftDeletableInterface;
 use App\Entity\Traits\TimestampableInterface;
 use Doctrine\Common\Collections\Collection;
@@ -20,7 +20,7 @@ class SuiteSpec extends ObjectBehavior
 
     function it_have_behaviors()
     {
-        $this->shouldImplement(BaseInterface::class);
+        $this->shouldImplement(BaseEntityInterface::class);
         $this->shouldImplement(SoftDeletableInterface::class);
         $this->shouldImplement(TimestampableInterface::class);
     }

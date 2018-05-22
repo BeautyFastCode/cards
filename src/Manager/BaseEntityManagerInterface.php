@@ -11,7 +11,7 @@ declare(strict_types = 1);
 
 namespace App\Manager;
 
-use App\Entity\Traits\BaseInterface;
+use App\Entity\Traits\BaseEntityInterface;
 
 /**
  * Contact for BaseEntityManager
@@ -24,9 +24,9 @@ interface BaseEntityManagerInterface
     /**
      * @param int $id
      *
-     * @return BaseInterface
+     * @return BaseEntityInterface
      */
-    public function read(int $id): BaseInterface;
+    public function read(int $id): BaseEntityInterface;
 
     /**
      * @return array

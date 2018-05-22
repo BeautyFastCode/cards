@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Entity\Traits\BaseInterface;
+use App\Entity\Traits\BaseEntityInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="cards")
  * @ORM\Entity(repositoryClass="App\Repository\CardRepository")
  */
-class Card implements \JsonSerializable, BaseInterface
+class Card implements \JsonSerializable, BaseEntityInterface
 {
     /**
      * @var integer

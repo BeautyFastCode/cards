@@ -16,7 +16,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false, hardDelete=true)
  */
-class Suite extends Base implements \JsonSerializable
+class Suite extends BaseEntity implements \JsonSerializable
 {
     /**
      * @var string
