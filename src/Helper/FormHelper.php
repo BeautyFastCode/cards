@@ -81,7 +81,7 @@ class FormHelper
         }
 
         if ($this->formIsNotValid($form)) {
-            throw new FormIsNotValidException();
+            throw new FormIsNotValidException($this->getErrors());
         }
 
         return $form->getData();

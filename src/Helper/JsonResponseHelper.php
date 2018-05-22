@@ -22,7 +22,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class JsonResponseHelper
 {
     /**
-     * todo: add another response, check usage new JsonResponse
      * @param string $message
      *
      * @return JsonResponse
@@ -35,6 +34,40 @@ class JsonResponseHelper
                 'errors' => $message,
             ],
             JsonResponse::HTTP_NOT_FOUND
+        );
+    }
+
+    /**
+     * @param string $message
+     * @param array  $data
+     *
+     * @return JsonResponse
+     */
+    public function badRequestResponse(string $message, array $data = null): JsonResponse
+    {
+        return new JsonResponse(
+            [
+                'status' => 'error',
+                'message' => $message,
+                'errors' => $data,
+            ],
+            JsonResponse::HTTP_BAD_REQUEST
+        );
+    }
+
+    /**
+     * todo: check usage new JsonResponse
+     *
+     * @param array $data
+     * @param int   $status
+     *
+     * @return JsonResponse
+     */
+    public function commonResponse(array $data, int $status): JsonResponse
+    {
+        return new JsonResponse(
+            $data,
+            $status
         );
     }
 }

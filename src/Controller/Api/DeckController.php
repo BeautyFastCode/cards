@@ -2,7 +2,6 @@
 
 namespace App\Controller\Api;
 
-use App\Entity\Deck;
 use App\Helper\JsonHelper;
 use App\Manager\DeckManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -158,17 +157,6 @@ class DeckController
              */
             $responseData = $this->deckManager->create($data);
             $responseStatus = JsonResponse::HTTP_CREATED;
-        }
-
-        /*
-         * Failed update or create the Deck.
-         */
-        if (!($responseData instanceof Deck)) {
-            $responseData = [
-                'status' => 'error',
-                'errors' => $this->deckManager->getErrors(),
-            ];
-            $responseStatus = JsonResponse::HTTP_BAD_REQUEST;
         }
 
         return new JsonResponse(

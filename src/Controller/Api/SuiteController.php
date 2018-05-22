@@ -11,7 +11,6 @@ declare(strict_types = 1);
 
 namespace App\Controller\Api;
 
-use App\Entity\Suite;
 use App\Helper\JsonHelper;
 use App\Manager\SuiteManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -191,17 +190,6 @@ class SuiteController
              */
             $responseData = $this->suiteManager->create($data);
             $responseStatus = JsonResponse::HTTP_CREATED;
-        }
-
-        /*
-         * Failed update or create the Suite.
-         */
-        if (!($responseData instanceof Suite)) {
-            $responseData = [
-                'status' => 'error',
-                'errors' => $this->suiteManager->getErrors(),
-            ];
-            $responseStatus = JsonResponse::HTTP_BAD_REQUEST;
         }
 
         return new JsonResponse(

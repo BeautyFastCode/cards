@@ -22,13 +22,25 @@ use Symfony\Component\Config\Definition\Exception\Exception;
 class FormIsNotValidException extends Exception
 {
     /**
+     * @var array
+     */
+    private $formErrors;
+
+    /**
      * {@inheritdoc}
      */
-    public function __construct()
+    public function __construct(array $formErrors)
     {
-        $template = 'Form is not valid exception.';
-        $message = sprintf($template);
+        $this->formErrors = $formErrors;
 
-        parent::__construct($message);
+        parent::__construct('Form for is not valid.');
+    }
+
+    /**
+     * @return array
+     */
+    public function getFormErrors():array
+    {
+        return $this->formErrors;
     }
 }

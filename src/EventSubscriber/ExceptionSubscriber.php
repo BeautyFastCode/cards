@@ -12,6 +12,7 @@ declare(strict_types = 1);
 namespace App\EventSubscriber;
 
 use App\Exception\EntityNotFoundException;
+use App\Exception\FormIsNotValidException;
 use App\Helper\JsonResponseHelper;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
@@ -76,6 +77,21 @@ class ExceptionSubscriber implements EventSubscriberInterface
             $jsonResponse = $this
                 ->jsonResponseHelper
                 ->notFoundResponse($exception->getMessage());
+
+            /*
+             * Sends the modified response object to the event
+             */
+            $event->setResponse($jsonResponse);
+        }
+
+        if ($exception instanceof FormIsNotValidException) {
+
+            /*
+             * Customize response object to display the exception in Json format
+             */
+            $jsonResponse = $this
+                ->jsonResponseHelper
+                ->badRequestResponse($exception->getMessage(), $exception->getFormErrors());
 
             /*
              * Sends the modified response object to the event
