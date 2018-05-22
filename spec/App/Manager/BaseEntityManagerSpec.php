@@ -11,13 +11,16 @@ declare(strict_types = 1);
 
 namespace spec\App\Manager;
 
+use App\Entity\Stubs\BaseStub;
 use App\Entity\Traits\BaseInterface;
 use App\Exception\EntityNotFoundException;
+use App\Helper\FormHelper;
 use App\Manager\BaseEntityManagerInterface;
 use App\Manager\Stubs\BaseEntityManagerStub;
 use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpSpec\ObjectBehavior;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 
 /**
  * BaseEntityManagerSpec
@@ -29,13 +32,15 @@ class BaseEntityManagerSpec extends ObjectBehavior
 {
     function let(
         ObjectRepository $entityRepository,
-        EntityManagerInterface $entityManager)
+        EntityManagerInterface $entityManager,
+        FormHelper $formHelper)
     {
         $this->beAnInstanceOf(BaseEntityManagerStub::class);
 
         $this->beConstructedWith(
             $entityRepository,
-            $entityManager
+            $entityManager,
+            $formHelper
         );
     }
 
@@ -78,6 +83,38 @@ class BaseEntityManagerSpec extends ObjectBehavior
         $this
             ->list()
             ->shouldBeArray();
+    }
+
+    function it_can_create_an_entity(
+        EntityManagerInterface $entityManager,
+        FormHelper $formHelper,
+        BaseInterface $entity,
+        ObjectRepository $entityRepository)
+    {
+        $data = [];
+
+        $formHelper
+            ->submitEntity(FormType::class, new BaseStub(), $data)
+            ->willReturn($entity);
+
+        $entityManager
+            ->persist($entity)
+            ->shouldBeCalledTimes(1);
+
+        $entityManager
+            ->flush()
+            ->shouldBeCalledTimes(1);
+
+        $entity
+            ->getId()
+            ->willReturn(1);
+
+        $entityRepository
+            ->findOneBy(['id' => 1])
+            ->willReturn($entity);
+
+        $this
+            ->create($data);
     }
 
     function it_can_delete_an_entity(

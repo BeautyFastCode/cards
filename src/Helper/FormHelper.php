@@ -80,7 +80,7 @@ class FormHelper
         }
 
         if ($this->formIsNotValid($form)) {
-            return null;
+            return null; //todo: create Exception
         }
 
         return $form->getData();

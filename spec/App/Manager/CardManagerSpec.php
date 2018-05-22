@@ -2,6 +2,7 @@
 
 namespace spec\App\Manager;
 
+use App\Helper\FormHelper;
 use App\Manager\BaseEntityManagerInterface;
 use App\Manager\CardManager;
 use App\Repository\CardRepository;
@@ -12,12 +13,14 @@ class CardManagerSpec extends ObjectBehavior
 {
     function let(
         CardRepository $cardRepository,
-        EntityManagerInterface $entityManager
+        EntityManagerInterface $entityManager,
+        FormHelper $formHelper
     )
     {
         $this->beConstructedWith(
             $cardRepository,
-            $entityManager
+            $entityManager,
+            $formHelper
         );
     }
 

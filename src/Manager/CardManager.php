@@ -11,6 +11,9 @@ declare(strict_types = 1);
 
 namespace App\Manager;
 
+use App\Entity\Card;
+use App\Form\CardType;
+use App\Helper\FormHelper;
 use App\Repository\CardRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -27,10 +30,33 @@ class CardManager extends BaseEntityManager
      *
      * @param CardRepository         $cardRepository
      * @param EntityManagerInterface $entityManager
+     * @param FormHelper             $formHelper
      */
     public function __construct(CardRepository $cardRepository,
-                                EntityManagerInterface $entityManager)
+                                EntityManagerInterface $entityManager,
+                                FormHelper $formHelper)
     {
-        parent::__construct($cardRepository, $entityManager);
+        parent::__construct($cardRepository, $entityManager, $formHelper);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function getEntity()
+    {
+        return new Card();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function getEntityFormType()
+    {
+        return CardType::class;
+    }
+
+    protected function getEntityClassName():string
+    {
+        return Card::class;
     }
 }
