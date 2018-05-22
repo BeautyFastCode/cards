@@ -4,6 +4,7 @@ namespace App\Controller\Api;
 
 use App\Entity\Card;
 use App\Form\CardType;
+use App\Manager\CardManager;
 use App\Repository\CardRepository;
 use App\Serializer\FormErrorSerializer;
 use Doctrine\ORM\EntityManagerInterface;
@@ -46,22 +47,30 @@ class CardController
     private $formFactory;
 
     /**
+     * @var CardManager
+     */
+    private $cardManager;
+
+    /**
      * Class constructor
      *
      * @param EntityManagerInterface $entityManager
      * @param FormErrorSerializer    $formErrorSerializer
      * @param CardRepository         $cardRepository
      * @param FormFactoryInterface   $formFactory
+     * @param CardManager            $cardManager
      */
     public function __construct(EntityManagerInterface $entityManager,
                                 FormErrorSerializer $formErrorSerializer,
                                 CardRepository $cardRepository,
-                                FormFactoryInterface $formFactory)
+                                FormFactoryInterface $formFactory,
+                                CardManager $cardManager)
     {
         $this->entityManager = $entityManager;
         $this->formErrorSerializer = $formErrorSerializer;
         $this->cardRepository = $cardRepository;
         $this->formFactory = $formFactory;
+        $this->cardManager = $cardManager;
     }
 
     /**
@@ -70,14 +79,14 @@ class CardController
      * @Route("/api/cards/{id}", name="api_cards_get_item", requirements={"id"="\d+"})
      * @Method({"GET"})
      *
-     * @param Card $card
+     * @param int $id
      *
      * @return JsonResponse
      */
-    public function read(Card $card): JsonResponse
+    public function read(int $id): JsonResponse
     {
         return new JsonResponse(
-            $card,
+            $this->cardManager->read($id),
             JsonResponse::HTTP_OK
         );
     }
@@ -93,7 +102,7 @@ class CardController
     public function list(): JsonResponse
     {
         return new JsonResponse(
-            $this->cardRepository->findAll(),
+            $this->cardManager->list(),
             JsonResponse::HTTP_OK
         );
     }

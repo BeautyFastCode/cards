@@ -4,6 +4,7 @@ namespace spec\App\Controller\Api;
 
 use App\Controller\Api\CardController;
 use App\Entity\Card;
+use App\Manager\CardManager;
 use App\Repository\CardRepository;
 use App\Serializer\FormErrorSerializer;
 use Doctrine\ORM\EntityManagerInterface;
@@ -17,14 +18,16 @@ class CardControllerSpec extends ObjectBehavior
         EntityManagerInterface $entityManager,
         FormErrorSerializer $formErrorSerializer,
         CardRepository $cardRepository,
-        FormFactoryInterface $formFactory
+        FormFactoryInterface $formFactory,
+        CardManager $cardManager
     )
     {
         $this->beConstructedWith(
             $entityManager,
             $formErrorSerializer,
             $cardRepository,
-            $formFactory);
+            $formFactory,
+            $cardManager);
     }
 
     function it_is_initializable()
@@ -32,18 +35,31 @@ class CardControllerSpec extends ObjectBehavior
         $this->shouldHaveType(CardController::class);
     }
 
-    function it_should_respond_to_read_action(Card $card)
+    function it_should_respond_to_read_action(CardManager $cardManager, Card $card)
     {
-        $card->jsonSerialize()->willReturn([]);
+        $id = 1;
+
+        $cardManager
+            ->read($id)
+            ->willReturn($card);
+
+        $card->jsonSerialize()->willReturn([
+            'id'    => 1,
+            'question'  => 'Front Card',
+            'answer'  => 'Back Card',
+            'deck' => 1,
+        ]);
 
         $this
-            ->read($card)
+            ->read($id)
             ->shouldHaveType(JsonResponse::class);
     }
 
-    function it_should_respond_to_list_action(CardRepository $cardRepository)
+    function it_should_respond_to_list_action(CardManager $cardManager)
     {
-        $cardRepository->findAll()->willReturn([]);
+        $cardManager
+            ->list()
+            ->shouldBeCalledTimes(1);
 
         $this
             ->list()
