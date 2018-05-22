@@ -200,7 +200,9 @@ class SuiteControllerSpec extends ObjectBehavior
 
     function it_should_respond_to_delete_action(SuiteManager $suiteManager)
     {
-        $suiteManager->delete(1)->shouldBeCalledTimes(1);
+        $suiteManager
+            ->delete(1)
+            ->shouldBeCalledTimes(1);
 
         $this
             ->delete(1)

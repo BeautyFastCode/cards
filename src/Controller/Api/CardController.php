@@ -240,14 +240,13 @@ class CardController
      * @Route("/api/cards/{id}", name="api_cards_delete_item", requirements={"id"="\d+"})
      * @Method({"DELETE"})
      *
-     * @param Card $card
+     * @param int $id
      *
      * @return JsonResponse
      */
-    public function delete(Card $card): JsonResponse
+    public function delete(int $id): JsonResponse
     {
-        $this->entityManager->remove($card);
-        $this->entityManager->flush();
+        $this->cardManager->delete($id);
 
         return new JsonResponse(
             null,

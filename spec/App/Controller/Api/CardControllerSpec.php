@@ -66,16 +66,14 @@ class CardControllerSpec extends ObjectBehavior
             ->shouldHaveType(JsonResponse::class);
     }
 
-    function it_should_respond_to_delete_action(
-        Card $card,
-        EntityManagerInterface $entityManager
-    )
+    function it_should_respond_to_delete_action(CardManager $cardManager)
     {
-        $entityManager->remove($card)->shouldBeCalledTimes(1);
-        $entityManager->flush()->shouldBeCalledTimes(1);
+        $cardManager
+            ->delete(1)
+            ->shouldBeCalledTimes(1);
 
         $this
-            ->delete($card)
+            ->delete(1)
             ->shouldHaveType(JsonResponse::class);
     }
 }

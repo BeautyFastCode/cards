@@ -14,6 +14,7 @@ namespace App\Manager;
 use App\Entity\Traits\BaseInterface;
 use App\Exception\EntityNotFoundException;
 use Doctrine\Common\Persistence\ObjectRepository;
+use Doctrine\ORM\EntityManagerInterface;
 
 /**
  * BaseEntityManager
@@ -29,13 +30,21 @@ abstract class BaseEntityManager implements BaseEntityManagerInterface
     private $entityRepository;
 
     /**
+     * @var EntityManagerInterface
+     */
+    private $entityManager;
+
+    /**
      * Class constructor
      *
-     * @param ObjectRepository $entityRepository
+     * @param ObjectRepository       $entityRepository
+     * @param EntityManagerInterface $entityManager
      */
-    public function __construct(ObjectRepository $entityRepository)
+    public function __construct(ObjectRepository $entityRepository,
+                                EntityManagerInterface $entityManager)
     {
         $this->entityRepository = $entityRepository;
+        $this->entityManager = $entityManager;
     }
 
     /**
@@ -64,5 +73,22 @@ abstract class BaseEntityManager implements BaseEntityManagerInterface
     public function list(): array
     {
         return $this->entityRepository->findAll();
+    }
+
+    /**
+     * Delete one an entity.
+     *
+     * @param int $id
+     *
+     * @return void
+     */
+    public function delete(int $id):void
+    {
+        $entity = $this->read($id);
+
+        $this->entityManager->remove($entity);
+        $this->entityManager->flush();
+
+        return;
     }
 }

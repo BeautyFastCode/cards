@@ -5,16 +5,19 @@ namespace spec\App\Manager;
 use App\Manager\BaseEntityManagerInterface;
 use App\Manager\CardManager;
 use App\Repository\CardRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use PhpSpec\ObjectBehavior;
 
 class CardManagerSpec extends ObjectBehavior
 {
     function let(
-        CardRepository $cardRepository
+        CardRepository $cardRepository,
+        EntityManagerInterface $entityManager
     )
     {
         $this->beConstructedWith(
-            $cardRepository
+            $cardRepository,
+            $entityManager
         );
     }
 

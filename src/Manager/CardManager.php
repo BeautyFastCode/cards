@@ -12,6 +12,7 @@ declare(strict_types = 1);
 namespace App\Manager;
 
 use App\Repository\CardRepository;
+use Doctrine\ORM\EntityManagerInterface;
 
 /**
  * CardManager
@@ -22,19 +23,14 @@ use App\Repository\CardRepository;
 class CardManager extends BaseEntityManager
 {
     /**
-     * @var CardRepository
-     */
-    private $cardRepository;
-
-    /**
      * Class constructor
      *
-     * @param CardRepository $cardRepository
+     * @param CardRepository         $cardRepository
+     * @param EntityManagerInterface $entityManager
      */
-    public function __construct(CardRepository $cardRepository)
+    public function __construct(CardRepository $cardRepository,
+                                EntityManagerInterface $entityManager)
     {
-        $this->cardRepository = $cardRepository;
-
-        parent::__construct($cardRepository);
+        parent::__construct($cardRepository, $entityManager);
     }
 }

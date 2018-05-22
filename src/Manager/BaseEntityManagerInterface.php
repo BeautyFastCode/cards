@@ -32,4 +32,9 @@ interface BaseEntityManagerInterface
      * @return array
      */
     public function list(): array;
+
+    /**
+     * @param int $id
+     */
+    public function delete(int $id):void;
 }
