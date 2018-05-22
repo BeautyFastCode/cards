@@ -2,29 +2,22 @@
 
 namespace App\Entity;
 
-use App\Entity\Traits\BaseEntityInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\ManyToMany;
 use Doctrine\ORM\Mapping\OneToMany;
 use Symfony\Component\Validator\Constraints as Assert;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Table(name="decks")
  * @ORM\Entity(repositoryClass="App\Repository\DeckRepository")
+ *
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false, hardDelete=true)
  */
-class Deck implements \JsonSerializable, BaseEntityInterface
+class Deck extends BaseEntity implements \JsonSerializable
 {
-    /**
-     * @var integer
-     *
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
-
     /**
      * @var string
      *
@@ -60,14 +53,6 @@ class Deck implements \JsonSerializable, BaseEntityInterface
     {
         $this->suites = new ArrayCollection();
         $this->cards = new ArrayCollection();
-    }
-
-    /**
-     * @return null|int
-     */
-    public function getId(): ?int
-    {
-        return $this->id;
     }
 
     /**

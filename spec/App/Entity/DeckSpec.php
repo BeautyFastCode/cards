@@ -5,6 +5,9 @@ namespace spec\App\Entity;
 use App\Entity\Card;
 use App\Entity\Deck;
 use App\Entity\Suite;
+use App\Entity\Traits\BaseEntityInterface;
+use App\Entity\Traits\SoftDeletableInterface;
+use App\Entity\Traits\TimestampableInterface;
 use Doctrine\Common\Collections\Collection;
 use JsonSerializable;
 use PhpSpec\ObjectBehavior;
@@ -16,9 +19,11 @@ class DeckSpec extends ObjectBehavior
         $this->shouldHaveType(Deck::class);
     }
 
-    function it_have_id_property()
+    function it_have_behaviors()
     {
-        $this->getId()->shouldReturn(null);
+        $this->shouldImplement(BaseEntityInterface::class);
+        $this->shouldImplement(SoftDeletableInterface::class);
+        $this->shouldImplement(TimestampableInterface::class);
     }
 
     function it_have_name_property()

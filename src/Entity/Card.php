@@ -2,27 +2,20 @@
 
 namespace App\Entity;
 
-use App\Entity\Traits\BaseEntityInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Symfony\Component\Validator\Constraints as Assert;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Table(name="cards")
  * @ORM\Entity(repositoryClass="App\Repository\CardRepository")
+ *
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false, hardDelete=true)
  */
-class Card implements \JsonSerializable, BaseEntityInterface
+class Card extends BaseEntity implements \JsonSerializable
 {
-    /**
-     * @var integer
-     *
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
-
     /**
      * @var string
      *
@@ -52,14 +45,6 @@ class Card implements \JsonSerializable, BaseEntityInterface
      * @Assert\NotNull()
      */
     private $deck;
-
-    /**
-     * @return null|int
-     */
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     /**
      * @return null|string
