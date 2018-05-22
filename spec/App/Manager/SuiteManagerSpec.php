@@ -113,9 +113,9 @@ class SuiteManagerSpec extends ObjectBehavior
             ->findOneBy(['id' => 1])
             ->willReturn($suite);
 
-//        $formHelper
-//            ->submitEntity(SuiteType::class, $suite, $data)
-//            ->willReturn($suite);
+        $formHelper
+            ->submitEntity(SuiteType::class, $suite, $data, true)
+            ->willReturn($suite);
 
         $entityManager
             ->flush()

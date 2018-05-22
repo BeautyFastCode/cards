@@ -3,6 +3,7 @@
 namespace spec\App\Helper;
 
 use App\Entity\Traits\BaseEntityInterface;
+use App\Exception\FormIsNotValidException;
 use App\Helper\FormHelper;
 use App\Serializer\FormErrorSerializer;
 use PhpSpec\ObjectBehavior;
@@ -110,8 +111,8 @@ class FormHelperSpec extends ObjectBehavior
             ->willReturn([]);
 
         $this
-            ->submitEntity(FormType::class, $baseEntity, $data)
-            ->shouldReturn(null);
+            ->shouldThrow(FormIsNotValidException::class)
+            ->duringSubmitEntity(FormType::class, $baseEntity, $data);
     }
 
     function it_can_get_form_errors()

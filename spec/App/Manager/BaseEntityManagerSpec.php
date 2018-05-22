@@ -117,19 +117,8 @@ class BaseEntityManagerSpec extends ObjectBehavior
             ->create($data);
     }
 
-     function it_can_create_an_entity_2(FormHelper $formHelper)
-    {
-        $data = [];
-
-        $formHelper
-            ->submitEntity(FormType::class, new BaseEntityStub(), $data)
-            ->willReturn(null);
-
-        $this
-            ->create($data);
-    }
-
     function it_can_update_properties_in_an_entity(
+        FormHelper $formHelper,
         ObjectRepository $entityRepository,
         BaseEntityInterface $baseEntity,
         EntityManagerInterface $entityManager)
@@ -141,9 +130,9 @@ class BaseEntityManagerSpec extends ObjectBehavior
             ->findOneBy(['id' => 1])
             ->willReturn($baseEntity);
 
-//        $formHelper
-//            ->submitEntity(SuiteType::class, $suite, $data)
-//            ->willReturn($suite);
+        $formHelper
+            ->submitEntity(FormType::class, $baseEntity, $data, true)
+            ->willReturn($baseEntity);
 
         $entityManager
             ->flush()

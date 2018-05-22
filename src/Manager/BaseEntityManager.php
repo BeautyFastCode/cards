@@ -102,10 +102,6 @@ abstract class BaseEntityManager implements BaseEntityManagerInterface
             ->formHelper
             ->submitEntity($this->getEntityFormType(), $this->getEntity(), $data);
 
-        if($baseEntity === null) {
-            return null;
-        }
-
         $this->entityManager->persist($baseEntity);
         $this->entityManager->flush();
 

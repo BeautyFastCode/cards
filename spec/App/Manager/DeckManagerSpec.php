@@ -113,10 +113,10 @@ class DeckManagerSpec extends ObjectBehavior
             ->findOneBy(['id' => 1])
             ->willReturn($deck);
 
-//        $formHelper
-//            ->submitEntity(DeckType::class, $deck, $data)
-//            ->willReturn($deck);
-//
+        $formHelper
+            ->submitEntity(DeckType::class, $deck, $data, true)
+            ->willReturn($deck);
+
         $entityManager
             ->flush()
             ->shouldBeCalledTimes(1);

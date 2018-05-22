@@ -113,10 +113,6 @@ class CardControllerSpec extends ObjectBehavior
             ->create($data)
             ->willReturn(null);
 
-        $cardManager
-            ->getErrors()
-            ->shouldBeCalledTimes(1);
-
         $this
             ->create($request)
             ->shouldHaveType(JsonResponse::class);

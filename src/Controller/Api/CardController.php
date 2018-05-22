@@ -180,17 +180,6 @@ class CardController
             $responseStatus = JsonResponse::HTTP_CREATED;
         }
 
-        /*
-         * Failed update or create the Card.
-         */
-        if (!($responseData instanceof Card)) {
-            $responseData = [
-                'status' => 'error',
-                'errors' => $this->cardManager->getErrors(),
-            ];
-            $responseStatus = JsonResponse::HTTP_BAD_REQUEST;
-        }
-
         return new JsonResponse(
             $responseData,
             $responseStatus

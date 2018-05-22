@@ -12,6 +12,7 @@ declare(strict_types = 1);
 namespace App\Helper;
 
 use App\Entity\Traits\BaseEntityInterface;
+use App\Exception\FormIsNotValidException;
 use App\Serializer\FormErrorSerializer;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormFactoryInterface;
@@ -60,10 +61,10 @@ class FormHelper
      * @param                     $data
      * @param bool                $allProperties
      *
-     * @return BaseEntityInterface|null
+     * @return BaseEntityInterface
      */
     public function submitEntity(string $type = FormType::class, BaseEntityInterface $baseEntity,
-                                 array $data, bool $allProperties = true): ?BaseEntityInterface
+                                 array $data, bool $allProperties = true): BaseEntityInterface
     {
         $form = $this->formFactory->create($type, $baseEntity);
 
@@ -80,7 +81,7 @@ class FormHelper
         }
 
         if ($this->formIsNotValid($form)) {
-            return null; //todo: create Exception
+            throw new FormIsNotValidException();
         }
 
         return $form->getData();
