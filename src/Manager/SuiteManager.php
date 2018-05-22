@@ -12,7 +12,6 @@ declare(strict_types = 1);
 namespace App\Manager;
 
 use App\Entity\Suite;
-use App\Exception\EntityNotFoundException;
 use App\Form\SuiteType;
 use App\Helper\FormHelper;
 use App\Repository\SuiteRepository;
@@ -24,22 +23,12 @@ use Doctrine\ORM\EntityManagerInterface;
  * @author    Bogumił Brzeziński <beautyfastcode@gmail.com>
  * @copyright BeautyFastCode.com
  */
-class SuiteManager
+class SuiteManager extends BaseEntityManager
 {
-    /**
-     * @var SuiteRepository
-     */
-    private $suiteRepository;
-
     /**
      * @var EntityManagerInterface
      */
     private $entityManager;
-
-    /**
-     * @var FormHelper
-     */
-    private $formHelper;
 
     /**
      * Class constructor
@@ -52,84 +41,24 @@ class SuiteManager
                                 EntityManagerInterface $entityManager,
                                 FormHelper $formHelper)
     {
-        $this->suiteRepository = $suiteRepository;
         $this->entityManager = $entityManager;
-        $this->formHelper = $formHelper;
+
+        parent::__construct($suiteRepository, $entityManager, $formHelper);
     }
 
-    /**
-     * Read one Suite
-     *
-     * @param int $id
-     *
-     * @return Suite
-     */
-    public function read(int $id): Suite
+    protected function getEntity()
     {
-        $suite = $this->suiteRepository->findOneBy(['id' => $id]);
-
-        if ($suite === null or !($suite instanceof Suite)) {
-            throw new EntityNotFoundException('Suite', $id);
-        }
-
-        return $suite;
+        return new Suite();
     }
 
-    /**
-     * List of all suites in the repository.
-     *
-     * @return array The suites
-     */
-    public function list(): array
+    protected function getEntityClassName(): string
     {
-        return $this->suiteRepository->findAll();
+        return Suite::class;
     }
 
-    /**
-     * Create one Suite.
-     *
-     * @param array $data
-     *
-     * @return Suite|null
-     */
-    public function create(array $data): ?Suite
+    protected function getEntityFormType()
     {
-        $suite = $this
-            ->formHelper
-            ->submitEntity(SuiteType::class, new Suite(), $data);
-
-        $this->entityManager->persist($suite);
-        $this->entityManager->flush();
-
-        /*
-         * Get data from repository, not from form.
-         */
-        return $this->read($suite->getId());
-    }
-
-    /**
-     * Update one Suite.
-     *
-     * @param int   $id
-     * @param array $data
-     * @param bool  $allProperties
-     *
-     * @return Suite|null
-     */
-    public function update(int $id, array $data, bool $allProperties = true): ?Suite
-    {
-        $suite = $this->read($id);
-
-        $this
-            ->formHelper
-            ->submitEntity(SuiteType::class, $suite, $data, $allProperties);
-
-        $this->entityManager->flush();
-
-        /*
-         * Get data from repository, not from form.
-         */
-        return $this->read($suite->getId());
+        return SuiteType::class;
     }
 
     /**
@@ -141,6 +70,7 @@ class SuiteManager
      */
     public function delete(int $id):void
     {
+        /** @var Suite $suite */
         $suite = $this->read($id);
 
         /*
@@ -158,15 +88,5 @@ class SuiteManager
         $this->entityManager->flush();
 
         return;
-    }
-
-    /**
-     * Get errors.
-     *
-     * @return array
-     */
-    public function getErrors(): array
-    {
-        return $this->formHelper->getErrors();
     }
 }

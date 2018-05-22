@@ -47,16 +47,16 @@ class CardManager extends BaseEntityManager
         return new Card();
     }
 
+    protected function getEntityClassName():string
+    {
+        return Card::class;
+    }
+
     /**
      * {@inheritdoc}
      */
     protected function getEntityFormType()
     {
         return CardType::class;
-    }
-
-    protected function getEntityClassName():string
-    {
-        return Card::class;
     }
 }

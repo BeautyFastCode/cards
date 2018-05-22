@@ -12,7 +12,6 @@ declare(strict_types = 1);
 namespace App\Manager;
 
 use App\Entity\Deck;
-use App\Exception\EntityNotFoundException;
 use App\Form\DeckType;
 use App\Helper\FormHelper;
 use App\Repository\DeckRepository;
@@ -24,22 +23,12 @@ use Doctrine\ORM\EntityManagerInterface;
  * @author    Bogumił Brzeziński <beautyfastcode@gmail.com>
  * @copyright BeautyFastCode.com
  */
-class DeckManager
+class DeckManager extends BaseEntityManager
 {
-    /**
-     * @var DeckRepository
-     */
-    private $deckRepository;
-
     /**
      * @var EntityManagerInterface
      */
     private $entityManager;
-
-    /**
-     * @var FormHelper
-     */
-    private $formHelper;
 
     /**
      * Class constructor
@@ -52,86 +41,24 @@ class DeckManager
                                 EntityManagerInterface $entityManager,
                                 FormHelper $formHelper)
     {
-        $this->deckRepository = $deckRepository;
         $this->entityManager = $entityManager;
-        $this->formHelper = $formHelper;
+
+        parent::__construct($deckRepository, $entityManager, $formHelper);
     }
 
-    /**
-     * Read one Deck
-     *
-     * @param int $id
-     *
-     * @return Deck
-     */
-    public function read(int $id): Deck
+    protected function getEntity()
     {
-        $deck = $this->deckRepository->findOneBy(['id' => $id]);
-
-        if ($deck === null or !($deck instanceof Deck)) {
-            throw new EntityNotFoundException('Deck', $id);
-        }
-
-        return $deck;
+        return new Deck();
     }
 
-    /**
-     * List of all decks in the repository.
-     *
-     * @return array The decks
-     */
-    public function list(): array
+    protected function getEntityClassName(): string
     {
-        return $this->deckRepository->findAll();
+        return Deck::class;
     }
 
-    /**
-     * Create one Deck.
-     *
-     * @param array $data
-     *
-     * @return Deck|null
-     */
-    public function create(array $data): ?Deck
+    protected function getEntityFormType()
     {
-        $deck = $this
-            ->formHelper
-            ->submitEntity(DeckType::class, new Deck(), $data);
-
-        $this->entityManager->persist($deck);
-        $this->entityManager->flush();
-
-        /*
-         * Get data from repository, not from form.
-         */
-
-        return $this->read($deck->getId());
-    }
-
-    /**
-     * Update one Deck.
-     *
-     * @param int   $id
-     * @param array $data
-     * @param bool  $allProperties
-     *
-     * @return Deck|null
-     */
-    public function update(int $id, array $data, bool $allProperties = true): ?Deck
-    {
-        $deck = $this->read($id);
-
-        $this
-            ->formHelper
-            ->submitEntity(DeckType::class, $deck, $data, $allProperties);
-
-        $this->entityManager->flush();
-
-        /*
-         * Get data from repository, not from form.
-         */
-
-        return $this->read($deck->getId());
+        return DeckType::class;
     }
 
     /**
@@ -143,6 +70,7 @@ class DeckManager
      */
     public function delete(int $id):void
     {
+        /** @var Deck $deck */
         $deck = $this->read($id);
 
         /*
@@ -160,15 +88,5 @@ class DeckManager
         $this->entityManager->flush();
 
         return;
-    }
-
-    /**
-     * Get errors.
-     *
-     * @return array
-     */
-    public function getErrors(): array
-    {
-        return $this->formHelper->getErrors();
     }
 }
