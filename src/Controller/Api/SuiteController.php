@@ -30,6 +30,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * api_suites_delete_item            DELETE   ANY      ANY    /api/suites/{id}
  *
  * @Route("/api/suites")
+ * todo: Create BaseApiController for Api
  *
  * @author    Bogumił Brzeziński <beautyfastcode@gmail.com>
  * @copyright BeautyFastCode.com
