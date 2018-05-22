@@ -12,6 +12,7 @@ declare(strict_types = 1);
 namespace App\Controller\Api;
 
 use App\Helper\JsonHelper;
+use App\Helper\JsonResponseHelper;
 use App\Manager\SuiteManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -46,15 +47,24 @@ class SuiteController
     private $jsonHelper;
 
     /**
+     * @var JsonResponseHelper
+     */
+    private $jsonResponseHelper;
+
+    /**
      * Class constructor
      *
-     * @param SuiteManager $suiteManager
-     * @param JsonHelper   $jsonHelper
+     * @param SuiteManager       $suiteManager
+     * @param JsonHelper         $jsonHelper
+     * @param JsonResponseHelper $jsonResponseHelper
      */
-    public function __construct(SuiteManager $suiteManager, JsonHelper $jsonHelper)
+    public function __construct(SuiteManager $suiteManager,
+                                JsonHelper $jsonHelper,
+                                JsonResponseHelper $jsonResponseHelper)
     {
         $this->suiteManager = $suiteManager;
         $this->jsonHelper = $jsonHelper;
+        $this->jsonResponseHelper = $jsonResponseHelper;
     }
 
     /**
@@ -69,10 +79,9 @@ class SuiteController
      */
     public function read(int $id): JsonResponse
     {
-        return new JsonResponse(
-            $this->suiteManager->read($id),
-            JsonResponse::HTTP_OK
-        );
+        return $this
+            ->jsonResponseHelper
+            ->okResponse($this->suiteManager->read($id));
     }
 
     /**
@@ -85,10 +94,9 @@ class SuiteController
      */
     public function list(): JsonResponse
     {
-        return new JsonResponse(
-            $this->suiteManager->list(),
-            JsonResponse::HTTP_OK
-        );
+        return $this
+            ->jsonResponseHelper
+            ->okResponse($this->suiteManager->list());
     }
 
     /**
@@ -138,26 +146,6 @@ class SuiteController
     }
 
     /**
-     * Delete action
-     *
-     * @Route("/{id}", name="api_suites_delete_item", requirements={"id"="\d+"})
-     * @Method({"DELETE"})
-     *
-     * @param int $id
-     *
-     * @return JsonResponse
-     */
-    public function delete(int $id): JsonResponse
-    {
-        $this->suiteManager->delete($id);
-
-        return new JsonResponse(
-            null,
-            JsonResponse::HTTP_NO_CONTENT
-        );
-    }
-
-    /**
      * @param Request $request
      * @param int     $id
      * @param bool    $allProperties
@@ -182,19 +170,40 @@ class SuiteController
             } else {
                 $responseData = $this->suiteManager->update($id, $data, false);
             }
-            $responseStatus = JsonResponse::HTTP_OK;
+
+            return $this
+                ->jsonResponseHelper
+                ->okResponse($responseData);
 
         } else {
             /*
              * Create the new Suite.
              */
             $responseData = $this->suiteManager->create($data);
-            $responseStatus = JsonResponse::HTTP_CREATED;
+
+            return $this
+                ->jsonResponseHelper
+                ->createdResponse($responseData);
         }
 
-        return new JsonResponse(
-            $responseData,
-            $responseStatus
-        );
+    }
+
+    /**
+     * Delete action
+     *
+     * @Route("/{id}", name="api_suites_delete_item", requirements={"id"="\d+"})
+     * @Method({"DELETE"})
+     *
+     * @param int $id
+     *
+     * @return JsonResponse
+     */
+    public function delete(int $id): JsonResponse
+    {
+        $this->suiteManager->delete($id);
+
+        return $this
+            ->jsonResponseHelper
+            ->noContentResponse();
     }
 }

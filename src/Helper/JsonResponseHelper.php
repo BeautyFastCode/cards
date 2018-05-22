@@ -22,6 +22,43 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class JsonResponseHelper
 {
     /**
+     * @param mixed $data The response data
+     *
+     * @return JsonResponse
+     */
+    public function okResponse($data = null): JsonResponse
+    {
+        return new JsonResponse(
+            $data,
+            JsonResponse::HTTP_OK
+        );
+    }
+
+    /**
+     * @param mixed $data The response data
+     *
+     * @return JsonResponse
+     */
+    public function createdResponse($data = null): JsonResponse
+    {
+        return new JsonResponse(
+            $data,
+            JsonResponse::HTTP_CREATED
+        );
+    }
+
+    /**
+     * @return JsonResponse
+     */
+    public function noContentResponse(): JsonResponse
+    {
+        return new JsonResponse(
+            null,
+            JsonResponse::HTTP_NO_CONTENT
+        );
+    }
+
+    /**
      * @param string $message
      *
      * @return JsonResponse
@@ -52,22 +89,6 @@ class JsonResponseHelper
                 'errors' => $data,
             ],
             JsonResponse::HTTP_BAD_REQUEST
-        );
-    }
-
-    /**
-     * todo: check usage new JsonResponse
-     *
-     * @param array $data
-     * @param int   $status
-     *
-     * @return JsonResponse
-     */
-    public function commonResponse(array $data, int $status): JsonResponse
-    {
-        return new JsonResponse(
-            $data,
-            $status
         );
     }
 }

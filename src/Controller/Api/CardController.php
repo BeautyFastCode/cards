@@ -2,8 +2,8 @@
 
 namespace App\Controller\Api;
 
-use App\Entity\Card;
 use App\Helper\JsonHelper;
+use App\Helper\JsonResponseHelper;
 use App\Manager\CardManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -33,16 +33,24 @@ class CardController
     private $jsonHelper;
 
     /**
+     * @var JsonResponseHelper
+     */
+    private $jsonResponseHelper;
+
+    /**
      * Class constructor
      *
-     * @param CardManager            $cardManager
-     * @param JsonHelper             $jsonHelper
+     * @param CardManager        $cardManager
+     * @param JsonHelper         $jsonHelper
+     * @param JsonResponseHelper $jsonResponseHelper
      */
     public function __construct(CardManager $cardManager,
-                                JsonHelper $jsonHelper)
+                                JsonHelper $jsonHelper,
+                                JsonResponseHelper $jsonResponseHelper)
     {
         $this->cardManager = $cardManager;
         $this->jsonHelper = $jsonHelper;
+        $this->jsonResponseHelper = $jsonResponseHelper;
     }
 
     /**
@@ -57,10 +65,9 @@ class CardController
      */
     public function read(int $id): JsonResponse
     {
-        return new JsonResponse(
-            $this->cardManager->read($id),
-            JsonResponse::HTTP_OK
-        );
+        return $this
+            ->jsonResponseHelper
+            ->okResponse($this->cardManager->read($id));
     }
 
     /**
@@ -73,10 +80,9 @@ class CardController
      */
     public function list(): JsonResponse
     {
-        return new JsonResponse(
-            $this->cardManager->list(),
-            JsonResponse::HTTP_OK
-        );
+        return $this
+            ->jsonResponseHelper
+            ->okResponse($this->cardManager->list());
     }
 
     /**
@@ -100,7 +106,7 @@ class CardController
      * @Method({"PUT"})
      *
      * @param Request $request
-     * @param int $id
+     * @param int     $id
      *
      * @return JsonResponse
      */
@@ -116,33 +122,13 @@ class CardController
      * @Method({"PATCH"})
      *
      * @param Request $request
-     * @param int $id
+     * @param int     $id
      *
      * @return JsonResponse
      */
     public function updateSelectedProperties(Request $request, int $id):JsonResponse
     {
         return $this->update($request, $id, false);
-    }
-
-    /**
-     * Delete action
-     *
-     * @Route("/api/cards/{id}", name="api_cards_delete_item", requirements={"id"="\d+"})
-     * @Method({"DELETE"})
-     *
-     * @param int $id
-     *
-     * @return JsonResponse
-     */
-    public function delete(int $id): JsonResponse
-    {
-        $this->cardManager->delete($id);
-
-        return new JsonResponse(
-            null,
-            JsonResponse::HTTP_NO_CONTENT
-        );
     }
 
     /**
@@ -170,19 +156,39 @@ class CardController
             } else {
                 $responseData = $this->cardManager->update($id, $data, false);
             }
-            $responseStatus = JsonResponse::HTTP_OK;
+
+            return $this
+                ->jsonResponseHelper
+                ->okResponse($responseData);
 
         } else {
             /*
              * Create the new Card.
              */
             $responseData = $this->cardManager->create($data);
-            $responseStatus = JsonResponse::HTTP_CREATED;
-        }
 
-        return new JsonResponse(
-            $responseData,
-            $responseStatus
-        );
-    }    
+            return $this
+                ->jsonResponseHelper
+                ->createdResponse($responseData);
+        }
+    }
+
+    /**
+     * Delete action
+     *
+     * @Route("/api/cards/{id}", name="api_cards_delete_item", requirements={"id"="\d+"})
+     * @Method({"DELETE"})
+     *
+     * @param int $id
+     *
+     * @return JsonResponse
+     */
+    public function delete(int $id): JsonResponse
+    {
+        $this->cardManager->delete($id);
+
+        return $this
+            ->jsonResponseHelper
+            ->noContentResponse();
+    }
 }

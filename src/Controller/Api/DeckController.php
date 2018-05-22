@@ -3,6 +3,7 @@
 namespace App\Controller\Api;
 
 use App\Helper\JsonHelper;
+use App\Helper\JsonResponseHelper;
 use App\Manager\DeckManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -32,16 +33,25 @@ class DeckController
     private $jsonHelper;
 
     /**
+     * @var JsonResponseHelper
+     */
+    private $jsonResponseHelper;
+
+    /**
      * Class constructor
      *
-     * @param DeckManager $deckManager
-     * @param JsonHelper  $jsonHelper
+     * @param DeckManager        $deckManager
+     * @param JsonHelper         $jsonHelper
+     * @param JsonResponseHelper $jsonResponseHelper
      */
-    public function __construct(DeckManager $deckManager, JsonHelper $jsonHelper)
+    public function __construct(DeckManager $deckManager,
+                                JsonHelper $jsonHelper,
+                                JsonResponseHelper $jsonResponseHelper)
     {
 
         $this->deckManager = $deckManager;
         $this->jsonHelper = $jsonHelper;
+        $this->jsonResponseHelper = $jsonResponseHelper;
     }
 
     /**
@@ -56,10 +66,9 @@ class DeckController
      */
     public function read(int $id): JsonResponse
     {
-        return new JsonResponse(
-            $this->deckManager->read($id),
-            JsonResponse::HTTP_OK
-        );
+        return $this
+            ->jsonResponseHelper
+            ->okResponse($this->deckManager->read($id));
     }
 
     /**
@@ -72,10 +81,9 @@ class DeckController
      */
     public function list(): JsonResponse
     {
-        return new JsonResponse(
-            $this->deckManager->list(),
-            JsonResponse::HTTP_OK
-        );
+        return $this
+            ->jsonResponseHelper
+            ->okResponse($this->deckManager->list());
     }
 
     /**
@@ -99,7 +107,7 @@ class DeckController
      * @Method({"PUT"})
      *
      * @param Request $request
-     * @param int $id
+     * @param int     $id
      *
      * @return JsonResponse
      */
@@ -115,7 +123,7 @@ class DeckController
      * @Method({"PATCH"})
      *
      * @param Request $request
-     * @param int $id
+     * @param int     $id
      *
      * @return JsonResponse
      */
@@ -149,20 +157,21 @@ class DeckController
             } else {
                 $responseData = $this->deckManager->update($id, $data, false);
             }
-            $responseStatus = JsonResponse::HTTP_OK;
+
+            return $this
+                ->jsonResponseHelper
+                ->okResponse($responseData);
 
         } else {
             /*
              * Create the new Deck.
              */
             $responseData = $this->deckManager->create($data);
-            $responseStatus = JsonResponse::HTTP_CREATED;
-        }
 
-        return new JsonResponse(
-            $responseData,
-            $responseStatus
-        );
+            return $this
+                ->jsonResponseHelper
+                ->createdResponse($responseData);
+        }
     }
 
     /**
@@ -179,9 +188,8 @@ class DeckController
     {
         $this->deckManager->delete($id);
 
-        return new JsonResponse(
-            null,
-            JsonResponse::HTTP_NO_CONTENT
-        );
+        return $this
+            ->jsonResponseHelper
+            ->noContentResponse();
     }
 }
