@@ -6,32 +6,15 @@ use App\Controller\Api\CardController;
 use App\Entity\Card;
 use App\Helper\JsonHelper;
 use App\Manager\CardManager;
-use App\Repository\CardRepository;
-use App\Serializer\FormErrorSerializer;
-use Doctrine\ORM\EntityManagerInterface;
 use PhpSpec\ObjectBehavior;
-use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class CardControllerSpec extends ObjectBehavior
 {
-    function let(
-        EntityManagerInterface $entityManager,
-        FormErrorSerializer $formErrorSerializer,
-        CardRepository $cardRepository,
-        FormFactoryInterface $formFactory,
-        CardManager $cardManager,
-        JsonHelper $jsonHelper
-    )
+    function let(CardManager $cardManager, JsonHelper $jsonHelper)
     {
-        $this->beConstructedWith(
-            $entityManager,
-            $formErrorSerializer,
-            $cardRepository,
-            $formFactory,
-            $cardManager,
-            $jsonHelper);
+        $this->beConstructedWith($cardManager, $jsonHelper);
     }
 
     function it_is_initializable()
@@ -106,6 +89,116 @@ class CardControllerSpec extends ObjectBehavior
 
         $this
             ->create($request)
+            ->shouldHaveType(JsonResponse::class);
+    }
+    
+    function it_should_respond_to_create_action_wrong_content(
+        Request $request,
+        JsonHelper $jsonHelper,
+        CardManager $cardManager
+    )
+    {
+        $jsonContent = '{\n \n}';
+        $data = [];
+
+        $request
+            ->getContent()
+            ->willReturn($jsonContent);
+
+        $jsonHelper
+            ->decode($jsonContent)
+            ->willReturn($data);
+
+        $cardManager
+            ->create($data)
+            ->willReturn(null);
+
+        $cardManager
+            ->getErrors()
+            ->shouldBeCalledTimes(1);
+
+        $this
+            ->create($request)
+            ->shouldHaveType(JsonResponse::class);
+    }
+
+    function it_should_respond_to_update_all_action(
+        Request $request,
+        JsonHelper $jsonHelper,
+        CardManager $cardManager,
+        Card $card
+    )
+    {
+        $id = 1;
+        $jsonContent = '{"question":"Where are you?","answer":"I\'m here"}';
+        $data = [
+            'question'  => 'Where are you?',
+            'answer' => 'I\'m here'
+        ];
+
+        $request
+            ->getContent()
+            ->willReturn($jsonContent);
+
+        $jsonHelper
+            ->decode($jsonContent)
+            ->willReturn($data);
+
+        $cardManager
+            ->update($id, $data)
+            ->willReturn($card);
+
+        $card
+            ->jsonSerialize()
+            ->willReturn([
+                'id'    => 1,
+                'question'  => 'Where are you?',
+                'answer' => 'I\'m here',
+                'deck' => null
+            ]);
+
+        $this
+            ->updateAllProperties($request, $id)
+            ->shouldHaveType(JsonResponse::class);
+    }
+
+     function it_should_respond_to_update_selected_action(
+        Request $request,
+        JsonHelper $jsonHelper,
+        CardManager $cardManager,
+        Card $card
+    )
+    {
+        $id = 1;
+        $jsonContent = '{"question":"Where are you?","answer":"I\'m here"}';
+        $data = [
+            'question'  => 'Where are you?',
+            'answer' => 'I\'m here'
+        ];
+
+        $request
+            ->getContent()
+            ->willReturn($jsonContent);
+
+        $jsonHelper
+            ->decode($jsonContent)
+            ->willReturn($data);
+
+        $cardManager
+            ->update($id, $data, false)
+            ->willReturn($card);
+
+        $card
+            ->jsonSerialize()
+            ->willReturn([
+                'id'    => 1,
+                'question'  => 'Where are you?',
+                'answer' => 'I\'m here',
+                'deck' => null
+            ]);
+
+        $this
+            ->updateSelectedProperties($request, $id)
             ->shouldHaveType(JsonResponse::class);
     }
 

@@ -117,6 +117,50 @@ class BaseEntityManagerSpec extends ObjectBehavior
             ->create($data);
     }
 
+     function it_can_create_an_entity_2(FormHelper $formHelper)
+    {
+        $data = [];
+
+        $formHelper
+            ->submitEntity(FormType::class, new BaseStub(), $data)
+            ->willReturn(null);
+
+        $this
+            ->create($data);
+    }
+
+    function it_can_update_properties_in_an_entity(
+        ObjectRepository $entityRepository,
+        BaseInterface $entity,
+        EntityManagerInterface $entityManager)
+    {
+        $id = 1;
+        $data = [];
+
+        $entityRepository
+            ->findOneBy(['id' => 1])
+            ->willReturn($entity);
+
+//        $formHelper
+//            ->submitEntity(SuiteType::class, $suite, $data)
+//            ->willReturn($suite);
+
+        $entityManager
+            ->flush()
+            ->shouldBeCalledTimes(1);
+
+        $entity
+            ->getId()
+            ->willReturn(1);
+
+        $entityRepository
+            ->findOneBy(['id' => 1])
+            ->willReturn($entity);
+
+        $this
+            ->update($id, $data);
+    }
+
     function it_can_delete_an_entity(
         EntityManagerInterface $entityManager,
         ObjectRepository $entityRepository,
@@ -136,5 +180,17 @@ class BaseEntityManagerSpec extends ObjectBehavior
             ->shouldBeCalledTimes(1);
 
         $this->delete(1);
+    }
+
+    function it_can_get_form_errors(FormHelper $formHelper)
+    {
+        $formHelper
+            ->getErrors()
+            ->willReturn([]);
+
+        $this
+            ->getErrors()
+            ->shouldBeArray();
+
     }
 }

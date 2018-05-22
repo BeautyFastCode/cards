@@ -116,6 +116,31 @@ abstract class BaseEntityManager implements BaseEntityManagerInterface
     }
 
     /**
+     * Update one an entity.
+     *
+     * @param int   $id
+     * @param array $data
+     * @param bool  $allProperties
+     *
+     * @return BaseInterface|null
+     */
+    public function update(int $id, array $data, bool $allProperties = true): ?BaseInterface
+    {
+        $suite = $this->read($id);
+
+        $this
+            ->formHelper
+            ->submitEntity($this->getEntityFormType(), $suite, $data, $allProperties);
+
+        $this->entityManager->flush();
+
+        /*
+         * Get data from repository, not from form.
+         */
+        return $this->read($suite->getId());
+    }
+
+    /**
      * Delete one an entity.
      *
      * @param int $id

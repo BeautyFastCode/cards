@@ -3,14 +3,9 @@
 namespace App\Controller\Api;
 
 use App\Entity\Card;
-use App\Form\CardType;
 use App\Helper\JsonHelper;
 use App\Manager\CardManager;
-use App\Repository\CardRepository;
-use App\Serializer\FormErrorSerializer;
-use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -28,26 +23,6 @@ use Symfony\Component\Routing\Annotation\Route;
 class CardController
 {
     /**
-     * @var EntityManagerInterface
-     */
-    private $entityManager;
-
-    /**
-     * @var FormErrorSerializer
-     */
-    private $formErrorSerializer;
-
-    /**
-     * @var CardRepository
-     */
-    private $cardRepository;
-
-    /**
-     * @var FormFactoryInterface
-     */
-    private $formFactory;
-
-    /**
      * @var CardManager
      */
     private $cardManager;
@@ -60,24 +35,12 @@ class CardController
     /**
      * Class constructor
      *
-     * @param EntityManagerInterface $entityManager
-     * @param FormErrorSerializer    $formErrorSerializer
-     * @param CardRepository         $cardRepository
-     * @param FormFactoryInterface   $formFactory
      * @param CardManager            $cardManager
      * @param JsonHelper             $jsonHelper
      */
-    public function __construct(EntityManagerInterface $entityManager,
-                                FormErrorSerializer $formErrorSerializer,
-                                CardRepository $cardRepository,
-                                FormFactoryInterface $formFactory,
-                                CardManager $cardManager,
+    public function __construct(CardManager $cardManager,
                                 JsonHelper $jsonHelper)
     {
-        $this->entityManager = $entityManager;
-        $this->formErrorSerializer = $formErrorSerializer;
-        $this->cardRepository = $cardRepository;
-        $this->formFactory = $formFactory;
         $this->cardManager = $cardManager;
         $this->jsonHelper = $jsonHelper;
     }
@@ -137,40 +100,13 @@ class CardController
      * @Method({"PUT"})
      *
      * @param Request $request
-     * @param Card    $card
+     * @param int $id
      *
      * @return JsonResponse
      */
-    public function updateAllProperties(Request $request, Card $card):JsonResponse
+    public function updateAllProperties(Request $request, int $id):JsonResponse
     {
-
-        $data = json_decode(
-            $request->getContent(),
-            true
-        );
-
-        $form = $this->formFactory->create(CardType::class, $card);
-        $form->submit($data);
-
-        if (false === $form->isValid()) {
-            return new JsonResponse(
-                [
-                    'status' => 'error',
-                    'errors' => $this->formErrorSerializer
-                        ->convertFormToArray($form),
-                ],
-                JsonResponse::HTTP_BAD_REQUEST
-            );
-        }
-
-        $card = $form->getData();
-
-        $this->entityManager->flush();
-
-        return new JsonResponse(
-            $card,
-            JsonResponse::HTTP_OK
-        );
+        return $this->update($request, $id);
     }
 
     /**
@@ -180,40 +116,13 @@ class CardController
      * @Method({"PATCH"})
      *
      * @param Request $request
-     * @param Card    $card
+     * @param int $id
      *
      * @return JsonResponse
      */
-    public function updateSelectedProperties(Request $request, Card $card):JsonResponse
+    public function updateSelectedProperties(Request $request, int $id):JsonResponse
     {
-
-        $data = json_decode(
-            $request->getContent(),
-            true
-        );
-
-        $form = $this->formFactory->create(CardType::class, $card);
-        $form->submit($data, false);
-
-        if (false === $form->isValid()) {
-            return new JsonResponse(
-                [
-                    'status' => 'error',
-                    'errors' => $this->formErrorSerializer
-                        ->convertFormToArray($form),
-                ],
-                JsonResponse::HTTP_BAD_REQUEST
-            );
-        }
-
-        $card = $form->getData();
-
-        $this->entityManager->flush();
-
-        return new JsonResponse(
-            $card,
-            JsonResponse::HTTP_OK
-        );
+        return $this->update($request, $id, false);
     }
 
     /**
@@ -256,12 +165,11 @@ class CardController
             /*
              * Update an existing Card.
              */
-//            if ($allProperties) {
-//                $responseData = $this->cardManager->update($id, $data);
-//            } else {
-//                $responseData = $this->cardManager->update($id, $data, false);
-//            }
-            $responseData = [];
+            if ($allProperties) {
+                $responseData = $this->cardManager->update($id, $data);
+            } else {
+                $responseData = $this->cardManager->update($id, $data, false);
+            }
             $responseStatus = JsonResponse::HTTP_OK;
 
         } else {
