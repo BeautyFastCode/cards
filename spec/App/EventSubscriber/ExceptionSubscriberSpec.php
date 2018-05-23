@@ -4,6 +4,7 @@ namespace spec\App\EventSubscriber;
 
 use App\EventSubscriber\ExceptionSubscriber;
 use App\Exception\EntityNotFoundException;
+use App\Exception\FormIsNotValidException;
 use App\Helper\JsonResponseHelper;
 use PhpSpec\ObjectBehavior;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -32,11 +33,20 @@ class ExceptionSubscriberSpec extends ObjectBehavior
     {
         $this::getSubscribedEvents()
             ->shouldReturn([
-                KernelEvents::EXCEPTION => 'onKernelException',
+                KernelEvents::EXCEPTION => [
+                    [
+                        'onNotFoundException',
+                        10,
+                    ],
+                    [
+                        'onFormIsNotValidException',
+                        20,
+                    ],
+                ],
             ]);
     }
 
-    function it_should_handle_kernel_exception_event(
+    function it_should_handle_not_found_exception(
         GetResponseForExceptionEvent $event,
         EntityNotFoundException $exception,
         JsonResponseHelper $jsonResponseHelper,
@@ -55,6 +65,32 @@ class ExceptionSubscriberSpec extends ObjectBehavior
             ->setResponse($jsonResponse)
             ->shouldBeCalledTimes(1);
 
-        $this->onKernelException($event);
+        $this->onNotFoundException($event);
+    }
+
+    function it_should_handle_form_is_not_valid(
+        GetResponseForExceptionEvent $event,
+        FormIsNotValidException $exception,
+        JsonResponseHelper $jsonResponseHelper,
+        JsonResponse $jsonResponse
+    )
+    {
+        $event
+            ->getException()
+            ->willReturn($exception);
+
+        $exception
+            ->getFormErrors()
+            ->willReturn([]);
+
+        $jsonResponseHelper
+            ->badRequestResponse('', [])
+            ->willReturn($jsonResponse);
+
+        $event
+            ->setResponse($jsonResponse)
+            ->shouldBeCalledTimes(1);
+
+        $this->onFormIsNotValidException($event);
     }
 }

@@ -21,6 +21,9 @@ use Symfony\Component\HttpKernel\KernelEvents;
 /**
  * ExceptionSubscriber
  *
+ * todo: handle all exceptions for Api JSON (route: /api/)
+ * see: https://symfony.com/doc/current/event_dispatcher.html
+ *
  * @author    Bogumił Brzeziński <beautyfastcode@gmail.com>
  * @copyright BeautyFastCode.com
  */
@@ -47,7 +50,16 @@ class ExceptionSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            KernelEvents::EXCEPTION => 'onKernelException',
+            KernelEvents::EXCEPTION => [
+                [
+                    'onNotFoundException',
+                    10,
+                ],
+                [
+                    'onFormIsNotValidException',
+                    20,
+                ],
+            ],
         ];
     }
 
@@ -58,17 +70,13 @@ class ExceptionSubscriber implements EventSubscriberInterface
      *
      * @return void
      */
-    public function onKernelException(GetResponseForExceptionEvent $event): void
+    public function onNotFoundException(GetResponseForExceptionEvent $event): void
     {
         /*
          * Get the exception object from the received event
          */
         $exception = $event->getException();
 
-        /*
-         * todo: handle all exceptions for Api JSON (route: /api/)
-         * see: https://symfony.com/doc/current/event_dispatcher.html
-         */
         if ($exception instanceof EntityNotFoundException) {
 
             /*
@@ -83,6 +91,23 @@ class ExceptionSubscriber implements EventSubscriberInterface
              */
             $event->setResponse($jsonResponse);
         }
+
+        return;
+    }
+
+    /**
+     * Handler for the Kernel "kernel.exception" event.
+     *
+     * @param GetResponseForExceptionEvent $event
+     *
+     * @return void
+     */
+    public function onFormIsNotValidException(GetResponseForExceptionEvent $event): void
+    {
+        /*
+         * Get the exception object from the received event
+         */
+        $exception = $event->getException();
 
         if ($exception instanceof FormIsNotValidException) {
 
