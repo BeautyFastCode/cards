@@ -14,7 +14,7 @@ namespace App\Exception;
 use Symfony\Component\Config\Definition\Exception\Exception;
 
 /**
- * FormIsNotValidException
+ * An exception used when a form is not valid.
  *
  * @author    Bogumił Brzeziński <beautyfastcode@gmail.com>
  * @copyright BeautyFastCode.com
@@ -22,12 +22,16 @@ use Symfony\Component\Config\Definition\Exception\Exception;
 class FormIsNotValidException extends Exception
 {
     /**
+     * The form errors.
+     *
      * @var array
      */
     private $formErrors;
 
     /**
      * {@inheritdoc}
+     *
+     * @param array $formErrors The form errors
      */
     public function __construct(array $formErrors)
     {
@@ -37,6 +41,8 @@ class FormIsNotValidException extends Exception
     }
 
     /**
+     * Returns the form errors.
+     *
      * @return array
      */
     public function getFormErrors():array

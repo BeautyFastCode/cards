@@ -14,7 +14,7 @@ namespace App\Helper;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
- * JsonResponseHelper
+ * Helper to generate JSON responses.
  *
  * @author    Bogumił Brzeziński <beautyfastcode@gmail.com>
  * @copyright BeautyFastCode.com
@@ -22,9 +22,11 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class JsonResponseHelper
 {
     /**
-     * @param mixed $data The response data
+     * Returns HTTP_OK a JSON response.
      *
-     * @return JsonResponse
+     * @param mixed $data (optional) The response data
+     *
+     * @return JsonResponse A JsonResponse instance
      */
     public function okResponse($data = null): JsonResponse
     {
@@ -35,9 +37,11 @@ class JsonResponseHelper
     }
 
     /**
-     * @param mixed $data The response data
+     * Returns HTTP_CREATED a JSON response.
      *
-     * @return JsonResponse
+     * @param mixed $data (optional) The response data
+     *
+     * @return JsonResponse A JsonResponse instance
      */
     public function createdResponse($data = null): JsonResponse
     {
@@ -48,7 +52,9 @@ class JsonResponseHelper
     }
 
     /**
-     * @return JsonResponse
+     * Returns HTTP_NO_CONTENT a JSON response.
+     *
+     * @return JsonResponse A JsonResponse instance
      */
     public function noContentResponse(): JsonResponse
     {
@@ -59,15 +65,17 @@ class JsonResponseHelper
     }
 
     /**
-     * @param string $message
+     * Returns HTTP_NOT_FOUND a JSON response.
      *
-     * @return JsonResponse
+     * @param string $message The message
+     *
+     * @return JsonResponse A JsonResponse instance
      */
     public function notFoundResponse(string $message): JsonResponse
     {
         return new JsonResponse(
             [
-                'status' => 'error',
+                'status'  => 'error',
                 'message' => $message,
             ],
             JsonResponse::HTTP_NOT_FOUND
@@ -75,18 +83,20 @@ class JsonResponseHelper
     }
 
     /**
-     * @param string $message
-     * @param array  $data
+     * Returns HTTP_BAD_REQUEST a JSON response.
      *
-     * @return JsonResponse
+     * @param string $message The message
+     * @param array  $data    (optional) An errors
+     *
+     * @return JsonResponse A JsonResponse instance
      */
     public function badRequestResponse(string $message, array $data = null): JsonResponse
     {
         return new JsonResponse(
             [
-                'status' => 'error',
+                'status'  => 'error',
                 'message' => $message,
-                'errors' => $data,
+                'errors'  => $data,
             ],
             JsonResponse::HTTP_BAD_REQUEST
         );

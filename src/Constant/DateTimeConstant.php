@@ -11,7 +11,7 @@ declare(strict_types = 1);
 namespace App\Constant;
 
 /**
- * DateTimeConstant
+ * Configuration for DateTime.
  *
  * @author    Bogumił Brzeziński <beautyfastcode@gmail.com>
  * @copyright BeautyFastCode.com
@@ -19,7 +19,7 @@ namespace App\Constant;
 class DateTimeConstant
 {
     /**
-     * Datetime in human-readable format
+     * Datetime in human-readable format.
      *
      * @var string
      */

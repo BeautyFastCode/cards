@@ -13,7 +13,7 @@ namespace App\Exception;
 use Symfony\Component\Config\Definition\Exception\Exception;
 
 /**
- * EntityNotFoundException
+ * An exception used when an entity was not found.
  *
  * @author    Bogumił Brzeziński <beautyfastcode@gmail.com>
  * @copyright BeautyFastCode.com
@@ -28,7 +28,7 @@ class EntityNotFoundException extends Exception
      */
     public function __construct(string $entityName, int $entityId)
     {
-        $entityShortName = substr($entityName, strrpos($entityName, '\\')+1);
+        $entityShortName = substr($entityName, strrpos($entityName, '\\') + 1);
         $template = 'Not found entity %s with id=\'%s\'.';
 
         $message = sprintf($template, $entityShortName, $entityId);

@@ -12,7 +12,7 @@ declare(strict_types = 1);
 namespace App\Helper;
 
 /**
- * JsonHelper
+ * Helper decodes a JSON string to an associative array.
  *
  * @author    Bogumił Brzeziński <beautyfastcode@gmail.com>
  * @copyright BeautyFastCode.com

@@ -19,7 +19,7 @@ use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
- * ExceptionSubscriber
+ * Subscriber for the Kernel exception events - "kernel.exception".
  *
  * todo: handle all exceptions for Api JSON (route: /api/)
  * see: https://symfony.com/doc/current/event_dispatcher.html
@@ -30,6 +30,8 @@ use Symfony\Component\HttpKernel\KernelEvents;
 class ExceptionSubscriber implements EventSubscriberInterface
 {
     /**
+     * Helper decodes a JSON string to an associative array.
+     *
      * @var JsonResponseHelper
      */
     private $jsonResponseHelper;
@@ -37,7 +39,7 @@ class ExceptionSubscriber implements EventSubscriberInterface
     /**
      * Class constructor
      *
-     * @param JsonResponseHelper $jsonResponseHelper
+     * @param JsonResponseHelper $jsonResponseHelper Helper decodes a JSON string to an associative array
      */
     public function __construct(JsonResponseHelper $jsonResponseHelper)
     {
@@ -64,9 +66,10 @@ class ExceptionSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * Handler for the Kernel "kernel.exception" event.
+     * Handler for the entity not found exception event.
+     * Customize response object to display the exception in JSON format.
      *
-     * @param GetResponseForExceptionEvent $event
+     * @param GetResponseForExceptionEvent $event The event
      *
      * @return void
      */
@@ -96,9 +99,10 @@ class ExceptionSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * Handler for the Kernel "kernel.exception" event.
+     * Handler for the form is not valid exception event.
+     * Customize response object to display the exception in JSON format.
      *
-     * @param GetResponseForExceptionEvent $event
+     * @param GetResponseForExceptionEvent $event The event
      *
      * @return void
      */

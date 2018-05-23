@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * JSON Api for Suite entity:
+ * JSON Api for the Suite entity:
  * todo: Create BaseApiController for Api
  *
  * api_suites_get_item               GET      ANY      ANY    /api/suites/{id}
@@ -38,16 +38,22 @@ use Symfony\Component\Routing\Annotation\Route;
 class SuiteController
 {
     /**
+     * Manager for the Suite entity.
+     *
      * @var SuiteManager
      */
     private $suiteManager;
 
     /**
+     * Helper decodes a JSON string to an associative array.
+     *
      * @var JsonHelper
      */
     private $jsonHelper;
 
     /**
+     * Helper to generate JSON responses.
+     *
      * @var JsonResponseHelper
      */
     private $jsonResponseHelper;
@@ -55,9 +61,9 @@ class SuiteController
     /**
      * Class constructor
      *
-     * @param SuiteManager       $suiteManager
-     * @param JsonHelper         $jsonHelper
-     * @param JsonResponseHelper $jsonResponseHelper
+     * @param SuiteManager       $suiteManager       Manager for the Suite entity
+     * @param JsonHelper         $jsonHelper         Helper decodes a JSON string to an associative array
+     * @param JsonResponseHelper $jsonResponseHelper Helper to generate JSON responses
      */
     public function __construct(SuiteManager $suiteManager,
                                 JsonHelper $jsonHelper,
@@ -69,14 +75,14 @@ class SuiteController
     }
 
     /**
-     * Read action
+     * Read action - get one Suite.
      *
      * @Route("/{id}", name="api_suites_get_item", requirements={"id"="\d+"})
      * @Method({"GET"})
      *
      * @param int $id
      *
-     * @return JsonResponse
+     * @return JsonResponse A JsonResponse instance
      */
     public function read(int $id): JsonResponse
     {
@@ -86,12 +92,12 @@ class SuiteController
     }
 
     /**
-     * List of all the Suites
+     * List action - list of all the Suites.
      *
      * @Route("", name="api_suites_get_collection")
      * @Method({"GET"})
      *
-     * @return JsonResponse
+     * @return JsonResponse A JsonResponse instance
      */
     public function list(): JsonResponse
     {
@@ -101,13 +107,14 @@ class SuiteController
     }
 
     /**
-     * Create action
+     * Create action - create on Suite.
      *
      * @Route("", name="api_suites_post_item")
      * @Method({"Post"})
      *
      * @param Request $request
-     * @return JsonResponse
+     *
+     * @return JsonResponse A JsonResponse instance
      */
     public function create(Request $request): JsonResponse
     {
@@ -115,7 +122,7 @@ class SuiteController
     }
 
     /**
-     * Update all properties action
+     * Update action - update all properties in the Suite.
      *
      * @Route("/{id}", name="api_suites_put_item", requirements={"id"="\d+"})
      * @Method({"PUT"})
@@ -123,7 +130,7 @@ class SuiteController
      * @param Request $request
      * @param int     $id
      *
-     * @return JsonResponse
+     * @return JsonResponse A JsonResponse instance
      */
     public function updateAllProperties(Request $request, int $id):JsonResponse
     {
@@ -131,7 +138,7 @@ class SuiteController
     }
 
     /**
-     * Update selected properties action
+     * Update action - update selected properties in the Suite.
      *
      * @Route("/{id}", name="api_suites_patch_item", requirements={"id"="\d+"})
      * @Method({"PATCH"})
@@ -139,7 +146,7 @@ class SuiteController
      * @param Request $request
      * @param int     $id
      *
-     * @return JsonResponse
+     * @return JsonResponse A JsonResponse instance
      */
     public function updateSelectedProperties(Request $request, int $id):JsonResponse
     {
@@ -147,11 +154,13 @@ class SuiteController
     }
 
     /**
+     * Handles requests for update or create a Suite.
+     *
      * @param Request $request
      * @param int     $id
      * @param bool    $allProperties
      *
-     * @return JsonResponse
+     * @return JsonResponse A JsonResponse instance
      */
     private function update(Request $request, int $id = null, bool $allProperties = true):JsonResponse
     {
@@ -186,18 +195,17 @@ class SuiteController
                 ->jsonResponseHelper
                 ->createdResponse($responseData);
         }
-
     }
 
     /**
-     * Delete action
+     * Delete action - delete one Suite.
      *
      * @Route("/{id}", name="api_suites_delete_item", requirements={"id"="\d+"})
      * @Method({"DELETE"})
      *
      * @param int $id
      *
-     * @return JsonResponse
+     * @return JsonResponse A JsonResponse instance
      */
     public function delete(int $id): JsonResponse
     {

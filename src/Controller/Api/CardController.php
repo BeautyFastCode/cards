@@ -1,5 +1,14 @@
 <?php
 
+declare(strict_types = 1);
+
+/*
+ * (c) BeautyFastCode.com
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace App\Controller\Api;
 
 use App\Helper\JsonHelper;
@@ -11,7 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * JSON Api for Card entity:
+ * JSON Api for the Card entity:
  *
  * api_cards_get_item               GET      ANY      ANY    /api/cards/{id}
  * api_cards_get_collection         GET      ANY      ANY    /api/cards
@@ -19,20 +28,31 @@ use Symfony\Component\Routing\Annotation\Route;
  * api_cards_put_item               PUT      ANY      ANY    /api/cards/{id}
  * api_cards_patch_item             PATCH    ANY      ANY    /api/cards/{id}
  * api_cards_delete_item            DELETE   ANY      ANY    /api/cards/{id}
+ *
+ * @Route("/api/cards")
+ *
+ * @author    Bogumił Brzeziński <beautyfastcode@gmail.com>
+ * @copyright BeautyFastCode.com
  */
 class CardController
 {
     /**
+     * Manager for the Card entity.
+     *
      * @var CardManager
      */
     private $cardManager;
 
     /**
+     * Helper decodes a JSON string to an associative array.
+     *
      * @var JsonHelper
      */
     private $jsonHelper;
 
     /**
+     * Helper to generate JSON responses.
+     *
      * @var JsonResponseHelper
      */
     private $jsonResponseHelper;
@@ -40,9 +60,9 @@ class CardController
     /**
      * Class constructor
      *
-     * @param CardManager        $cardManager
-     * @param JsonHelper         $jsonHelper
-     * @param JsonResponseHelper $jsonResponseHelper
+     * @param CardManager        $cardManager        Manager for the Card entity
+     * @param JsonHelper         $jsonHelper         Helper decodes a JSON string to an associative array
+     * @param JsonResponseHelper $jsonResponseHelper Helper to generate JSON responses
      */
     public function __construct(CardManager $cardManager,
                                 JsonHelper $jsonHelper,
@@ -54,14 +74,14 @@ class CardController
     }
 
     /**
-     * Read action
+     * Read action - get one Card.
      *
-     * @Route("/api/cards/{id}", name="api_cards_get_item", requirements={"id"="\d+"})
+     * @Route("/{id}", name="api_cards_get_item", requirements={"id"="\d+"})
      * @Method({"GET"})
      *
      * @param int $id
      *
-     * @return JsonResponse
+     * @return JsonResponse A JsonResponse instance
      */
     public function read(int $id): JsonResponse
     {
@@ -71,12 +91,12 @@ class CardController
     }
 
     /**
-     * Collection of all the Cards
+     * List action - list of all the Cards.
      *
-     * @Route("/api/cards", name="api_cards_get_collection")
+     * @Route("", name="api_cards_get_collection")
      * @Method({"GET"})
      *
-     * @return JsonResponse
+     * @return JsonResponse A JsonResponse instance
      */
     public function list(): JsonResponse
     {
@@ -86,13 +106,14 @@ class CardController
     }
 
     /**
-     * Create action
+     * Create action - create one Card.
      *
-     * @Route("/api/cards", name="api_cards_post_item")
+     * @Route("", name="api_cards_post_item")
      * @Method({"Post"})
      *
      * @param Request $request
-     * @return JsonResponse
+     *
+     * @return JsonResponse A JsonResponse instance
      */
     public function create(Request $request): JsonResponse
     {
@@ -100,15 +121,15 @@ class CardController
     }
 
     /**
-     * Update all properties action
+     * Update action - update all properties in the Card.
      *
-     * @Route("/api/cards/{id}", name="api_cards_put_item", requirements={"id"="\d+"})
+     * @Route("/{id}", name="api_cards_put_item", requirements={"id"="\d+"})
      * @Method({"PUT"})
      *
      * @param Request $request
      * @param int     $id
      *
-     * @return JsonResponse
+     * @return JsonResponse A JsonResponse instance
      */
     public function updateAllProperties(Request $request, int $id):JsonResponse
     {
@@ -116,15 +137,15 @@ class CardController
     }
 
     /**
-     * Update selected properties action
+     * Update action - update selected properties in the Card.
      *
-     * @Route("/api/cards/{id}", name="api_cards_patch_item", requirements={"id"="\d+"})
+     * @Route("/{id}", name="api_cards_patch_item", requirements={"id"="\d+"})
      * @Method({"PATCH"})
      *
      * @param Request $request
      * @param int     $id
      *
-     * @return JsonResponse
+     * @return JsonResponse A JsonResponse instance
      */
     public function updateSelectedProperties(Request $request, int $id):JsonResponse
     {
@@ -132,11 +153,13 @@ class CardController
     }
 
     /**
+     * Handles requests for update or create a Card.
+     *
      * @param Request $request
      * @param int     $id
      * @param bool    $allProperties
      *
-     * @return JsonResponse
+     * @return JsonResponse A JsonResponse instance
      */
     private function update(Request $request, int $id = null, bool $allProperties = true):JsonResponse
     {
@@ -174,14 +197,14 @@ class CardController
     }
 
     /**
-     * Delete action
+     * Delete action - delete one Card.
      *
-     * @Route("/api/cards/{id}", name="api_cards_delete_item", requirements={"id"="\d+"})
+     * @Route("/{id}", name="api_cards_delete_item", requirements={"id"="\d+"})
      * @Method({"DELETE"})
      *
      * @param int $id
      *
-     * @return JsonResponse
+     * @return JsonResponse A JsonResponse instance
      */
     public function delete(int $id): JsonResponse
     {

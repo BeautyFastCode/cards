@@ -19,7 +19,7 @@ use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 
 /**
- * FormHelper
+ * Helper for create or update and validate an entity.
  *
  * @author    Bogumił Brzeziński <beautyfastcode@gmail.com>
  * @copyright BeautyFastCode.com
@@ -27,16 +27,22 @@ use Symfony\Component\Form\FormInterface;
 class FormHelper
 {
     /**
+     * The form errors.
+     *
      * @var array
      */
     private $formErrors;
 
     /**
+     * The factory to create a form.
+     *
      * @var FormFactoryInterface
      */
     private $formFactory;
 
     /**
+     * Serializes invalid Form instances.
+     *
      * @var FormErrorSerializer
      */
     private $formErrorSerializer;
@@ -44,8 +50,8 @@ class FormHelper
     /**
      * Class constructor
      *
-     * @param FormFactoryInterface $formFactory
-     * @param FormErrorSerializer  $formErrorSerializer
+     * @param FormFactoryInterface $formFactory         The factory to create a form
+     * @param FormErrorSerializer  $formErrorSerializer Serializes invalid Form instances
      */
     public function __construct(FormFactoryInterface $formFactory,
                                 FormErrorSerializer $formErrorSerializer)
@@ -56,26 +62,30 @@ class FormHelper
     }
 
     /**
-     * @param string              $type
-     * @param BaseEntityInterface $baseEntity
-     * @param                     $data
-     * @param bool                $allProperties
+     * Validates a form and create or update an entity.
+     *
+     * @param string              $formType      An entity form type class name
+     * @param BaseEntityInterface $baseEntity    An entity object
+     * @param array               $data          The data for an entity
+     * @param bool                $allProperties (optional) False if selected properties are updated.
      *
      * @return BaseEntityInterface
      */
-    public function submitEntity(string $type = FormType::class, BaseEntityInterface $baseEntity,
-                                 array $data, bool $allProperties = true): BaseEntityInterface
+    public function submitEntity(string $formType = FormType::class,
+                                 BaseEntityInterface $baseEntity,
+                                 array $data,
+                                 bool $allProperties = true): BaseEntityInterface
     {
-        $form = $this->formFactory->create($type, $baseEntity);
+        $form = $this->formFactory->create($formType, $baseEntity);
 
         if ($allProperties) {
             /*
-             * Update all properties
+             * Update all properties.
              */
             $form->submit($data);
         } else {
             /*
-             * update selected properties
+             * Update selected properties.
              */
             $form->submit($data, false);
         }
@@ -88,7 +98,10 @@ class FormHelper
     }
 
     /**
-     * @param FormInterface $form
+     * Checks if a form is not valid,
+     * true - form is not valid, false - form is valid.
+     *
+     * @param FormInterface $form The form
      *
      * @return bool
      */
@@ -106,9 +119,9 @@ class FormHelper
     }
 
     /**
-     * Get errors.
+     * Get the form errors.
      *
-     * @return array
+     * @return array The form errors
      */
     public function getErrors(): array
     {

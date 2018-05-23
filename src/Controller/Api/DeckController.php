@@ -1,5 +1,14 @@
 <?php
 
+declare(strict_types = 1);
+
+/*
+ * (c) BeautyFastCode.com
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace App\Controller\Api;
 
 use App\Helper\JsonHelper;
@@ -11,7 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * JSON Api for Deck entity:
+ * JSON Api for the Deck entity:
  *
  * api_decks_get_item               GET      ANY      ANY    /api/decks/{id}
  * api_decks_get_collection         GET      ANY      ANY    /api/decks
@@ -19,20 +28,31 @@ use Symfony\Component\Routing\Annotation\Route;
  * api_decks_put_item               PUT      ANY      ANY    /api/decks/{id}
  * api_decks_patch_item             PATCH    ANY      ANY    /api/decks/{id}
  * api_decks_delete_item            DELETE   ANY      ANY    /api/decks/{id}
+ *
+ * @Route("/api/decks")
+ *
+ * @author    Bogumił Brzeziński <beautyfastcode@gmail.com>
+ * @copyright BeautyFastCode.com
  */
 class DeckController
 {
     /**
+     * Manager for the Deck entity.
+     *
      * @var DeckManager
      */
     private $deckManager;
 
     /**
+     * Helper decodes a JSON string to an associative array.
+     *
      * @var JsonHelper
      */
     private $jsonHelper;
 
     /**
+     * Helper to generate JSON responses.
+     *
      * @var JsonResponseHelper
      */
     private $jsonResponseHelper;
@@ -40,9 +60,9 @@ class DeckController
     /**
      * Class constructor
      *
-     * @param DeckManager        $deckManager
-     * @param JsonHelper         $jsonHelper
-     * @param JsonResponseHelper $jsonResponseHelper
+     * @param DeckManager        $deckManager        Manager for the Deck entity
+     * @param JsonHelper         $jsonHelper         Helper decodes a JSON string to an associative array
+     * @param JsonResponseHelper $jsonResponseHelper Helper to generate JSON responses
      */
     public function __construct(DeckManager $deckManager,
                                 JsonHelper $jsonHelper,
@@ -55,14 +75,14 @@ class DeckController
     }
 
     /**
-     * Read action
+     * Read action - get one Deck.
      *
-     * @Route("/api/decks/{id}", name="api_decks_get_item", requirements={"id"="\d+"})
+     * @Route("/{id}", name="api_decks_get_item", requirements={"id"="\d+"})
      * @Method({"GET"})
      *
      * @param int $id
      *
-     * @return JsonResponse
+     * @return JsonResponse A JsonResponse instance
      */
     public function read(int $id): JsonResponse
     {
@@ -72,12 +92,12 @@ class DeckController
     }
 
     /**
-     * Collection of all the Decks
+     * List action - list of all the Decks.
      *
-     * @Route("/api/decks", name="api_decks_get_collection")
+     * @Route("", name="api_decks_get_collection")
      * @Method({"GET"})
      *
-     * @return JsonResponse
+     * @return JsonResponse A JsonResponse instance
      */
     public function list(): JsonResponse
     {
@@ -87,13 +107,14 @@ class DeckController
     }
 
     /**
-     * Create action
+     * Create action - create one Deck.
      *
-     * @Route("/api/decks", name="api_decks_post_item")
+     * @Route("", name="api_decks_post_item")
      * @Method({"Post"})
      *
      * @param Request $request
-     * @return JsonResponse
+     *
+     * @return JsonResponse A JsonResponse instance
      */
     public function create(Request $request): JsonResponse
     {
@@ -101,15 +122,15 @@ class DeckController
     }
 
     /**
-     * Update all properties action
+     * Update action - update all properties in the Deck.
      *
-     * @Route("/api/decks/{id}", name="api_decks_put_item", requirements={"id"="\d+"})
+     * @Route("/{id}", name="api_decks_put_item", requirements={"id"="\d+"})
      * @Method({"PUT"})
      *
      * @param Request $request
      * @param int     $id
      *
-     * @return JsonResponse
+     * @return JsonResponse A JsonResponse instance
      */
     public function updateAllProperties(Request $request, int $id):JsonResponse
     {
@@ -117,15 +138,15 @@ class DeckController
     }
 
     /**
-     * Update selected properties action
+     * Update action - update selected properties in the Deck.
      *
-     * @Route("/api/decks/{id}", name="api_decks_patch_item", requirements={"id"="\d+"})
+     * @Route("/{id}", name="api_decks_patch_item", requirements={"id"="\d+"})
      * @Method({"PATCH"})
      *
      * @param Request $request
      * @param int     $id
      *
-     * @return JsonResponse
+     * @return JsonResponse A JsonResponse instance
      */
     public function updateSelectedProperties(Request $request, int $id):JsonResponse
     {
@@ -133,11 +154,13 @@ class DeckController
     }
 
     /**
+     * Handles requests for update or create a Deck.
+     *
      * @param Request $request
      * @param int     $id
      * @param bool    $allProperties
      *
-     * @return JsonResponse
+     * @return JsonResponse A JsonResponse instance
      */
     private function update(Request $request, int $id = null, bool $allProperties = true):JsonResponse
     {
@@ -175,14 +198,14 @@ class DeckController
     }
 
     /**
-     * Delete action
+     * Delete action - delete one Deck.
      *
-     * @Route("/api/decks/{id}", name="api_decks_delete_item", requirements={"id"="\d+"})
+     * @Route("/{id}", name="api_decks_delete_item", requirements={"id"="\d+"})
      * @Method({"DELETE"})
      *
      * @param int $id
      *
-     * @return JsonResponse
+     * @return JsonResponse A JsonResponse instance
      */
     public function delete(int $id): JsonResponse
     {
