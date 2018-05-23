@@ -5,6 +5,7 @@ namespace spec\App\Controller\Api;
 use App\Controller\Api\CardController;
 use App\Entity\Card;
 use App\Helper\JsonHelper;
+use App\Helper\JsonResponseHelper;
 use App\Manager\CardManager;
 use PhpSpec\ObjectBehavior;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -12,9 +13,11 @@ use Symfony\Component\HttpFoundation\Request;
 
 class CardControllerSpec extends ObjectBehavior
 {
-    function let(CardManager $cardManager, JsonHelper $jsonHelper)
+    function let(CardManager $cardManager,
+                 JsonHelper $jsonHelper,
+                 JsonResponseHelper $jsonResponseHelper)
     {
-        $this->beConstructedWith($cardManager, $jsonHelper);
+        $this->beConstructedWith($cardManager, $jsonHelper, $jsonResponseHelper);
     }
 
     function it_is_initializable()
@@ -22,7 +25,8 @@ class CardControllerSpec extends ObjectBehavior
         $this->shouldHaveType(CardController::class);
     }
 
-    function it_should_respond_to_read_action(CardManager $cardManager, Card $card)
+    function it_should_respond_to_read_action(CardManager $cardManager,
+                                              Card $card, JsonResponseHelper $jsonResponseHelper)
     {
         $id = 1;
 
@@ -30,22 +34,26 @@ class CardControllerSpec extends ObjectBehavior
             ->read($id)
             ->willReturn($card);
 
-        $card->jsonSerialize()->willReturn([
-            'id'    => 1,
-            'question'  => 'Front Card',
-            'answer'  => 'Back Card',
-            'deck' => 1,
-        ]);
+        $jsonResponseHelper
+            ->okResponse($card)
+            ->shouldBeCalledTimes(1);
 
         $this
             ->read($id)
             ->shouldHaveType(JsonResponse::class);
     }
 
-    function it_should_respond_to_list_action(CardManager $cardManager)
+    function it_should_respond_to_list_action(CardManager $cardManager,
+                                              JsonResponseHelper $jsonResponseHelper)
     {
+        $cards = [];
+
         $cardManager
             ->list()
+            ->willReturn($cards);
+
+        $jsonResponseHelper
+            ->okResponse($cards)
             ->shouldBeCalledTimes(1);
 
         $this
@@ -57,7 +65,8 @@ class CardControllerSpec extends ObjectBehavior
         Request $request,
         JsonHelper $jsonHelper,
         CardManager $cardManager,
-        Card $card
+        Card $card,
+        JsonResponseHelper $jsonResponseHelper
     )
     {
         $jsonContent = '{"question":"Where are you?","answer":"I\'m here"}';
@@ -78,40 +87,9 @@ class CardControllerSpec extends ObjectBehavior
             ->create($data)
             ->willReturn($card);
 
-        $card
-            ->jsonSerialize()
-            ->willReturn([
-                'id'    => 1,
-                'question'  => 'Where are you?',
-                'answer' => 'I\'m here',
-                'deck' => null
-            ]);
-
-        $this
-            ->create($request)
-            ->shouldHaveType(JsonResponse::class);
-    }
-    
-    function it_should_respond_to_create_action_wrong_content(
-        Request $request,
-        JsonHelper $jsonHelper,
-        CardManager $cardManager
-    )
-    {
-        $jsonContent = '{\n \n}';
-        $data = [];
-
-        $request
-            ->getContent()
-            ->willReturn($jsonContent);
-
-        $jsonHelper
-            ->decode($jsonContent)
-            ->willReturn($data);
-
-        $cardManager
-            ->create($data)
-            ->willReturn(null);
+        $jsonResponseHelper
+            ->createdResponse($card)
+            ->shouldBeCalledTimes(1);
 
         $this
             ->create($request)
@@ -122,7 +100,8 @@ class CardControllerSpec extends ObjectBehavior
         Request $request,
         JsonHelper $jsonHelper,
         CardManager $cardManager,
-        Card $card
+        Card $card,
+        JsonResponseHelper $jsonResponseHelper
     )
     {
         $id = 1;
@@ -144,14 +123,9 @@ class CardControllerSpec extends ObjectBehavior
             ->update($id, $data)
             ->willReturn($card);
 
-        $card
-            ->jsonSerialize()
-            ->willReturn([
-                'id'    => 1,
-                'question'  => 'Where are you?',
-                'answer' => 'I\'m here',
-                'deck' => null
-            ]);
+        $jsonResponseHelper
+            ->okResponse($card)
+            ->shouldBeCalledTimes(1);
 
         $this
             ->updateAllProperties($request, $id)
@@ -162,7 +136,8 @@ class CardControllerSpec extends ObjectBehavior
         Request $request,
         JsonHelper $jsonHelper,
         CardManager $cardManager,
-        Card $card
+        Card $card,
+        JsonResponseHelper $jsonResponseHelper
     )
     {
         $id = 1;
@@ -184,24 +159,24 @@ class CardControllerSpec extends ObjectBehavior
             ->update($id, $data, false)
             ->willReturn($card);
 
-        $card
-            ->jsonSerialize()
-            ->willReturn([
-                'id'    => 1,
-                'question'  => 'Where are you?',
-                'answer' => 'I\'m here',
-                'deck' => null
-            ]);
+        $jsonResponseHelper
+            ->okResponse($card)
+            ->shouldBeCalledTimes(1);
 
         $this
             ->updateSelectedProperties($request, $id)
             ->shouldHaveType(JsonResponse::class);
     }
 
-    function it_should_respond_to_delete_action(CardManager $cardManager)
+    function it_should_respond_to_delete_action(CardManager $cardManager,
+                                                JsonResponseHelper $jsonResponseHelper)
     {
         $cardManager
             ->delete(1)
+            ->shouldBeCalledTimes(1);
+
+        $jsonResponseHelper
+            ->noContentResponse()
             ->shouldBeCalledTimes(1);
 
         $this

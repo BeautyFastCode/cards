@@ -5,6 +5,7 @@ namespace spec\App\Controller\Api;
 use App\Controller\Api\DeckController;
 use App\Entity\Deck;
 use App\Helper\JsonHelper;
+use App\Helper\JsonResponseHelper;
 use App\Manager\DeckManager;
 use PhpSpec\ObjectBehavior;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -12,9 +13,11 @@ use Symfony\Component\HttpFoundation\Request;
 
 class DeckControllerSpec extends ObjectBehavior
 {
-    function let(DeckManager $deckManager, JsonHelper $jsonHelper)
+    function let(DeckManager $deckManager,
+                 JsonHelper $jsonHelper,
+                 JsonResponseHelper $jsonResponseHelper)
     {
-        $this->beConstructedWith($deckManager, $jsonHelper);
+        $this->beConstructedWith($deckManager, $jsonHelper, $jsonResponseHelper);
     }
 
     function it_is_initializable()
@@ -22,7 +25,8 @@ class DeckControllerSpec extends ObjectBehavior
         $this->shouldHaveType(DeckController::class);
     }
 
-    function it_should_respond_to_read_action(DeckManager $deckManager, Deck $deck)
+    function it_should_respond_to_read_action(DeckManager $deckManager, Deck $deck,
+                                              JsonResponseHelper $jsonResponseHelper)
     {
         $id = 1;
 
@@ -30,28 +34,25 @@ class DeckControllerSpec extends ObjectBehavior
             ->read($id)
             ->willReturn($deck);
 
-        $deck->jsonSerialize()->willReturn([
-            'id'    => 1,
-            'name'  => 'Welcome Deck',
-            'suites' => [
-                1
-            ],
-            'cards' => [
-                1,
-                2,
-                3
-            ]
-        ]);
-
+        $jsonResponseHelper
+            ->okResponse($deck)
+            ->shouldBeCalledTimes(1);
         $this
             ->read($id)
             ->shouldHaveType(JsonResponse::class);
     }
 
-    function it_should_respond_to_list_action(DeckManager $deckManager)
+    function it_should_respond_to_list_action(DeckManager $deckManager,
+                                              JsonResponseHelper $jsonResponseHelper)
     {
+        $decks = [];
+
         $deckManager
             ->list()
+            ->shouldBeCalledTimes(1);
+
+        $jsonResponseHelper
+            ->okResponse($decks)
             ->shouldBeCalledTimes(1);
 
         $this
@@ -63,7 +64,8 @@ class DeckControllerSpec extends ObjectBehavior
         Request $request,
         JsonHelper $jsonHelper,
         DeckManager $deckManager,
-        Deck $deck
+        Deck $deck,
+        JsonResponseHelper $jsonResponseHelper
     )
     {
         $jsonContent = '{\n "name":"New Deck"\n}';
@@ -83,43 +85,8 @@ class DeckControllerSpec extends ObjectBehavior
             ->create($data)
             ->willReturn($deck);
 
-        $deck
-            ->jsonSerialize()
-            ->willReturn([
-                'id'    => 1,
-                'name'  => 'New Deck',
-                'suites' => [],
-                'cards' => []
-            ]);
-
-        $this
-            ->create($request)
-            ->shouldHaveType(JsonResponse::class);
-    }
-
-    function it_should_respond_to_create_action_wrong_content(
-        Request $request,
-        JsonHelper $jsonHelper,
-        DeckManager $deckManager
-    )
-    {
-        $jsonContent = '{\n \n}';
-        $data = [];
-
-        $request
-            ->getContent()
-            ->willReturn($jsonContent);
-
-        $jsonHelper
-            ->decode($jsonContent)
-            ->willReturn($data);
-
-        $deckManager
-            ->create($data)
-            ->willReturn(null);
-
-        $deckManager
-            ->getErrors()
+        $jsonResponseHelper
+            ->createdResponse($deck)
             ->shouldBeCalledTimes(1);
 
         $this
@@ -131,7 +98,8 @@ class DeckControllerSpec extends ObjectBehavior
         Request $request,
         JsonHelper $jsonHelper,
         DeckManager $deckManager,
-        Deck $deck
+        Deck $deck,
+        JsonResponseHelper $jsonResponseHelper
     )
     {
         $id = 1;
@@ -152,14 +120,9 @@ class DeckControllerSpec extends ObjectBehavior
             ->update($id, $data)
             ->willReturn($deck);
 
-        $deck
-            ->jsonSerialize()
-            ->willReturn([
-                'id'    => 1,
-                'name'  => 'Deck A, version 2',
-                'suites' => [],
-                'cards' => []
-            ]);
+        $jsonResponseHelper
+            ->okResponse($deck)
+            ->shouldBeCalledTimes(1);
 
         $this
             ->updateAllProperties($request, $id)
@@ -170,7 +133,8 @@ class DeckControllerSpec extends ObjectBehavior
         Request $request,
         JsonHelper $jsonHelper,
         DeckManager $deckManager,
-        Deck $deck
+        Deck $deck,
+        JsonResponseHelper $jsonResponseHelper
     )
     {
         $id = 1;
@@ -191,24 +155,24 @@ class DeckControllerSpec extends ObjectBehavior
             ->update($id, $data, false)
             ->willReturn($deck);
 
-        $deck
-            ->jsonSerialize()
-            ->willReturn([
-                'id'    => 1,
-                'name'  => 'Deck A, version 2',
-                'suites' => [],
-                'cards' => []
-            ]);
+        $jsonResponseHelper
+            ->okResponse($deck)
+            ->shouldBeCalledTimes(1);
 
         $this
             ->updateSelectedProperties($request, $id)
             ->shouldHaveType(JsonResponse::class);
     }
 
-    function it_should_respond_to_delete_action(DeckManager $deckManager)
+    function it_should_respond_to_delete_action(DeckManager $deckManager,
+                                                JsonResponseHelper $jsonResponseHelper)
     {
         $deckManager
             ->delete(1)
+            ->shouldBeCalledTimes(1);
+
+        $jsonResponseHelper
+            ->noContentResponse()
             ->shouldBeCalledTimes(1);
 
         $this

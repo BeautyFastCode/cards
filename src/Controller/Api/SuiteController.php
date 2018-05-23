@@ -21,6 +21,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * JSON Api for Suite entity:
+ * todo: Create BaseApiController for Api
  *
  * api_suites_get_item               GET      ANY      ANY    /api/suites/{id}
  * api_suites_get_collection         GET      ANY      ANY    /api/suites
@@ -30,7 +31,6 @@ use Symfony\Component\Routing\Annotation\Route;
  * api_suites_delete_item            DELETE   ANY      ANY    /api/suites/{id}
  *
  * @Route("/api/suites")
- * todo: Create BaseApiController for Api
  *
  * @author    Bogumił Brzeziński <beautyfastcode@gmail.com>
  * @copyright BeautyFastCode.com

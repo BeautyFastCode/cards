@@ -5,6 +5,7 @@ namespace spec\App\Controller\Api;
 use App\Controller\Api\SuiteController;
 use App\Entity\Suite;
 use App\Helper\JsonHelper;
+use App\Helper\JsonResponseHelper;
 use App\Manager\SuiteManager;
 use PhpSpec\ObjectBehavior;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -12,9 +13,11 @@ use Symfony\Component\HttpFoundation\Request;
 
 class SuiteControllerSpec extends ObjectBehavior
 {
-    function let(SuiteManager $suiteManager, JsonHelper $jsonHelper)
+    function let(SuiteManager $suiteManager,
+                 JsonHelper $jsonHelper,
+                 JsonResponseHelper $jsonResponseHelper)
     {
-        $this->beConstructedWith($suiteManager, $jsonHelper);
+        $this->beConstructedWith($suiteManager, $jsonHelper, $jsonResponseHelper);
     }
 
     function it_is_initializable()
@@ -22,7 +25,8 @@ class SuiteControllerSpec extends ObjectBehavior
         $this->shouldHaveType(SuiteController::class);
     }
 
-    function it_should_respond_to_read_action(SuiteManager $suiteManager, Suite $suite)
+    function it_should_respond_to_read_action(SuiteManager $suiteManager,
+                                              Suite $suite, JsonResponseHelper $jsonResponseHelper)
     {
         $id = 1;
 
@@ -30,24 +34,26 @@ class SuiteControllerSpec extends ObjectBehavior
             ->read($id)
             ->willReturn($suite);
 
-        $suite->jsonSerialize()->willReturn([
-            'id'    => 1,
-            'name'  => 'Suite A',
-            'decks' => [
-                1,
-                2,
-            ],
-        ]);
+        $jsonResponseHelper
+            ->okResponse($suite)
+            ->shouldBeCalledTimes(1);
 
         $this
             ->read($id)
             ->shouldHaveType(JsonResponse::class);
     }
 
-    function it_should_respond_to_list_action(SuiteManager $suiteManager)
+    function it_should_respond_to_list_action(SuiteManager $suiteManager,
+                                              JsonResponseHelper $jsonResponseHelper)
     {
+        $suites = [];
+
         $suiteManager
             ->list()
+            ->willReturn($suites);
+
+        $jsonResponseHelper
+            ->okResponse($suites)
             ->shouldBeCalledTimes(1);
 
         $this
@@ -59,7 +65,8 @@ class SuiteControllerSpec extends ObjectBehavior
         Request $request,
         JsonHelper $jsonHelper,
         SuiteManager $suiteManager,
-        Suite $suite
+        Suite $suite,
+        JsonResponseHelper $jsonResponseHelper
     )
     {
         $jsonContent = '{\n "name":"New Suite"\n}';
@@ -79,42 +86,8 @@ class SuiteControllerSpec extends ObjectBehavior
             ->create($data)
             ->willReturn($suite);
 
-        $suite
-            ->jsonSerialize()
-            ->willReturn([
-            'id'    => 1,
-            'name'  => 'New Suite',
-            'decks' => []
-        ]);
-
-        $this
-            ->create($request)
-            ->shouldHaveType(JsonResponse::class);
-    }
-
-    function it_should_respond_to_create_action_wrong_content(
-        Request $request,
-        JsonHelper $jsonHelper,
-        SuiteManager $suiteManager
-    )
-    {
-        $jsonContent = '{\n \n}';
-        $data = [];
-
-        $request
-            ->getContent()
-            ->willReturn($jsonContent);
-
-        $jsonHelper
-            ->decode($jsonContent)
-            ->willReturn($data);
-
-        $suiteManager
-            ->create($data)
-            ->willReturn(null);
-
-        $suiteManager
-            ->getErrors()
+        $jsonResponseHelper
+            ->createdResponse($suite)
             ->shouldBeCalledTimes(1);
 
         $this
@@ -126,7 +99,8 @@ class SuiteControllerSpec extends ObjectBehavior
         Request $request,
         JsonHelper $jsonHelper,
         SuiteManager $suiteManager,
-        Suite $suite
+        Suite $suite,
+        JsonResponseHelper $jsonResponseHelper
     )
     {
         $id = 1;
@@ -147,13 +121,9 @@ class SuiteControllerSpec extends ObjectBehavior
             ->update($id, $data)
             ->willReturn($suite);
 
-        $suite
-            ->jsonSerialize()
-            ->willReturn([
-                'id'    => 1,
-                'name'  => 'Suite A, version 2',
-                'decks' => []
-            ]);
+        $jsonResponseHelper
+            ->okResponse($suite)
+            ->shouldBeCalledTimes(1);
 
         $this
             ->updateAllProperties($request, $id)
@@ -164,7 +134,8 @@ class SuiteControllerSpec extends ObjectBehavior
         Request $request,
         JsonHelper $jsonHelper,
         SuiteManager $suiteManager,
-        Suite $suite
+        Suite $suite,
+        JsonResponseHelper $jsonResponseHelper
     )
     {
         $id = 1;
@@ -185,23 +156,24 @@ class SuiteControllerSpec extends ObjectBehavior
             ->update($id, $data, false)
             ->willReturn($suite);
 
-        $suite
-            ->jsonSerialize()
-            ->willReturn([
-                'id'    => 1,
-                'name'  => 'Suite A, version 2',
-                'decks' => []
-            ]);
+        $jsonResponseHelper
+            ->okResponse($suite)
+            ->shouldBeCalledTimes(1);
 
         $this
             ->updateSelectedProperties($request, $id)
             ->shouldHaveType(JsonResponse::class);
     }
 
-    function it_should_respond_to_delete_action(SuiteManager $suiteManager)
+    function it_should_respond_to_delete_action(SuiteManager $suiteManager,
+                                                JsonResponseHelper $jsonResponseHelper)
     {
         $suiteManager
             ->delete(1)
+            ->shouldBeCalledTimes(1);
+
+        $jsonResponseHelper
+            ->noContentResponse()
             ->shouldBeCalledTimes(1);
 
         $this

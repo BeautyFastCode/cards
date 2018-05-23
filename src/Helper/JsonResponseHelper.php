@@ -68,7 +68,7 @@ class JsonResponseHelper
         return new JsonResponse(
             [
                 'status' => 'error',
-                'errors' => $message,
+                'message' => $message,
             ],
             JsonResponse::HTTP_NOT_FOUND
         );

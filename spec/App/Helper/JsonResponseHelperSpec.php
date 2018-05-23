@@ -13,6 +13,36 @@ class JsonResponseHelperSpec extends ObjectBehavior
         $this->shouldHaveType(JsonResponseHelper::class);
     }
 
+    function it_can_create_ok_json_response()
+    {
+        /** @var JsonResponse $jsonResponse */
+        $jsonResponse = $this->okResponse();
+
+        $jsonResponse
+            ->getStatusCode()
+            ->shouldReturn(200);
+    }
+
+    function it_can_create_created_json_response()
+    {
+        /** @var JsonResponse $jsonResponse */
+        $jsonResponse = $this->createdResponse();
+
+        $jsonResponse
+            ->getStatusCode()
+            ->shouldReturn(201);
+    }
+
+    function it_can_create_no_content_json_response()
+    {
+        /** @var JsonResponse $jsonResponse */
+        $jsonResponse = $this->noContentResponse();
+
+        $jsonResponse
+            ->getStatusCode()
+            ->shouldReturn(204);
+    }
+
     function it_can_create_not_found_json_response()
     {
         $this
@@ -23,8 +53,7 @@ class JsonResponseHelperSpec extends ObjectBehavior
     function it_can_create_not_found_json_response_2()
     {
         /** @var JsonResponse $jsonResponse */
-        $jsonResponse = $this
-            ->notFoundResponse('Not Found Response');
+        $jsonResponse = $this->notFoundResponse('Not Found Response');
 
         $jsonResponse
             ->getStatusCode()
@@ -34,11 +63,24 @@ class JsonResponseHelperSpec extends ObjectBehavior
     function it_can_create_not_found_json_response_3()
     {
         /** @var JsonResponse $jsonResponse */
-        $jsonResponse = $this
-            ->notFoundResponse('Not Found Response');
+        $jsonResponse = $this->notFoundResponse('Not Found Response');
 
         $jsonResponse
             ->getContent()
-            ->shouldReturn('{"status":"error","errors":"Not Found Response"}');
+            ->shouldReturn('{"status":"error","message":"Not Found Response"}');
+    }
+
+    function it_can_create_bad_request_json_response()
+    {
+        /** @var JsonResponse $jsonResponse */
+        $jsonResponse = $this->badRequestResponse('Bad Request Response');
+
+        $jsonResponse
+            ->getStatusCode()
+            ->shouldReturn(400);
+
+        $jsonResponse
+            ->getContent()
+            ->shouldReturn('{"status":"error","message":"Bad Request Response","errors":null}');
     }
 }
