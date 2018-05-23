@@ -109,8 +109,6 @@ class CardsContext implements Context
      */
     public function thereAreCardsWithTheFollowingDetails(TableNode $cardTable)
     {
-        $this->emptyEntity(Card::class);
-
         /*
          * New records.
          */
@@ -163,7 +161,8 @@ class CardsContext implements Context
     private function emptySuites()
     {
         /*
-         * This will disable the SoftDeleteable filter, so entities which were "soft-deleted" will appear in results
+         * This will disable the SoftDeleteable filter,
+         * so entities which were "soft-deleted" will appear in results
          */
         $this->entityManager->getFilters()->disable('softdeleteable');
 
@@ -183,7 +182,7 @@ class CardsContext implements Context
             $this->entityManager->flush();
 
             /*
-             * Hard Delete the Suite.
+             * Hard delete the Suite.
              */
             $suite->setDeletedAt(new DateTime());
             $this->entityManager->remove($suite);
@@ -198,13 +197,34 @@ class CardsContext implements Context
      */
     private function emptyDecks()
     {
+        /*
+         * This will disable the SoftDeleteable filter,
+         * so entities which were "soft-deleted" will appear in results
+         */
+        $this->entityManager->getFilters()->disable('softdeleteable');
+
+
         $decks = $this->entityManager
             ->getRepository(Deck::class)
             ->findAll();
 
+        /** @var Deck $deck */
         foreach ($decks as $deck) {
+
+            /*
+             * Hard delete the Deck and assigned Cards.
+             */
+
+            /** @var Card $card */
+            foreach ($deck->getCards() as $card) {
+                $card->setDeletedAt(new DateTime());
+            }
+
+            $deck->setDeletedAt(new DateTime());
             $this->entityManager->remove($deck);
         }
         $this->entityManager->flush();
+
+        $this->entityManager->getFilters()->enable('softdeleteable');
     }
 }
