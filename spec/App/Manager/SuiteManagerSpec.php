@@ -1,5 +1,14 @@
 <?php
 
+declare(strict_types = 1);
+
+/*
+ * (c) BeautyFastCode.com
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace spec\App\Manager;
 
 use App\Entity\Deck;
@@ -13,19 +22,23 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpSpec\ObjectBehavior;
 
+/**
+ * Specification for SuiteManager.
+ *
+ * @author    Bogumił Brzeziński <beautyfastcode@gmail.com>
+ * @copyright BeautyFastCode.com
+ */
 class SuiteManagerSpec extends ObjectBehavior
 {
     function let(
         SuiteRepository $suiteRepository,
         EntityManagerInterface $entityManager,
-        FormHelper $formHelper
-    )
+        FormHelper $formHelper)
     {
         $this->beConstructedWith(
             $suiteRepository,
             $entityManager,
-            $formHelper
-        );
+            $formHelper);
     }
 
     function it_is_initializable()
@@ -33,7 +46,9 @@ class SuiteManagerSpec extends ObjectBehavior
         $this->shouldHaveType(SuiteManager::class);
     }
 
-    function it_can_read_one_suite(SuiteRepository $suiteRepository, Suite $suite)
+    function it_can_read_one_suite(
+        SuiteRepository $suiteRepository,
+        Suite $suite)
     {
         $suiteRepository
             ->findOneBy(['id' => 1])
@@ -103,8 +118,7 @@ class SuiteManagerSpec extends ObjectBehavior
         SuiteRepository $suiteRepository,
         FormHelper $formHelper,
         Suite $suite,
-        EntityManagerInterface $entityManager
-        )
+        EntityManagerInterface $entityManager)
     {
         $id = 1;
         $data = ['name' => 'Suite A, version 2'];
@@ -174,6 +188,5 @@ class SuiteManagerSpec extends ObjectBehavior
         $this
             ->getErrors()
             ->shouldBeArray();
-
     }
 }

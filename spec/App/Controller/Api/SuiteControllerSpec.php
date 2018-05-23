@@ -1,5 +1,14 @@
 <?php
 
+declare(strict_types = 1);
+
+/*
+ * (c) BeautyFastCode.com
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace spec\App\Controller\Api;
 
 use App\Controller\Api\SuiteController;
@@ -11,11 +20,18 @@ use PhpSpec\ObjectBehavior;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * Specification for SuiteController.
+ *
+ * @author    Bogumił Brzeziński <beautyfastcode@gmail.com>
+ * @copyright BeautyFastCode.com
+ */
 class SuiteControllerSpec extends ObjectBehavior
 {
-    function let(SuiteManager $suiteManager,
-                 JsonHelper $jsonHelper,
-                 JsonResponseHelper $jsonResponseHelper)
+    function let(
+        SuiteManager $suiteManager,
+        JsonHelper $jsonHelper,
+        JsonResponseHelper $jsonResponseHelper)
     {
         $this->beConstructedWith($suiteManager, $jsonHelper, $jsonResponseHelper);
     }
@@ -25,8 +41,10 @@ class SuiteControllerSpec extends ObjectBehavior
         $this->shouldHaveType(SuiteController::class);
     }
 
-    function it_should_respond_to_read_action(SuiteManager $suiteManager,
-                                              Suite $suite, JsonResponseHelper $jsonResponseHelper)
+    function it_should_respond_to_read_action(
+        SuiteManager $suiteManager,
+        Suite $suite,
+        JsonResponseHelper $jsonResponseHelper)
     {
         $id = 1;
 
@@ -43,8 +61,9 @@ class SuiteControllerSpec extends ObjectBehavior
             ->shouldHaveType(JsonResponse::class);
     }
 
-    function it_should_respond_to_list_action(SuiteManager $suiteManager,
-                                              JsonResponseHelper $jsonResponseHelper)
+    function it_should_respond_to_list_action(
+        SuiteManager $suiteManager,
+        JsonResponseHelper $jsonResponseHelper)
     {
         $suites = [];
 
@@ -66,8 +85,7 @@ class SuiteControllerSpec extends ObjectBehavior
         JsonHelper $jsonHelper,
         SuiteManager $suiteManager,
         Suite $suite,
-        JsonResponseHelper $jsonResponseHelper
-    )
+        JsonResponseHelper $jsonResponseHelper)
     {
         $jsonContent = '{\n "name":"New Suite"\n}';
         $data = [
@@ -100,8 +118,7 @@ class SuiteControllerSpec extends ObjectBehavior
         JsonHelper $jsonHelper,
         SuiteManager $suiteManager,
         Suite $suite,
-        JsonResponseHelper $jsonResponseHelper
-    )
+        JsonResponseHelper $jsonResponseHelper)
     {
         $id = 1;
         $jsonContent = '{\n "name":"Suite A, version 2"\n}';
@@ -135,8 +152,7 @@ class SuiteControllerSpec extends ObjectBehavior
         JsonHelper $jsonHelper,
         SuiteManager $suiteManager,
         Suite $suite,
-        JsonResponseHelper $jsonResponseHelper
-    )
+        JsonResponseHelper $jsonResponseHelper)
     {
         $id = 1;
         $jsonContent = '{\n "name":"Suite A, version 2"\n}';
@@ -165,8 +181,9 @@ class SuiteControllerSpec extends ObjectBehavior
             ->shouldHaveType(JsonResponse::class);
     }
 
-    function it_should_respond_to_delete_action(SuiteManager $suiteManager,
-                                                JsonResponseHelper $jsonResponseHelper)
+    function it_should_respond_to_delete_action(
+        SuiteManager $suiteManager,
+        JsonResponseHelper $jsonResponseHelper)
     {
         $suiteManager
             ->delete(1)

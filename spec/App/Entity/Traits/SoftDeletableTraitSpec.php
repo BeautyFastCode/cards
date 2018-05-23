@@ -17,7 +17,7 @@ use PhpSpec\ObjectBehavior;
 use DateTime;
 
 /**
- * SoftDeletableTraitSpec
+ * Specification for SoftDeletableTrait.
  *
  * @author    Bogumił Brzeziński <beautyfastcode@gmail.com>
  * @copyright BeautyFastCode.com
@@ -38,32 +38,49 @@ class SoftDeletableTraitSpec extends ObjectBehavior
     {
         $datetime = new DateTime();
 
-        $this->getDeletedAt()->shouldReturn(null);
+        $this
+            ->getDeletedAt()
+            ->shouldReturn(null);
 
-        $this->setDeletedAt($datetime);
-        $this->getDeletedAt()->shouldReturn($datetime);
+        $this
+            ->setDeletedAt($datetime);
+
+        $this
+            ->getDeletedAt()
+            ->shouldReturn($datetime);
     }
 
     function it_can_recover_entity()
     {
         $datetime = new DateTime();
 
-        $this->setDeletedAt($datetime);
-        $this->getDeletedAt()->shouldReturn($datetime);
+        $this
+            ->setDeletedAt($datetime);
+
+        $this
+            ->getDeletedAt()
+            ->shouldReturn($datetime);
 
         // Recover
-        $this->recover();
+        $this
+            ->recover();
 
-        $this->getDeletedAt()->shouldReturn(null);
+        $this
+            ->getDeletedAt()
+            ->shouldReturn(null);
     }
 
     function it_can_check_if_entity_is_deleted()
     {
-        $this->isDeleted()->shouldReturn(false);
+        $this
+            ->isDeleted()
+            ->shouldReturn(false);
     }
 
     function it_can_check_if_entity_is_not_deleted()
     {
-        $this->isNotDeleted()->shouldReturn(true);
+        $this
+            ->isNotDeleted()
+            ->shouldReturn(true);
     }
 }

@@ -18,7 +18,7 @@ use DateTime;
 use PhpSpec\ObjectBehavior;
 
 /**
- * TimestampableTraitSpec
+ * Specification for TimestampableTrait.
  *
  * @author    Bogumił Brzeziński <beautyfastcode@gmail.com>
  * @copyright BeautyFastCode.com
@@ -39,20 +39,32 @@ class TimestampableTraitSpec extends ObjectBehavior
     {
         $datetime = new DateTime();
 
-        $this->getCreatedAt()->shouldReturn(null);
+        $this
+            ->getCreatedAt()
+            ->shouldReturn(null);
 
-        $this->setCreatedAt($datetime);
-        $this->getCreatedAt()->shouldReturn($datetime);
+        $this
+            ->setCreatedAt($datetime);
+
+        $this
+            ->getCreatedAt()
+            ->shouldReturn($datetime);
     }
     
     function it_have_updated_at_property()
     {
         $datetime = new DateTime();
 
-        $this->getUpdatedAt()->shouldReturn(null);
+        $this
+            ->getUpdatedAt()
+            ->shouldReturn(null);
 
-        $this->setUpdatedAt($datetime);
-        $this->getUpdatedAt()->shouldReturn($datetime);
+        $this
+            ->setUpdatedAt($datetime);
+
+        $this
+            ->getUpdatedAt()
+            ->shouldReturn($datetime);
     }
 
     function it_can_returns_date_of_creation_in_readable_format()
@@ -63,8 +75,12 @@ class TimestampableTraitSpec extends ObjectBehavior
 
         $datetime = DateTime::createFromFormat(DateTimeConstant::FORMAT, $readable);
 
-        $this->setCreatedAt($datetime);
-        $this->getReadableCreatedAt()->shouldReturn($readable);
+        $this
+            ->setCreatedAt($datetime);
+
+        $this
+            ->getReadableCreatedAt()
+            ->shouldReturn($readable);
     }
 
     function it_can_returns_date_of_update_in_readable_format()
@@ -75,7 +91,11 @@ class TimestampableTraitSpec extends ObjectBehavior
 
         $datetime = DateTime::createFromFormat(DateTimeConstant::FORMAT, $readable);
 
-        $this->setUpdatedAt($datetime);
-        $this->getReadableUpdatedAt()->shouldReturn($readable);
+        $this
+            ->setUpdatedAt($datetime);
+
+        $this
+            ->getReadableUpdatedAt()
+            ->shouldReturn($readable);
     }
 }

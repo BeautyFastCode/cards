@@ -23,7 +23,7 @@ use PhpSpec\ObjectBehavior;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 
 /**
- * BaseEntityManagerSpec
+ * Specification for BaseEntityManager.
  *
  * @author    Bogumił Brzeziński <beautyfastcode@gmail.com>
  * @copyright BeautyFastCode.com
@@ -40,8 +40,7 @@ class BaseEntityManagerSpec extends ObjectBehavior
         $this->beConstructedWith(
             $entityRepository,
             $entityManager,
-            $formHelper
-        );
+            $formHelper);
     }
 
     function it_have_base_interface()
@@ -180,6 +179,5 @@ class BaseEntityManagerSpec extends ObjectBehavior
         $this
             ->getErrors()
             ->shouldBeArray();
-
     }
 }

@@ -1,5 +1,14 @@
 <?php
 
+declare(strict_types = 1);
+
+/*
+ * (c) BeautyFastCode.com
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace spec\App\Manager;
 
 use App\Entity\Card;
@@ -12,19 +21,23 @@ use App\Repository\CardRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpSpec\ObjectBehavior;
 
+/**
+ * Specification for CardManager.
+ *
+ * @author    Bogumił Brzeziński <beautyfastcode@gmail.com>
+ * @copyright BeautyFastCode.com
+ */
 class CardManagerSpec extends ObjectBehavior
 {
     function let(
         CardRepository $cardRepository,
         EntityManagerInterface $entityManager,
-        FormHelper $formHelper
-    )
+        FormHelper $formHelper)
     {
         $this->beConstructedWith(
             $cardRepository,
             $entityManager,
-            $formHelper
-        );
+            $formHelper);
     }
 
     function it_is_initializable()

@@ -1,5 +1,14 @@
 <?php
 
+declare(strict_types = 1);
+
+/*
+ * (c) BeautyFastCode.com
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace spec\App\EventSubscriber;
 
 use App\EventSubscriber\ExceptionSubscriber;
@@ -12,6 +21,12 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
+/**
+ * Specification for ExceptionSubscriber.
+ *
+ * @author    Bogumił Brzeziński <beautyfastcode@gmail.com>
+ * @copyright BeautyFastCode.com
+ */
 class ExceptionSubscriberSpec extends ObjectBehavior
 {
     function let(JsonResponseHelper $jsonResponseHelper)
@@ -50,8 +65,7 @@ class ExceptionSubscriberSpec extends ObjectBehavior
         GetResponseForExceptionEvent $event,
         EntityNotFoundException $exception,
         JsonResponseHelper $jsonResponseHelper,
-        JsonResponse $jsonResponse
-    )
+        JsonResponse $jsonResponse)
     {
         $event
             ->getException()
@@ -72,8 +86,7 @@ class ExceptionSubscriberSpec extends ObjectBehavior
         GetResponseForExceptionEvent $event,
         FormIsNotValidException $exception,
         JsonResponseHelper $jsonResponseHelper,
-        JsonResponse $jsonResponse
-    )
+        JsonResponse $jsonResponse)
     {
         $event
             ->getException()

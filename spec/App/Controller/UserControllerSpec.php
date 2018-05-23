@@ -1,5 +1,14 @@
 <?php
 
+declare(strict_types = 1);
+
+/*
+ * (c) BeautyFastCode.com
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace spec\App\Controller;
 
 use App\Controller\UserController;
@@ -9,6 +18,12 @@ use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * Specification for UserController.
+ *
+ * @author    Bogumił Brzeziński <beautyfastcode@gmail.com>
+ * @copyright BeautyFastCode.com
+ */
 class UserControllerSpec extends ObjectBehavior
 {
     function let(EngineInterface $templating)
@@ -21,7 +36,9 @@ class UserControllerSpec extends ObjectBehavior
         $this->shouldHaveType(UserController::class);
     }
 
-    function it_should_respond_to_login_action(EngineInterface $templating, Response $response)
+    function it_should_respond_to_login_action(
+        EngineInterface $templating,
+        Response $response)
     {
         $templating
             ->renderResponse('user/login.html.twig')
@@ -32,7 +49,9 @@ class UserControllerSpec extends ObjectBehavior
             ->shouldHaveType(Response::class);
     }
 
-    function it_should_respond_to_logged_out_action(EngineInterface $templating, Response $response)
+    function it_should_respond_to_logged_out_action(
+        EngineInterface $templating,
+        Response $response)
     {
         $templating
             ->renderResponse('user/logged-out.html.twig')
@@ -43,7 +62,9 @@ class UserControllerSpec extends ObjectBehavior
             ->shouldHaveType(Response::class);
     }
 
-    function it_should_respond_to_sign_up_action(EngineInterface $templating, Response $response)
+    function it_should_respond_to_sign_up_action(
+        EngineInterface $templating,
+        Response $response)
     {
         $templating
             ->renderResponse('user/sign-up.html.twig')
@@ -58,8 +79,7 @@ class UserControllerSpec extends ObjectBehavior
         EngineInterface $templating,
         Response $response,
         Request $request,
-        ParameterBag $query
-    )
+        ParameterBag $query)
     {
         $request->query = $query;
         $query->get('email')
@@ -77,7 +97,9 @@ class UserControllerSpec extends ObjectBehavior
             ->shouldHaveType(Response::class);
     }
 
-    function it_should_respond_to_privacy_action(EngineInterface $templating, Response $response)
+    function it_should_respond_to_privacy_action(
+        EngineInterface $templating,
+        Response $response)
     {
         $templating
             ->renderResponse('user/sign-up.html.twig')
@@ -88,7 +110,9 @@ class UserControllerSpec extends ObjectBehavior
             ->shouldHaveType(Response::class);
     }
 
-    function it_should_respond_to_successfully_created_action(EngineInterface $templating, Response $response)
+    function it_should_respond_to_successfully_created_action(
+        EngineInterface $templating,
+        Response $response)
     {
         $templating
             ->renderResponse('user/successfully-created.html.twig')

@@ -1,13 +1,27 @@
 <?php
 
+declare(strict_types = 1);
+
+/*
+ * (c) BeautyFastCode.com
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace spec\App\Controller;
 
 use App\Controller\DashboardController;
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * Specification for DashboardController.
+ *
+ * @author    Bogumił Brzeziński <beautyfastcode@gmail.com>
+ * @copyright BeautyFastCode.com
+ */
 class DashboardControllerSpec extends ObjectBehavior
 {
     function let(EngineInterface $templating)
@@ -20,7 +34,9 @@ class DashboardControllerSpec extends ObjectBehavior
         $this->shouldHaveType(DashboardController::class);
     }
 
-    function it_should_respond_to_index_action(EngineInterface $templating, Response $response)
+    function it_should_respond_to_index_action(
+        EngineInterface $templating,
+        Response $response)
     {
         $suites = [
             [
@@ -65,7 +81,9 @@ class DashboardControllerSpec extends ObjectBehavior
             ->shouldHaveType(Response::class);
     }
 
-    function it_should_respond_to_show_deck_action(EngineInterface $templating, Response $response)
+    function it_should_respond_to_show_deck_action(
+        EngineInterface $templating,
+        Response $response)
     {
         $deck = [
             'name'       => 'Welcome Deck',
@@ -95,14 +113,16 @@ class DashboardControllerSpec extends ObjectBehavior
             ->shouldHaveType(Response::class);
     }
 
-    function it_should_respond_to_vue_test_action(EngineInterface $templating, Response $response)
+    function it_should_respond_to_vue_test_action(
+        EngineInterface $templating,
+        Response $response)
     {
         $templating
-            ->renderResponse('vue/index.html.twig')
+            ->renderResponse('client/index.html.twig')
             ->willReturn($response);
 
         $this
-            ->vueTest()
+            ->clientTest()
             ->shouldHaveType(Response::class);
     }
 }

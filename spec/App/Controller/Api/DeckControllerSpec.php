@@ -1,5 +1,14 @@
 <?php
 
+declare(strict_types = 1);
+
+/*
+ * (c) BeautyFastCode.com
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace spec\App\Controller\Api;
 
 use App\Controller\Api\DeckController;
@@ -11,11 +20,18 @@ use PhpSpec\ObjectBehavior;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * Specification for DeckController.
+ *
+ * @author    Bogumił Brzeziński <beautyfastcode@gmail.com>
+ * @copyright BeautyFastCode.com
+ */
 class DeckControllerSpec extends ObjectBehavior
 {
-    function let(DeckManager $deckManager,
-                 JsonHelper $jsonHelper,
-                 JsonResponseHelper $jsonResponseHelper)
+    function let(
+        DeckManager $deckManager,
+        JsonHelper $jsonHelper,
+        JsonResponseHelper $jsonResponseHelper)
     {
         $this->beConstructedWith($deckManager, $jsonHelper, $jsonResponseHelper);
     }
@@ -25,8 +41,10 @@ class DeckControllerSpec extends ObjectBehavior
         $this->shouldHaveType(DeckController::class);
     }
 
-    function it_should_respond_to_read_action(DeckManager $deckManager, Deck $deck,
-                                              JsonResponseHelper $jsonResponseHelper)
+    function it_should_respond_to_read_action(
+        DeckManager $deckManager,
+        Deck $deck,
+        JsonResponseHelper $jsonResponseHelper)
     {
         $id = 1;
 
@@ -42,8 +60,9 @@ class DeckControllerSpec extends ObjectBehavior
             ->shouldHaveType(JsonResponse::class);
     }
 
-    function it_should_respond_to_list_action(DeckManager $deckManager,
-                                              JsonResponseHelper $jsonResponseHelper)
+    function it_should_respond_to_list_action(
+        DeckManager $deckManager,
+        JsonResponseHelper $jsonResponseHelper)
     {
         $decks = [];
 
@@ -65,8 +84,7 @@ class DeckControllerSpec extends ObjectBehavior
         JsonHelper $jsonHelper,
         DeckManager $deckManager,
         Deck $deck,
-        JsonResponseHelper $jsonResponseHelper
-    )
+        JsonResponseHelper $jsonResponseHelper)
     {
         $jsonContent = '{\n "name":"New Deck"\n}';
         $data = [
@@ -99,8 +117,7 @@ class DeckControllerSpec extends ObjectBehavior
         JsonHelper $jsonHelper,
         DeckManager $deckManager,
         Deck $deck,
-        JsonResponseHelper $jsonResponseHelper
-    )
+        JsonResponseHelper $jsonResponseHelper)
     {
         $id = 1;
         $jsonContent = '{\n "name":"Deck A, version 2"\n}';
@@ -134,8 +151,7 @@ class DeckControllerSpec extends ObjectBehavior
         JsonHelper $jsonHelper,
         DeckManager $deckManager,
         Deck $deck,
-        JsonResponseHelper $jsonResponseHelper
-    )
+        JsonResponseHelper $jsonResponseHelper)
     {
         $id = 1;
         $jsonContent = '{\n "name":"Deck A, version 2"\n}';
@@ -164,8 +180,9 @@ class DeckControllerSpec extends ObjectBehavior
             ->shouldHaveType(JsonResponse::class);
     }
 
-    function it_should_respond_to_delete_action(DeckManager $deckManager,
-                                                JsonResponseHelper $jsonResponseHelper)
+    function it_should_respond_to_delete_action(
+        DeckManager $deckManager,
+        JsonResponseHelper $jsonResponseHelper)
     {
         $deckManager
             ->delete(1)

@@ -1,5 +1,13 @@
 <?php
 
+declare(strict_types = 1);
+
+/*
+ * (c) BeautyFastCode.com
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 namespace spec\App\Manager;
 
 use App\Entity\Deck;
@@ -13,19 +21,22 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpSpec\ObjectBehavior;
 
+/**
+ * Specification for DeckManager.
+ *
+ * @author    Bogumił Brzeziński <beautyfastcode@gmail.com>
+ * @copyright BeautyFastCode.com
+ */
 class DeckManagerSpec extends ObjectBehavior
 {
     function let(DeckRepository $deckRepository,
                  EntityManagerInterface $entityManager,
-                 FormHelper $formHelper
-    )
+                 FormHelper $formHelper)
     {
-        $this
-            ->beConstructedWith(
+        $this->beConstructedWith(
                 $deckRepository,
                 $entityManager,
-                $formHelper
-            );
+                $formHelper);
     }
 
     function it_is_initializable()
@@ -33,7 +44,9 @@ class DeckManagerSpec extends ObjectBehavior
         $this->shouldHaveType(DeckManager::class);
     }
 
-    function it_can_read_one_deck(DeckRepository $deckRepository, Deck $deck)
+    function it_can_read_one_deck(
+        DeckRepository $deckRepository,
+        Deck $deck)
     {
         $deckRepository
             ->findOneBy(['id' => 1])
@@ -103,8 +116,7 @@ class DeckManagerSpec extends ObjectBehavior
         EntityManagerInterface $entityManager,
         DeckRepository $deckRepository,
         FormHelper $formHelper,
-        Deck $deck
-    )
+        Deck $deck)
     {
         $id = 1;
         $data = ['name' => 'Deck A, version 2'];
@@ -174,6 +186,5 @@ class DeckManagerSpec extends ObjectBehavior
         $this
             ->getErrors()
             ->shouldBeArray();
-
     }
 }

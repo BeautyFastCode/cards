@@ -1,5 +1,14 @@
 <?php
 
+declare(strict_types = 1);
+
+/*
+ * (c) BeautyFastCode.com
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace spec\App\Entity;
 
 use App\Entity\Card;
@@ -10,6 +19,12 @@ use App\Entity\Traits\TimestampableInterface;
 use JsonSerializable;
 use PhpSpec\ObjectBehavior;
 
+/**
+ * Specification for Card entity.
+ *
+ * @author    Bogumił Brzeziński <beautyfastcode@gmail.com>
+ * @copyright BeautyFastCode.com
+ */
 class CardSpec extends ObjectBehavior
 {
     function it_is_initializable()
@@ -26,26 +41,47 @@ class CardSpec extends ObjectBehavior
 
     function it_have_question_property()
     {
-        $this->getQuestion()->shouldReturn(null);
+        $this
+            ->getQuestion()
+            ->shouldReturn(null);
 
-        $this->setQuestion('How are you?')->shouldReturn($this);
-        $this->getQuestion()->shouldReturn('How are you?');
+        $this
+            ->setQuestion('How are you?')
+            ->shouldReturn($this);
+
+        $this
+            ->getQuestion()
+            ->shouldReturn('How are you?');
     }
 
     function it_have_answer_property()
     {
-        $this->getAnswer()->shouldReturn(null);
+        $this
+            ->getAnswer()
+            ->shouldReturn(null);
 
-        $this->setAnswer('I\'m fine')->shouldReturn($this);
-        $this->getAnswer()->shouldReturn('I\'m fine');
+        $this
+            ->setAnswer('I\'m fine')
+            ->shouldReturn($this);
+
+        $this
+            ->getAnswer()
+            ->shouldReturn('I\'m fine');
     }
 
     function it_have_deck_property(Deck $deck)
     {
-        $this->getDeck()->shouldReturn(null);
+        $this
+            ->getDeck()
+            ->shouldReturn(null);
 
-        $this->setDeck($deck)->shouldReturn($this);
-        $this->getDeck()->shouldReturn($deck);
+        $this
+            ->setDeck($deck)
+            ->shouldReturn($this);
+
+        $this
+            ->getDeck()
+            ->shouldReturn($deck);
     }
 
     function it_is_json_serializable()
@@ -55,20 +91,37 @@ class CardSpec extends ObjectBehavior
 
     function it_returns_object_as_an_array()
     {
-        $this->jsonSerialize()->shouldHaveKey('id');
-        $this->jsonSerialize()->shouldHaveKey('question');
-        $this->jsonSerialize()->shouldHaveKey('answer');
-        $this->jsonSerialize()->shouldHaveKey('deck');
+        $this
+            ->jsonSerialize()
+            ->shouldHaveKey('id');
+
+        $this
+            ->jsonSerialize()
+            ->shouldHaveKey('question');
+
+        $this
+            ->jsonSerialize()
+            ->shouldHaveKey('answer');
+
+        $this
+            ->jsonSerialize()
+            ->shouldHaveKey('deck');
     }
 
     function it_returns_object_as_an_array_2(Deck $deck)
     {
         // Expectations
-        $deck->getId()->shouldBeCalledTimes(1);
+        $deck
+            ->getId()
+            ->shouldBeCalledTimes(1);
 
-        $this->setDeck($deck)->shouldReturn($this);
+        $this
+            ->setDeck($deck)
+            ->shouldReturn($this);
 
-        $this->jsonSerialize()->shouldHaveKey('deck');
+        $this
+            ->jsonSerialize()
+            ->shouldHaveKey('deck');
 
         // todo:
 //        $this->jsonSerialize()->shouldHaveKeyWithValue('deck', $deck);

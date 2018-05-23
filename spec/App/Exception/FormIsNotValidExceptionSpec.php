@@ -15,7 +15,7 @@ use App\Exception\FormIsNotValidException;
 use PhpSpec\ObjectBehavior;
 
 /**
- * FormIsNotValidExceptionSpec
+ * Specification for FormIsNotValidException.
  *
  * @author    Bogumił Brzeziński <beautyfastcode@gmail.com>
  * @copyright BeautyFastCode.com
