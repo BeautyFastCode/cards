@@ -31,6 +31,7 @@ Feature: Edge cases for Suite data
 """
 {
     "status": "error",
+    "message": "Form is not valid.",
     "errors": {
       "children": {
           "name": {
@@ -57,6 +58,7 @@ Feature: Edge cases for Suite data
 """
 {
     "status": "error",
+    "message": "Form is not valid.",
     "errors": {
       "children": {
           "name": {
@@ -83,6 +85,7 @@ Feature: Edge cases for Suite data
 """
 {
     "status": "error",
+    "message": "Form is not valid.",
     "errors": {
       "children": {
           "name": {
@@ -114,7 +117,7 @@ Feature: Edge cases for Suite data
 """
 {
     "status": "error",
-    "errors": "Not found entity Suite with id='1000'."
+    "message": "Not found entity Suite with id='1000'."
 }
 """
 
@@ -132,6 +135,7 @@ Feature: Edge cases for Suite data
 """
 {
     "status": "error",
+    "message": "Form is not valid.",
     "errors": {
       "errors": [
           "This form should not contain extra fields."

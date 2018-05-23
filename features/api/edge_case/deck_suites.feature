@@ -35,6 +35,7 @@ Feature: Edge cases for Deck data with relations to the Suite
 """
 {
     "status": "error",
+    "message": "Form is not valid.",
     "errors": {
         "children": {
             "name": [],
@@ -65,6 +66,7 @@ Feature: Edge cases for Deck data with relations to the Suite
 """
 {
     "status": "error",
+    "message": "Form is not valid.",
     "errors": {
         "children": {
             "name": [],
@@ -96,6 +98,7 @@ Feature: Edge cases for Deck data with relations to the Suite
 """
 {
     "status": "error",
+    "message": "Form is not valid.",
     "errors": {
         "children": {
             "name": [],

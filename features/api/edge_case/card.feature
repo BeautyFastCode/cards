@@ -52,6 +52,7 @@ Feature: Edge cases for Card data
 """
 {
     "status": "error",
+    "message": "Form is not valid.",
     "errors": {
         "children": {
             "question": {
@@ -85,6 +86,7 @@ Feature: Edge cases for Card data
 """
 {
     "status": "error",
+    "message": "Form is not valid.",
     "errors": {
         "children": {
             "question": {

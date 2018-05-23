@@ -31,6 +31,7 @@ Feature: Edge cases for Deck data
 """
 {
     "status": "error",
+    "message": "Form is not valid.",
     "errors": {
       "children": {
           "name": {
@@ -58,6 +59,7 @@ Feature: Edge cases for Deck data
 """
 {
     "status": "error",
+    "message": "Form is not valid.",
     "errors": {
       "children": {
           "name": {
@@ -85,6 +87,7 @@ Feature: Edge cases for Deck data
 """
 {
     "status": "error",
+    "message": "Form is not valid.",
     "errors": {
       "children": {
           "name": {
@@ -128,6 +131,7 @@ Feature: Edge cases for Deck data
 """
 {
     "status": "error",
+    "message": "Form is not valid.",
     "errors": {
       "errors": [
           "This form should not contain extra fields."

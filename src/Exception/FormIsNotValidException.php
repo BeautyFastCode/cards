@@ -33,7 +33,7 @@ class FormIsNotValidException extends Exception
     {
         $this->formErrors = $formErrors;
 
-        parent::__construct('Form for is not valid.');
+        parent::__construct('Form is not valid.');
     }
 
     /**

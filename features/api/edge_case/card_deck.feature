@@ -31,6 +31,7 @@ Feature: Edge cases for Card data with relations to the Deck
 """
 {
   "status": "error",
+  "message": "Form is not valid.",
   "errors": {
       "children": {
           "question": [],
@@ -61,6 +62,7 @@ Feature: Edge cases for Card data with relations to the Deck
 """
 {
   "status": "error",
+  "message": "Form is not valid.",
   "errors": {
       "children": {
           "question": [],
@@ -90,6 +92,7 @@ Feature: Edge cases for Card data with relations to the Deck
 """
 {
   "status": "error",
+  "message": "Form is not valid.",
   "errors": {
       "children": {
           "question": [],
@@ -119,6 +122,7 @@ Feature: Edge cases for Card data with relations to the Deck
 """
 {
   "status": "error",
+  "message": "Form is not valid.",
   "errors": {
       "children": {
           "question": [],
