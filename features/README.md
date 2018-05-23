@@ -1,20 +1,4 @@
-# Behat
-
-## Gherkin Syntax
-
-```Gherkin
-Feature: {custom_title}
-  In order to {A}
-  As a {B}
-  I need to {C}
-```
-- {A} = the benefit or value of the feature
-- {B} = the role (or person) who will benefit
-- {C} = short feature description
-
----
-
-## Users
+# Users
  
 - Visitor
 - Customer
@@ -23,11 +7,7 @@ Feature: {custom_title}
 
 ---
 
-## Tags
-
-> Tags are a great way to organize your features and scenarios.
-
-> A Scenario or Feature can have as many tags as you like, just separate them with spaces.
+# Tags
 
 - @ui @email
 
@@ -46,4 +26,27 @@ Feature: {custom_title}
 - @card
 
 - @edge_case
+
+---
+
+# `curl` snippets for manual testing
+
+```
+curl -X POST \
+  http://127.0.0.1:8000/api/suites \
+  -H 'Cache-Control: no-cache' \
+  -H 'Content-Type: application/json' \
+  -d '{
+        "name": "",
+      }' >> test.html
+```
+
+---
+
+# Print all available step definitions
+
+```
+vendor/bin/behat -dl > behat-dl.txt
+```
+
 ---

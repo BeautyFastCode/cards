@@ -4,4 +4,5 @@ Feature: Edge cases for Deck data with relations to the Card
     As a developer
     I need to ensure Deck and Card data meets expected criteria
 
-# todo:
+# todo: add card, remove card etc.
+

@@ -3,9 +3,7 @@ default:
   suites:
     default:
       contexts:
-        - FeatureContext:
-            kernel: '@kernel'
-        - CardsContext:
+        - AppContext:
             kernel: '@kernel'
             entityManager: '@doctrine.orm.entity_manager'
 

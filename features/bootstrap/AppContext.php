@@ -1,5 +1,14 @@
 <?php
 
+declare(strict_types = 1);
+
+/*
+ * (c) BeautyFastCode.com
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 use App\Entity\Card;
 use App\Entity\Deck;
 use App\Entity\Suite;
@@ -8,14 +17,24 @@ use Behat\Gherkin\Node\TableNode;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
 
-class CardsContext implements Context
+/**
+ * AppContext
+ *
+ * @author    Bogumił Brzeziński <beautyfastcode@gmail.com>
+ * @copyright BeautyFastCode.com
+ */
+class AppContext implements Context
 {
     /**
+     * The Kernel is the heart of the Symfony system.
+     *
      * @var KernelInterface
      */
     private $kernel;
 
     /**
+     * EntityManager interface.
+     *
      * @var EntityManagerInterface
      */
     private $entityManager;
@@ -23,8 +42,8 @@ class CardsContext implements Context
     /**
      * Class constructor
      *
-     * @param KernelInterface        $kernel
-     * @param EntityManagerInterface $entityManager
+     * @param KernelInterface        $kernel        The Kernel is the heart of the Symfony system
+     * @param EntityManagerInterface $entityManager EntityManager interface
      */
     public function __construct(KernelInterface $kernel, EntityManagerInterface $entityManager)
     {
@@ -33,10 +52,12 @@ class CardsContext implements Context
     }
 
     /**
+     * Adds Suites.
+     *
      * @Given there are Suites with the following details:
      * @param TableNode $suitesTable
      */
-    public function thereAreSuitesWithTheFollowingDetails(TableNode $suitesTable)
+    public function thereAreSuitesWithTheFollowingDetails(TableNode $suitesTable):void
     {
         $this->emptySuites();
 
@@ -78,13 +99,17 @@ class CardsContext implements Context
         }
 
         $this->entityManager->flush();
+
+        return;
     }
 
     /**
+     * Adds Decks.
+     *
      * @Given /^there are Decks with the following details:$/
      * @param TableNode $decksTable
      */
-    public function thereAreDecksWithTheFollowingDetails(TableNode $decksTable)
+    public function thereAreDecksWithTheFollowingDetails(TableNode $decksTable): void
     {
         $this->emptyDecks();
 
@@ -101,13 +126,16 @@ class CardsContext implements Context
 
         $this->entityManager->flush();
 
+        return;
     }
 
     /**
+     * Adds Cards.
+     *
      * @Given /^there are Cards with the following details:$/
      * @param TableNode $cardTable
      */
-    public function thereAreCardsWithTheFollowingDetails(TableNode $cardTable)
+    public function thereAreCardsWithTheFollowingDetails(TableNode $cardTable):void
     {
         /*
          * New records.
@@ -118,7 +146,7 @@ class CardsContext implements Context
             $card->setQuestion($value['question']);
             $card->setAnswer($value['answer']);
 
-            if(array_key_exists('deck', $value)) {
+            if (array_key_exists('deck', $value)) {
 
                 $deck = $this->entityManager
                     ->getRepository(Deck::class)
@@ -129,36 +157,20 @@ class CardsContext implements Context
                 if ($deck) {
                     $card->setDeck($deck);
                 }
-
             }
 
             $this->entityManager->persist($card);
         }
 
         $this->entityManager->flush();
-    }
 
-    /**
-     * @param string $entityClassName The class/type whose instances are subject to the deletion.
-     */
-    private function emptyEntity($entityClassName)
-    {
-        /*
-         * Delete all previous records.
-         */
-        $queryBuilder = $this->entityManager->createQueryBuilder();
-
-        $query = $queryBuilder
-            ->delete($entityClassName)
-            ->getQuery();
-
-        $query->execute();
+        return;
     }
 
     /**
      * Remove all Suites without deleting Decks.
      */
-    private function emptySuites()
+    private function emptySuites(): void
     {
         /*
          * This will disable the SoftDeleteable filter,
@@ -190,19 +202,20 @@ class CardsContext implements Context
         }
 
         $this->entityManager->getFilters()->enable('softdeleteable');
+
+        return;
     }
 
     /**
      * Remove all Deck with assigned Cards.
      */
-    private function emptyDecks()
+    private function emptyDecks(): void
     {
         /*
          * This will disable the SoftDeleteable filter,
          * so entities which were "soft-deleted" will appear in results
          */
         $this->entityManager->getFilters()->disable('softdeleteable');
-
 
         $decks = $this->entityManager
             ->getRepository(Deck::class)
@@ -226,5 +239,7 @@ class CardsContext implements Context
         $this->entityManager->flush();
 
         $this->entityManager->getFilters()->enable('softdeleteable');
+
+        return;
     }
 }
