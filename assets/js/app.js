@@ -6,17 +6,20 @@
  * file that was distributed with this source code.
  */
 
-import axios from 'axios';
-import { API_HOST, API_PATH } from '../Config/_entrypoint';
+import Vue from 'vue';
+import Dashboard from './Component/Dashboard';
 
 /**
- * HTTP configurations.
+ * Create a fresh Vue Application instance.
  *
  * @author    Bogumił Brzeziński <beautyfastcode@gmail.com>
  * @copyright BeautyFastCode.com
  */
-const baseURL = API_HOST + API_PATH;
+Vue.config.debug = true;
+Vue.config.devtools = true;
 
-export const HTTP = axios.create({
-    baseURL: baseURL,
+var app = new Vue({
+    el: '#app',
+    template: '<dashboard></dashboard>',
+    components: {Dashboard}
 });

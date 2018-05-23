@@ -36,9 +36,9 @@ Encore
     // .enableVersioning(Encore.isProduction())
 
     /*
-     * Will create public/build/app.js and public/build/app.css
+     * Will create public/build/js/app.js and public/build/css/styles.css
      */
-    .addEntry('js/cards', './assets/js/cards.js')
+    .addEntry('js/app', './assets/js/app.js')
     .addStyleEntry('css/styles', './assets/scss/styles.scss')
     .addEntry('images/cards-logo.svg', './assets/svg/cards-logo.svg')
     .addEntry('images/cards-logo-white.svg', './assets/svg/cards-logo-white.svg')

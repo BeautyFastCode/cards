@@ -96,12 +96,12 @@ class DashboardController
     }
 
     /**
-     * @Route("/vue", name="vue-dashboard")
+     * @Route("/client", name="vue-dashboard")
      *
      * @return Response
      */
-    public function vueTest()
+    public function clientTest()
     {
-        return $this->templating->renderResponse('vue/index.html.twig');
+        return $this->templating->renderResponse('client/index.html.twig');
     }
 }
