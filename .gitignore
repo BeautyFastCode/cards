@@ -25,7 +25,7 @@ yarn-error.log
 /.idea/
 
 ###> behat/symfony2-extension ###
-behat.yml
+#behat.yml
 ###< behat/symfony2-extension ###
 
 bdd-wizard.phar

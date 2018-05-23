@@ -2,11 +2,11 @@ extensions:
   LeanPHP\PhpSpec\CodeCoverage\CodeCoverageExtension:
     format: [html]
     output:
-      html: var/coverage
+      html: var/code-coverage/spec
     # Blacklist directories for which code generation should NOT be done
     blacklist:
-      - src/Migrations
       - src/DataFixtures
+      - src/Migrations
       - src/Repository
     #
     # Blacklist files for which code generation should NOT be done

@@ -1,0 +1,56 @@
+# behat.yml
+default:
+  suites:
+    default:
+      contexts:
+        - FeatureContext:
+            kernel: '@kernel'
+        - CardsContext:
+            kernel: '@kernel'
+            entityManager: '@doctrine.orm.entity_manager'
+
+        - Behat\MinkExtension\Context\MinkContext
+        - behatch:context:browser
+#        - behatch:context:debug
+#        - behatch:context:system
+        - behatch:context:json
+#        - behatch:context:table
+        - behatch:context:rest
+        - behatch:context:xml
+
+  extensions:
+    Behat\Symfony2Extension:
+      kernel:
+        bootstrap: features/bootstrap/bootstrap.php
+        class: App\Kernel
+
+    Behat\MinkExtension:
+      base_url: "http://127.0.0.1:8000/"
+      sessions:
+        default:
+          symfony2: ~
+
+    Behatch\Extension: ~
+
+    # Disable this for speedup the tests.
+    LeanPHP\Behat\CodeCoverage\Extension:
+      drivers:
+        - local
+      filter:
+        whitelist:
+          include:
+            directories:
+              'src': ~
+          # blacklist
+          exclude:
+            directories:
+              'src/DataFixtures': ~
+              'src/Manager/Stubs': ~
+              'src/Migrations': ~
+              'src/Repository': ~
+            files:
+              - 'src/Kernel.php'
+      report:
+        format:   html
+        options:
+          target: var/code-coverage/features

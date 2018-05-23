@@ -125,6 +125,9 @@
     "justinrainbow/json-schema": {
         "version": "5.2.7"
     },
+    "leanphp/behat-code-coverage": {
+        "version": "v3.4.1"
+    },
     "leanphp/phpspec-code-coverage": {
         "version": "v4.2.2"
     },
