@@ -39,7 +39,7 @@ Encore
      * Will create public/build/app.js and public/build/app.css
      */
     .addEntry('js/cards', './assets/js/cards.js')
-    .addStyleEntry('css/cards', './assets/scss/cards.scss')
+    .addStyleEntry('css/styles', './assets/scss/styles.scss')
     .addEntry('images/cards-logo.svg', './assets/svg/cards-logo.svg')
     .addEntry('images/cards-logo-white.svg', './assets/svg/cards-logo-white.svg')
 
