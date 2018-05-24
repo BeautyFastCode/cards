@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * (c) BeautyFastCode.com
@@ -72,7 +72,7 @@ class SuiteManager extends BaseEntityManager
     /**
      * {@inheritdoc}
      */
-    public function delete(int $id):void
+    public function delete(int $id): void
     {
         /** @var Suite $suite */
         $suite = $this->read($id);

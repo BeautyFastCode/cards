@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * (c) BeautyFastCode.com
@@ -45,7 +45,7 @@ class DeckFixtures extends Fixture
             'Project Cards',
         ];
 
-        for ($i = 0; $i < $countDecks; $i++) {
+        for ($i = 0; $i < $countDecks; ++$i) {
             $suite = new Deck();
             $suite->setName($names[$i]);
 

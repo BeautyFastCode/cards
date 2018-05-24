@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * (c) BeautyFastCode.com
@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * JSON Api for the Deck entity:
+ * JSON Api for the Deck entity.
  *
  * api_decks_get_item               GET      ANY      ANY    /api/decks/{id}
  * api_decks_get_collection         GET      ANY      ANY    /api/decks
@@ -58,7 +58,7 @@ class DeckController
     private $jsonResponseHelper;
 
     /**
-     * Class constructor
+     * Class constructor.
      *
      * @param DeckManager        $deckManager        Manager for the Deck entity
      * @param JsonHelper         $jsonHelper         Helper decodes a JSON string to an associative array
@@ -68,7 +68,6 @@ class DeckController
                                 JsonHelper $jsonHelper,
                                 JsonResponseHelper $jsonResponseHelper)
     {
-
         $this->deckManager = $deckManager;
         $this->jsonHelper = $jsonHelper;
         $this->jsonResponseHelper = $jsonResponseHelper;
@@ -132,7 +131,7 @@ class DeckController
      *
      * @return JsonResponse A JsonResponse instance
      */
-    public function updateAllProperties(Request $request, int $id):JsonResponse
+    public function updateAllProperties(Request $request, int $id): JsonResponse
     {
         return $this->update($request, $id);
     }
@@ -148,7 +147,7 @@ class DeckController
      *
      * @return JsonResponse A JsonResponse instance
      */
-    public function updateSelectedProperties(Request $request, int $id):JsonResponse
+    public function updateSelectedProperties(Request $request, int $id): JsonResponse
     {
         return $this->update($request, $id, false);
     }
@@ -162,7 +161,7 @@ class DeckController
      *
      * @return JsonResponse A JsonResponse instance
      */
-    private function update(Request $request, int $id = null, bool $allProperties = true):JsonResponse
+    private function update(Request $request, int $id = null, bool $allProperties = true): JsonResponse
     {
         /*
          * Get data from request.
@@ -171,7 +170,7 @@ class DeckController
             ->jsonHelper
             ->decode($request->getContent());
 
-        if ($id !== null) {
+        if (null !== $id) {
             /*
              * Update an existing Deck.
              */
@@ -184,7 +183,6 @@ class DeckController
             return $this
                 ->jsonResponseHelper
                 ->okResponse($responseData);
-
         } else {
             /*
              * Create the new Deck.

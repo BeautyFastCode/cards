@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * (c) BeautyFastCode.com
@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * JSON Api for the Card entity:
+ * JSON Api for the Card entity.
  *
  * api_cards_get_item               GET      ANY      ANY    /api/cards/{id}
  * api_cards_get_collection         GET      ANY      ANY    /api/cards
@@ -58,7 +58,7 @@ class CardController
     private $jsonResponseHelper;
 
     /**
-     * Class constructor
+     * Class constructor.
      *
      * @param CardManager        $cardManager        Manager for the Card entity
      * @param JsonHelper         $jsonHelper         Helper decodes a JSON string to an associative array
@@ -131,7 +131,7 @@ class CardController
      *
      * @return JsonResponse A JsonResponse instance
      */
-    public function updateAllProperties(Request $request, int $id):JsonResponse
+    public function updateAllProperties(Request $request, int $id): JsonResponse
     {
         return $this->update($request, $id);
     }
@@ -147,7 +147,7 @@ class CardController
      *
      * @return JsonResponse A JsonResponse instance
      */
-    public function updateSelectedProperties(Request $request, int $id):JsonResponse
+    public function updateSelectedProperties(Request $request, int $id): JsonResponse
     {
         return $this->update($request, $id, false);
     }
@@ -161,7 +161,7 @@ class CardController
      *
      * @return JsonResponse A JsonResponse instance
      */
-    private function update(Request $request, int $id = null, bool $allProperties = true):JsonResponse
+    private function update(Request $request, int $id = null, bool $allProperties = true): JsonResponse
     {
         /*
          * Get data from request.
@@ -170,7 +170,7 @@ class CardController
             ->jsonHelper
             ->decode($request->getContent());
 
-        if ($id !== null) {
+        if (null !== $id) {
             /*
              * Update an existing Card.
              */
@@ -183,7 +183,6 @@ class CardController
             return $this
                 ->jsonResponseHelper
                 ->okResponse($responseData);
-
         } else {
             /*
              * Create the new Card.

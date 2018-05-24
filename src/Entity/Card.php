@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * (c) BeautyFastCode.com
@@ -137,19 +137,19 @@ class Card extends BaseEntity implements \JsonSerializable
     /**
      * {@inheritdoc}
      */
-    function jsonSerialize(): array
+    public function jsonSerialize(): array
     {
         $deckId = null;
 
-        if($this->deck !== null) {
+        if (null !== $this->deck) {
             $deckId = $this->deck->getId();
         }
 
         return [
-            'id'       => $this->id,
+            'id' => $this->id,
             'question' => $this->question,
-            'answer'   => $this->answer,
-            'deck'     => $deckId
+            'answer' => $this->answer,
+            'deck' => $deckId,
         ];
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * (c) BeautyFastCode.com
@@ -151,7 +151,6 @@ class Deck extends BaseEntity implements \JsonSerializable
         $cardsIds = [];
 
         if (!$this->cards->isEmpty()) {
-
             /** @var Card $card */
             foreach ($this->getCards() as $card) {
                 $cardsIds[] = $card->getId();
@@ -219,7 +218,6 @@ class Deck extends BaseEntity implements \JsonSerializable
         $suitesIds = [];
 
         if (!$this->suites->isEmpty()) {
-
             /** @var Suite $suite */
             foreach ($this->getSuites() as $suite) {
                 $suitesIds[] = $suite->getId();
@@ -232,13 +230,13 @@ class Deck extends BaseEntity implements \JsonSerializable
     /**
      * {@inheritdoc}
      */
-    function jsonSerialize(): array
+    public function jsonSerialize(): array
     {
         return [
-            'id'     => $this->id,
-            'name'   => $this->name,
+            'id' => $this->id,
+            'name' => $this->name,
             'suites' => $this->getSuitesIds(),
-            'cards'  => $this->getCardsIds(),
+            'cards' => $this->getCardsIds(),
         ];
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * (c) BeautyFastCode.com
@@ -26,7 +26,7 @@ use Symfony\Component\Routing\RouteCollectionBuilder;
  */
 class Kernel extends BaseKernel
 {
-    /**
+    /*
      * A Kernel that provides configuration hooks.
      */
     use MicroKernelTrait;

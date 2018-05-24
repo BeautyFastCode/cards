@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * (c) BeautyFastCode.com
@@ -26,19 +26,17 @@ interface SoftDeletableInterface
      *
      * @return bool
      */
-    public function isDeleted():bool;
+    public function isDeleted(): bool;
 
     /**
      * Returns true if an entity is not deleted.
      *
      * @return bool
      */
-    public function isNotDeleted():bool;
+    public function isNotDeleted(): bool;
 
     /**
      * Recover an entity.
-     *
-     * @return void
      */
     public function recover(): void;
 
@@ -46,8 +44,6 @@ interface SoftDeletableInterface
      * Sets date of an entity deletion.
      *
      * @param DateTime $deletedAt
-     *
-     * @return void
      */
     public function setDeletedAt(DateTime $deletedAt): void;
 

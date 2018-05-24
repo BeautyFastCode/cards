@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * (c) BeautyFastCode.com
@@ -29,17 +29,17 @@ use Gedmo\Mapping\Annotation as Gedmo;
  */
 abstract class BaseEntity implements BaseEntityInterface, SoftDeletableInterface, TimestampableInterface
 {
-    /**
+    /*
      * Unique identifier - id field.
      */
     use BaseEntityTrait;
 
-    /**
+    /*
      * SoftDeletable behavior - deletedAt field.
      */
     use SoftDeletableTrait;
 
-    /**
+    /*
      * Timestampable behavior - createdAt and updatedAt fields.
      */
     use TimestampableTrait;

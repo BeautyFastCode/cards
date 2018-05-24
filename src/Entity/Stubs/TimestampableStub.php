@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * (c) BeautyFastCode.com
@@ -22,7 +22,7 @@ use App\Entity\Traits\TimestampableTrait;
  */
 class TimestampableStub implements TimestampableInterface
 {
-    /**
+    /*
      * Timestampable behavior - createdAt and updatedAt fields
      */
     use TimestampableTrait;

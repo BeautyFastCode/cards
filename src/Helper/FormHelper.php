@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * (c) BeautyFastCode.com
@@ -48,7 +48,7 @@ class FormHelper
     private $formErrorSerializer;
 
     /**
-     * Class constructor
+     * Class constructor.
      *
      * @param FormFactoryInterface $formFactory         The factory to create a form
      * @param FormErrorSerializer  $formErrorSerializer Serializes invalid Form instances
@@ -67,7 +67,7 @@ class FormHelper
      * @param string              $formType      An entity form type class name
      * @param BaseEntityInterface $baseEntity    An entity object
      * @param array               $data          The data for an entity
-     * @param bool                $allProperties (optional) False if selected properties are updated.
+     * @param bool                $allProperties (optional) False if selected properties are updated
      *
      * @return BaseEntityInterface
      */

@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * (c) BeautyFastCode.com
@@ -44,7 +44,7 @@ class CardFixtures extends Fixture implements DependentFixtureInterface
             'I like the red cherry.',
         ];
 
-        for ($i = 0; $i < $countCards; $i++) {
+        for ($i = 0; $i < $countCards; ++$i) {
             $card = new Card();
             $card->setQuestion($questions[$i]);
             $card->setAnswer($answers[$i]);

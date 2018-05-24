@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * (c) BeautyFastCode.com
@@ -21,7 +21,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * JSON Api for the Suite entity:
- * todo: Create BaseApiController for Api
+ * todo: Create BaseApiController for Api.
  *
  * api_suites_get_item               GET      ANY      ANY    /api/suites/{id}
  * api_suites_get_collection         GET      ANY      ANY    /api/suites
@@ -59,7 +59,7 @@ class SuiteController
     private $jsonResponseHelper;
 
     /**
-     * Class constructor
+     * Class constructor.
      *
      * @param SuiteManager       $suiteManager       Manager for the Suite entity
      * @param JsonHelper         $jsonHelper         Helper decodes a JSON string to an associative array
@@ -132,7 +132,7 @@ class SuiteController
      *
      * @return JsonResponse A JsonResponse instance
      */
-    public function updateAllProperties(Request $request, int $id):JsonResponse
+    public function updateAllProperties(Request $request, int $id): JsonResponse
     {
         return $this->update($request, $id);
     }
@@ -148,7 +148,7 @@ class SuiteController
      *
      * @return JsonResponse A JsonResponse instance
      */
-    public function updateSelectedProperties(Request $request, int $id):JsonResponse
+    public function updateSelectedProperties(Request $request, int $id): JsonResponse
     {
         return $this->update($request, $id, false);
     }
@@ -162,7 +162,7 @@ class SuiteController
      *
      * @return JsonResponse A JsonResponse instance
      */
-    private function update(Request $request, int $id = null, bool $allProperties = true):JsonResponse
+    private function update(Request $request, int $id = null, bool $allProperties = true): JsonResponse
     {
         /*
          * Get data from request.
@@ -171,7 +171,7 @@ class SuiteController
             ->jsonHelper
             ->decode($request->getContent());
 
-        if ($id !== null) {
+        if (null !== $id) {
             /*
              * Update an existing Suite.
              */
@@ -184,7 +184,6 @@ class SuiteController
             return $this
                 ->jsonResponseHelper
                 ->okResponse($responseData);
-
         } else {
             /*
              * Create the new Suite.

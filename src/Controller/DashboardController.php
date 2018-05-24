@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * (c) BeautyFastCode.com
@@ -31,7 +31,7 @@ class DashboardController
     private $templating;
 
     /**
-     * Class constructor
+     * Class constructor.
      *
      * @param EngineInterface $templating Templating engine renders a view and returns a Response
      */
@@ -51,31 +51,31 @@ class DashboardController
     {
         $suites = [
             [
-                'name'  => 'Suite A',
+                'name' => 'Suite A',
                 'decks' => [
                     [
-                        'name'       => 'Untitled Deck',
+                        'name' => 'Untitled Deck',
                         'background' => 'bg-secondary',
                     ],
                     [
-                        'name'       => 'Welcome Deck',
+                        'name' => 'Welcome Deck',
                         'background' => 'bg-success',
                     ],
                     [
-                        'name'       => 'Information Deck',
+                        'name' => 'Information Deck',
                         'background' => 'bg-info',
                     ],
                 ],
             ],
             [
-                'name'  => 'Calendar',
+                'name' => 'Calendar',
                 'decks' => [
                     [
-                        'name'       => '2018 - 04',
+                        'name' => '2018 - 04',
                         'background' => 'bg-danger',
                     ],
                     [
-                        'name'       => 'Project Cards',
+                        'name' => 'Project Cards',
                         'background' => 'bg-warning',
                     ],
                 ],
@@ -99,20 +99,20 @@ class DashboardController
     public function showDeck(): Response
     {
         $deck = [
-            'name'       => 'Welcome Deck',
+            'name' => 'Welcome Deck',
             'background' => 'bg-success',
-            'cards'      => [
+            'cards' => [
                 [
                     'front' => 'Front Card',
-                    'back'  => 'Back Card',
+                    'back' => 'Back Card',
                 ],
                 [
                     'front' => 'How are you?',
-                    'back'  => 'I\'m fine.',
+                    'back' => 'I\'m fine.',
                 ],
                 [
                     'front' => 'What colour do you like?',
-                    'back'  => 'I like the red cherry.',
+                    'back' => 'I like the red cherry.',
                 ],
             ],
         ];
@@ -124,7 +124,7 @@ class DashboardController
     }
 
     /**
-     * The main page for the JSON Api client - JavaScript and Vue.js
+     * The main page for the JSON Api client - JavaScript and Vue.js.
      *
      * @Route("/client", name="vue-dashboard")
      *

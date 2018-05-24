@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * (c) BeautyFastCode.com
@@ -37,7 +37,7 @@ class ExceptionSubscriber implements EventSubscriberInterface
     private $jsonResponseHelper;
 
     /**
-     * Class constructor
+     * Class constructor.
      *
      * @param JsonResponseHelper $jsonResponseHelper Helper decodes a JSON string to an associative array
      */
@@ -70,8 +70,6 @@ class ExceptionSubscriber implements EventSubscriberInterface
      * Customize response object to display the exception in JSON format.
      *
      * @param GetResponseForExceptionEvent $event The event
-     *
-     * @return void
      */
     public function onNotFoundException(GetResponseForExceptionEvent $event): void
     {
@@ -81,7 +79,6 @@ class ExceptionSubscriber implements EventSubscriberInterface
         $exception = $event->getException();
 
         if ($exception instanceof EntityNotFoundException) {
-
             /*
              * Customize response object to display the exception in Json format
              */
@@ -103,8 +100,6 @@ class ExceptionSubscriber implements EventSubscriberInterface
      * Customize response object to display the exception in JSON format.
      *
      * @param GetResponseForExceptionEvent $event The event
-     *
-     * @return void
      */
     public function onFormIsNotValidException(GetResponseForExceptionEvent $event): void
     {
@@ -114,7 +109,6 @@ class ExceptionSubscriber implements EventSubscriberInterface
         $exception = $event->getException();
 
         if ($exception instanceof FormIsNotValidException) {
-
             /*
              * Customize response object to display the exception in Json format
              */

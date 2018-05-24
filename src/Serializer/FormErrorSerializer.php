@@ -20,14 +20,13 @@ use Symfony\Component\Translation\TranslatorInterface;
 /**
  * Serializes invalid Form instances.
  * todo: rewrite this from scratch.
- *
  */
 class FormErrorSerializer
 {
     private $translator;
 
     /**
-     * Class constructor
+     * Class constructor.
      *
      * @param TranslatorInterface $translator
      */
@@ -43,7 +42,7 @@ class FormErrorSerializer
      *
      * @return array
      */
-    public function convertFormToArray(FormInterface $data):array
+    public function convertFormToArray(FormInterface $data): array
     {
         $form = $errors = [];
 
@@ -74,7 +73,7 @@ class FormErrorSerializer
      *
      * @return string|null
      */
-    private function getErrorMessage(FormError $error):?string
+    private function getErrorMessage(FormError $error): ?string
     {
         if (null !== $error->getMessagePluralization()) {
             return $this->translator->transChoice(

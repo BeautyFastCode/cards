@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * (c) BeautyFastCode.com
@@ -48,11 +48,11 @@ abstract class BaseEntityManager implements BaseEntityManagerInterface
     private $formHelper;
 
     /**
-     * Class constructor
+     * Class constructor.
      *
-     * @param ObjectRepository       $entityRepository Repository for an entity.
-     * @param EntityManagerInterface $entityManager    Interface to an entity manager.
-     * @param FormHelper             $formHelper       Helper for create or update and validate an entity.
+     * @param ObjectRepository       $entityRepository Repository for an entity
+     * @param EntityManagerInterface $entityManager    Interface to an entity manager
+     * @param FormHelper             $formHelper       Helper for create or update and validate an entity
      */
     public function __construct(ObjectRepository $entityRepository,
                                 EntityManagerInterface $entityManager,
@@ -91,7 +91,7 @@ abstract class BaseEntityManager implements BaseEntityManagerInterface
     {
         $baseEntity = $this->entityRepository->findOneBy(['id' => $id]);
 
-        if ($baseEntity === null or !($baseEntity instanceof BaseEntityInterface)) {
+        if (null === $baseEntity or !($baseEntity instanceof BaseEntityInterface)) {
             throw new EntityNotFoundException($this->getEntityClassName(), $id);
         }
 
@@ -111,7 +111,7 @@ abstract class BaseEntityManager implements BaseEntityManagerInterface
      */
     public function create(array $data): ?BaseEntityInterface
     {
-        /**@var BaseEntityInterface $baseEntity */
+        /** @var BaseEntityInterface $baseEntity */
         $baseEntity = $this
             ->formHelper
             ->submitEntity($this->getEntityFormTypeClassName(), $this->getEntity(), $data);
@@ -149,7 +149,7 @@ abstract class BaseEntityManager implements BaseEntityManagerInterface
     /**
      * {@inheritdoc}
      */
-    public function delete(int $id):void
+    public function delete(int $id): void
     {
         $baseEntity = $this->read($id);
 

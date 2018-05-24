@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * (c) BeautyFastCode.com
@@ -53,7 +53,7 @@ class Suite extends BaseEntity implements \JsonSerializable
     private $decks;
 
     /**
-     * Class constructor
+     * Class constructor.
      */
     public function __construct()
     {
@@ -129,7 +129,6 @@ class Suite extends BaseEntity implements \JsonSerializable
     public function removeDeck(Deck $deck): Suite
     {
         if ($this->hasDeck($deck)) {
-
             $this->decks->removeElement($deck);
             $deck->removeSuite($this);
         }
@@ -157,7 +156,6 @@ class Suite extends BaseEntity implements \JsonSerializable
         $decksIds = [];
 
         if (!$this->decks->isEmpty()) {
-
             /** @var Deck $deck */
             foreach ($this->getDecks() as $deck) {
                 $decksIds[] = $deck->getId();
@@ -173,8 +171,8 @@ class Suite extends BaseEntity implements \JsonSerializable
     public function jsonSerialize(): array
     {
         return [
-            'id'    => $this->id,
-            'name'  => $this->name,
+            'id' => $this->id,
+            'name' => $this->name,
             'decks' => $this->getDecksIds(),
         ];
     }

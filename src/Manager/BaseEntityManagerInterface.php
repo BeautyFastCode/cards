@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * (c) BeautyFastCode.com
@@ -62,5 +62,5 @@ interface BaseEntityManagerInterface
      *
      * @param int $id The entity Id to delete
      */
-    public function delete(int $id):void;
+    public function delete(int $id): void;
 }

@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * (c) BeautyFastCode.com
@@ -31,7 +31,7 @@ class LearnController
     private $templating;
 
     /**
-     * Class constructor
+     * Class constructor.
      *
      * @param EngineInterface $templating Templating engine renders a view and returns a Response
      */
@@ -53,28 +53,28 @@ class LearnController
     public function index(string $card, string $state): Response
     {
         $deck = [
-            'name'       => 'Welcome Deck',
+            'name' => 'Welcome Deck',
             'background' => 'bg-success',
-            'cards'      => [
+            'cards' => [
                 [
                     'front' => 'Front Card',
-                    'back'  => 'Back Card',
+                    'back' => 'Back Card',
                 ],
                 [
                     'front' => 'How are you?',
-                    'back'  => 'I\'m fine.',
+                    'back' => 'I\'m fine.',
                 ],
                 [
                     'front' => 'What colour do you like?',
-                    'back'  => 'I like the red cherry.',
+                    'back' => 'I like the red cherry.',
                 ],
             ],
         ];
 
         return $this->templating->renderResponse('learn/index.html.twig',
             [
-                'deck'  => $deck,
-                'card'  => $card,
+                'deck' => $deck,
+                'card' => $card,
                 'state' => $state,
             ]);
     }
@@ -89,20 +89,20 @@ class LearnController
     public function learnSummary(): Response
     {
         $deck = [
-            'name'       => 'Welcome Deck',
+            'name' => 'Welcome Deck',
             'background' => 'bg-success',
-            'cards'      => [
+            'cards' => [
                 [
                     'front' => 'Front Card',
-                    'back'  => 'Back Card',
+                    'back' => 'Back Card',
                 ],
                 [
                     'front' => 'How are you?',
-                    'back'  => 'I\'m fine.',
+                    'back' => 'I\'m fine.',
                 ],
                 [
                     'front' => 'What colour do you like?',
-                    'back'  => 'I like the red cherry.',
+                    'back' => 'I like the red cherry.',
                 ],
             ],
         ];

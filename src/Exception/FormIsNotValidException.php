@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * (c) BeautyFastCode.com
@@ -45,7 +45,7 @@ class FormIsNotValidException extends Exception
      *
      * @return array
      */
-    public function getFormErrors():array
+    public function getFormErrors(): array
     {
         return $this->formErrors;
     }

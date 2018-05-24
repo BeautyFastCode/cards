@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * (c) BeautyFastCode.com
@@ -47,7 +47,7 @@ class CardManager extends BaseEntityManager
     /**
      * {@inheritdoc}
      */
-    protected function getEntityClassName():string
+    protected function getEntityClassName(): string
     {
         return Card::class;
     }

@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * (c) BeautyFastCode.com
@@ -46,8 +46,6 @@ interface TimestampableInterface
      * Sets date of an entity creation.
      *
      * @param DateTime $createdAt
-     *
-     * @return void
      */
     public function setCreatedAt(DateTime $createdAt): void;
 
@@ -62,8 +60,6 @@ interface TimestampableInterface
      * Sets date of an entity last update.
      *
      * @param DateTime|null $updatedAt
-     *
-     * @return void
      */
     public function setUpdatedAt($updatedAt): void;
 }

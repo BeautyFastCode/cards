@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * (c) BeautyFastCode.com
@@ -22,7 +22,7 @@ use App\Entity\Traits\BaseEntityTrait;
  */
 class BaseEntityTraitStub implements BaseEntityInterface
 {
-    /**
+    /*
      * Unique identifier - id field
      */
     use BaseEntityTrait;

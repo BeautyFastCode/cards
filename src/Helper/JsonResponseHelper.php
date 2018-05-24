@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * (c) BeautyFastCode.com
@@ -75,7 +75,7 @@ class JsonResponseHelper
     {
         return new JsonResponse(
             [
-                'status'  => 'error',
+                'status' => 'error',
                 'message' => $message,
             ],
             JsonResponse::HTTP_NOT_FOUND
@@ -94,9 +94,9 @@ class JsonResponseHelper
     {
         return new JsonResponse(
             [
-                'status'  => 'error',
+                'status' => 'error',
                 'message' => $message,
-                'errors'  => $data,
+                'errors' => $data,
             ],
             JsonResponse::HTTP_BAD_REQUEST
         );

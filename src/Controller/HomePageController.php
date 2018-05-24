@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * (c) BeautyFastCode.com
@@ -31,7 +31,7 @@ class HomePageController
     private $templating;
 
     /**
-     * Class constructor
+     * Class constructor.
      *
      * @param EngineInterface $templating Templating engine renders a view and returns a Response
      */

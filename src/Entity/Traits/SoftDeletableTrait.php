@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * (c) BeautyFastCode.com
@@ -34,7 +34,7 @@ trait SoftDeletableTrait
     /**
      * {@inheritdoc}
      */
-    public function isDeleted():bool
+    public function isDeleted(): bool
     {
         return isset($this->deletedAt);
     }
@@ -42,7 +42,7 @@ trait SoftDeletableTrait
     /**
      * {@inheritdoc}
      */
-    public function isNotDeleted():bool
+    public function isNotDeleted(): bool
     {
         return !$this->isDeleted();
     }

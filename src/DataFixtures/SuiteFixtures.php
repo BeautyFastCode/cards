@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * (c) BeautyFastCode.com
@@ -34,7 +34,7 @@ class SuiteFixtures extends Fixture implements DependentFixtureInterface
 
         $suites = [
             [
-                'name'  => 'Suite A',
+                'name' => 'Suite A',
                 'decks' => [
                     1,
                     0,
@@ -42,7 +42,7 @@ class SuiteFixtures extends Fixture implements DependentFixtureInterface
                 ],
             ],
             [
-                'name'  => 'Calendar',
+                'name' => 'Calendar',
                 'decks' => [
                     3,
                     4,
@@ -53,14 +53,12 @@ class SuiteFixtures extends Fixture implements DependentFixtureInterface
             ],
         ];
 
-        for ($i = 0; $i < $countSuites; $i++) {
-
+        for ($i = 0; $i < $countSuites; ++$i) {
             $suite = new Suite();
             $suite->setName($suites[$i]['name']);
 
             if (array_key_exists('decks', $suites[$i])) {
                 foreach ($suites[$i]['decks'] as $deckId) {
-
                     /** @var Deck $deck */
                     $deck = $this->getReference(sprintf('%s%s', DeckFixtures::DECK_REFERENCE, $deckId));
                     $suite->addDeck($deck);
