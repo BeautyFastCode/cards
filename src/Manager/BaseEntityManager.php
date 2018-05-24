@@ -54,10 +54,11 @@ abstract class BaseEntityManager implements BaseEntityManagerInterface
      * @param EntityManagerInterface $entityManager    Interface to an entity manager
      * @param FormHelper             $formHelper       Helper for create or update and validate an entity
      */
-    public function __construct(ObjectRepository $entityRepository,
-                                EntityManagerInterface $entityManager,
-                                FormHelper $formHelper)
-    {
+    public function __construct(
+        ObjectRepository $entityRepository,
+        EntityManagerInterface $entityManager,
+        FormHelper $formHelper
+    ) {
         $this->entityRepository = $entityRepository;
         $this->entityManager = $entityManager;
         $this->formHelper = $formHelper;

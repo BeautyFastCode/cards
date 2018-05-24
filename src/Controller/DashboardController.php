@@ -83,10 +83,12 @@ class DashboardController
             ['name' => 'Empty Suite'],
         ];
 
-        return $this->templating->renderResponse('dashboard/index.html.twig',
+        return $this->templating->renderResponse(
+            'dashboard/index.html.twig',
             [
                 'suites' => $suites,
-            ]);
+            ]
+        );
     }
 
     /**
@@ -117,10 +119,12 @@ class DashboardController
             ],
         ];
 
-        return $this->templating->renderResponse('dashboard/show-deck.html.twig',
+        return $this->templating->renderResponse(
+            'dashboard/show-deck.html.twig',
             [
                 'deck' => $deck,
-            ]);
+            ]
+        );
     }
 
     /**

@@ -36,10 +36,11 @@ class DeckManager extends BaseEntityManager
     /**
      * {@inheritdoc}
      */
-    public function __construct(DeckRepository $deckRepository,
-                                EntityManagerInterface $entityManager,
-                                FormHelper $formHelper)
-    {
+    public function __construct(
+        DeckRepository $deckRepository,
+        EntityManagerInterface $entityManager,
+        FormHelper $formHelper
+    ) {
         $this->entityManager = $entityManager;
 
         parent::__construct($deckRepository, $entityManager, $formHelper);

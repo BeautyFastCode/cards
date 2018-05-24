@@ -65,10 +65,11 @@ class SuiteController
      * @param JsonHelper         $jsonHelper         Helper decodes a JSON string to an associative array
      * @param JsonResponseHelper $jsonResponseHelper Helper to generate JSON responses
      */
-    public function __construct(SuiteManager $suiteManager,
-                                JsonHelper $jsonHelper,
-                                JsonResponseHelper $jsonResponseHelper)
-    {
+    public function __construct(
+        SuiteManager $suiteManager,
+        JsonHelper $jsonHelper,
+        JsonResponseHelper $jsonResponseHelper
+    ) {
         $this->suiteManager = $suiteManager;
         $this->jsonHelper = $jsonHelper;
         $this->jsonResponseHelper = $jsonResponseHelper;

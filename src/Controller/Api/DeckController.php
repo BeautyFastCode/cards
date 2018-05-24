@@ -64,10 +64,11 @@ class DeckController
      * @param JsonHelper         $jsonHelper         Helper decodes a JSON string to an associative array
      * @param JsonResponseHelper $jsonResponseHelper Helper to generate JSON responses
      */
-    public function __construct(DeckManager $deckManager,
-                                JsonHelper $jsonHelper,
-                                JsonResponseHelper $jsonResponseHelper)
-    {
+    public function __construct(
+        DeckManager $deckManager,
+        JsonHelper $jsonHelper,
+        JsonResponseHelper $jsonResponseHelper
+    ) {
         $this->deckManager = $deckManager;
         $this->jsonHelper = $jsonHelper;
         $this->jsonResponseHelper = $jsonResponseHelper;

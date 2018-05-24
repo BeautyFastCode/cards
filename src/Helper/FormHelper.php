@@ -53,9 +53,10 @@ class FormHelper
      * @param FormFactoryInterface $formFactory         The factory to create a form
      * @param FormErrorSerializer  $formErrorSerializer Serializes invalid Form instances
      */
-    public function __construct(FormFactoryInterface $formFactory,
-                                FormErrorSerializer $formErrorSerializer)
-    {
+    public function __construct(
+        FormFactoryInterface $formFactory,
+        FormErrorSerializer $formErrorSerializer
+    ) {
         $this->formErrors = [];
         $this->formFactory = $formFactory;
         $this->formErrorSerializer = $formErrorSerializer;
@@ -71,11 +72,12 @@ class FormHelper
      *
      * @return BaseEntityInterface
      */
-    public function submitEntity(string $formType = FormType::class,
-                                 BaseEntityInterface $baseEntity,
-                                 array $data,
-                                 bool $allProperties = true): BaseEntityInterface
-    {
+    public function submitEntity(
+        string $formType,
+        BaseEntityInterface $baseEntity,
+        array $data,
+        bool $allProperties = true
+    ): BaseEntityInterface {
         $form = $this->formFactory->create($formType, $baseEntity);
 
         if ($allProperties) {

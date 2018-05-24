@@ -71,12 +71,14 @@ class LearnController
             ],
         ];
 
-        return $this->templating->renderResponse('learn/index.html.twig',
+        return $this->templating->renderResponse(
+            'learn/index.html.twig',
             [
                 'deck' => $deck,
                 'card' => $card,
                 'state' => $state,
-            ]);
+            ]
+        );
     }
 
     /**
@@ -107,9 +109,11 @@ class LearnController
             ],
         ];
 
-        return $this->templating->renderResponse('learn/summary.html.twig',
+        return $this->templating->renderResponse(
+            'learn/summary.html.twig',
             [
                 'deck' => $deck,
-            ]);
+            ]
+        );
     }
 }

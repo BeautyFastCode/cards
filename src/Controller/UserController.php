@@ -88,10 +88,12 @@ class UserController
      */
     public function forgot(Request $request): Response
     {
-        return $this->templating->renderResponse('user/forgot.html.twig',
+        return $this->templating->renderResponse(
+            'user/forgot.html.twig',
             [
                 'email' => $request->query->get('email'),
-            ]);
+            ]
+        );
     }
 
     /**

@@ -29,10 +29,11 @@ class CardManager extends BaseEntityManager
     /**
      * {@inheritdoc}
      */
-    public function __construct(CardRepository $cardRepository,
-                                EntityManagerInterface $entityManager,
-                                FormHelper $formHelper)
-    {
+    public function __construct(
+        CardRepository $cardRepository,
+        EntityManagerInterface $entityManager,
+        FormHelper $formHelper
+    ) {
         parent::__construct($cardRepository, $entityManager, $formHelper);
     }
 

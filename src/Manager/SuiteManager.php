@@ -36,10 +36,11 @@ class SuiteManager extends BaseEntityManager
     /**
      * {@inheritdoc}
      */
-    public function __construct(SuiteRepository $suiteRepository,
-                                EntityManagerInterface $entityManager,
-                                FormHelper $formHelper)
-    {
+    public function __construct(
+        SuiteRepository $suiteRepository,
+        EntityManagerInterface $entityManager,
+        FormHelper $formHelper
+    ) {
         $this->entityManager = $entityManager;
 
         parent::__construct($suiteRepository, $entityManager, $formHelper);
