@@ -14,7 +14,7 @@ namespace App\Entity\Traits;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * BaseEntityTrait
+ * Provides functionality for BaseEntity class.
  *
  * @author    Bogumił Brzeziński <beautyfastcode@gmail.com>
  * @copyright BeautyFastCode.com
@@ -22,6 +22,8 @@ use Doctrine\ORM\Mapping as ORM;
 trait BaseEntityTrait
 {
     /**
+     * An entity Id.
+     *
      * @var integer
      *
      * @ORM\Id()
@@ -31,7 +33,7 @@ trait BaseEntityTrait
     protected $id;
 
     /**
-     * @return null|int
+     * {@inheritdoc}
      */
     public function getId(): ?int
     {

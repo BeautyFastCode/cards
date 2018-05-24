@@ -15,7 +15,7 @@ use App\Entity\Traits\TimestampableInterface;
 use App\Entity\Traits\TimestampableTrait;
 
 /**
- * TimestampableStub
+ * Stub for Timestampable trait used in specifications.
  *
  * @author    Bogumił Brzeziński <beautyfastcode@gmail.com>
  * @copyright BeautyFastCode.com

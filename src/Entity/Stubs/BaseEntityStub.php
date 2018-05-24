@@ -15,7 +15,7 @@ use App\Entity\Traits\BaseEntityInterface;
 use App\Entity\Traits\BaseEntityTrait;
 
 /**
- * BaseEntityStub
+ * Stub for BaseEntity trait used in specifications.
  *
  * @author    Bogumił Brzeziński <beautyfastcode@gmail.com>
  * @copyright BeautyFastCode.com

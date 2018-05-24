@@ -12,7 +12,7 @@ declare(strict_types = 1);
 namespace App\Entity\Traits;
 
 /**
- * BaseEntityInterface
+ * Contract for BaseEntity class.
  *
  * @author    Bogumił Brzeziński <beautyfastcode@gmail.com>
  * @copyright BeautyFastCode.com
@@ -20,6 +20,8 @@ namespace App\Entity\Traits;
 interface BaseEntityInterface
 {
     /**
+     * Returns an entity Id.
+     *
      * @return null|int
      */
     public function getId(): ?int;

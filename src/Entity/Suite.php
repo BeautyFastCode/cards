@@ -1,5 +1,14 @@
 <?php
 
+declare(strict_types = 1);
+
+/*
+ * (c) BeautyFastCode.com
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -11,6 +20,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
+ * The suite entity.
+ *
  * @ORM\Table(name="suites")
  * @ORM\Entity(repositoryClass="App\Repository\SuiteRepository")
  *
@@ -19,6 +30,8 @@ use Gedmo\Mapping\Annotation as Gedmo;
 class Suite extends BaseEntity implements \JsonSerializable
 {
     /**
+     * The name of an suite.
+     *
      * @var string
      *
      * @ORM\Column(type="string", length=64)
@@ -29,6 +42,7 @@ class Suite extends BaseEntity implements \JsonSerializable
     private $name;
 
     /**
+     * What decks are assigned to this suite.
      * Many Suites has Many Decks.
      *
      * @var Collection
@@ -47,6 +61,8 @@ class Suite extends BaseEntity implements \JsonSerializable
     }
 
     /**
+     * Returns name.
+     *
      * @return null|string
      */
     public function getName(): ?string
@@ -55,6 +71,8 @@ class Suite extends BaseEntity implements \JsonSerializable
     }
 
     /**
+     * Sets name.
+     *
      * @param string $name
      *
      * @return Suite
@@ -67,6 +85,8 @@ class Suite extends BaseEntity implements \JsonSerializable
     }
 
     /**
+     * Checks if the Suite has this deck.
+     *
      * @param Deck $deck
      *
      * @return bool
@@ -81,6 +101,8 @@ class Suite extends BaseEntity implements \JsonSerializable
     }
 
     /**
+     * Adds deck.
+     *
      * @param Deck $deck
      *
      * @return Suite
@@ -98,6 +120,8 @@ class Suite extends BaseEntity implements \JsonSerializable
     }
 
     /**
+     * Removes deck.
+     *
      * @param Deck $deck
      *
      * @return Suite
@@ -114,6 +138,8 @@ class Suite extends BaseEntity implements \JsonSerializable
     }
 
     /**
+     * Returns all decks.
+     *
      * @return Collection
      */
     public function getDecks(): Collection
@@ -122,6 +148,8 @@ class Suite extends BaseEntity implements \JsonSerializable
     }
 
     /**
+     * Returns only decks Ids.
+     *
      * @return array
      */
     public function getDecksIds(): array

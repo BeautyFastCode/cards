@@ -14,7 +14,7 @@ namespace App\Entity\Traits;
 use DateTime;
 
 /**
- * TimestampableInterface
+ * Contract for Timestampable functionality.
  *
  * @author    Bogumił Brzeziński <beautyfastcode@gmail.com>
  * @copyright BeautyFastCode.com
@@ -22,28 +22,28 @@ use DateTime;
 interface TimestampableInterface
 {
     /**
-     * Returns date of the creation in readable format
+     * Returns date of an entity creation in readable format.
      *
      * @return string
      */
     public function getReadableCreatedAt(): string;
 
     /**
-     * Returns date of the update in readable format
+     * Returns date of an entity update in readable format.
      *
      * @return string
      */
     public function getReadableUpdatedAt(): string;
 
     /**
-     * Returns date of the creation
+     * Returns date of an entity creation.
      *
      * @return DateTime|null
      */
     public function getCreatedAt(): ?\DateTime;
 
     /**
-     * Sets date of the creation
+     * Sets date of an entity creation.
      *
      * @param DateTime $createdAt
      *
@@ -52,14 +52,14 @@ interface TimestampableInterface
     public function setCreatedAt(DateTime $createdAt): void;
 
     /**
-     * Returns date of last update
+     * Returns date of an entity last update.
      *
      * @return DateTime|null
      */
     public function getUpdatedAt(): ?\DateTime;
 
     /**
-     * Sets date of last update
+     * Sets date of an entity last update.
      *
      * @param DateTime|null $updatedAt
      *

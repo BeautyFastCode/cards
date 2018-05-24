@@ -14,7 +14,7 @@ namespace App\Entity\Traits;
 use DateTime;
 
 /**
- * SoftDeletableInterface
+ * Contract for SoftDeletable functionality.
  *
  * @author    Bogumił Brzeziński <beautyfastcode@gmail.com>
  * @copyright BeautyFastCode.com
@@ -22,28 +22,28 @@ use DateTime;
 interface SoftDeletableInterface
 {
     /**
-     * Returns true if entity is deleted
+     * Returns true if an entity is deleted.
      *
      * @return bool
      */
     public function isDeleted():bool;
 
     /**
-     * Returns true if entity is not deleted
+     * Returns true if an entity is not deleted.
      *
      * @return bool
      */
     public function isNotDeleted():bool;
 
     /**
-     * Recover an entity
+     * Recover an entity.
      *
      * @return void
      */
     public function recover(): void;
 
     /**
-     * Sets date of deletion
+     * Sets date of an entity deletion.
      *
      * @param DateTime $deletedAt
      *
@@ -52,7 +52,7 @@ interface SoftDeletableInterface
     public function setDeletedAt(DateTime $deletedAt): void;
 
     /**
-     * Returns date of deletion
+     * Returns date of an entity deletion.
      *
      * @return DateTime|null
      */

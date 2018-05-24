@@ -20,7 +20,7 @@ use App\Entity\Traits\TimestampableTrait;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * BaseEntity
+ * Provides base functionality for an entity.
  *
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false, hardDelete=true)
  *
@@ -30,17 +30,17 @@ use Gedmo\Mapping\Annotation as Gedmo;
 abstract class BaseEntity implements BaseEntityInterface, SoftDeletableInterface, TimestampableInterface
 {
     /**
-     * Unique identifier - id field
+     * Unique identifier - id field.
      */
     use BaseEntityTrait;
 
     /**
-     * SoftDeletable behavior - deletedAt field
+     * SoftDeletable behavior - deletedAt field.
      */
     use SoftDeletableTrait;
 
     /**
-     * Timestampable behavior - createdAt and updatedAt fields
+     * Timestampable behavior - createdAt and updatedAt fields.
      */
     use TimestampableTrait;
 }

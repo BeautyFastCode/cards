@@ -15,7 +15,7 @@ use App\Entity\Traits\SoftDeletableInterface;
 use App\Entity\Traits\SoftDeletableTrait;
 
 /**
- * SoftDeletableStub
+ * Stub for SoftDeletable trait used in specifications.
  *
  * @author    Bogumił Brzeziński <beautyfastcode@gmail.com>
  * @copyright BeautyFastCode.com

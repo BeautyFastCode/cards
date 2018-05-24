@@ -17,7 +17,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * TimestampableTrait
+ * Provides Timestampable functionality.
  *
  * @author    Bogumił Brzeziński <beautyfastcode@gmail.com>
  * @copyright BeautyFastCode.com
@@ -25,29 +25,27 @@ use Doctrine\ORM\Mapping as ORM;
 trait TimestampableTrait
 {
     /**
-     * Datetime when an entity has been created
+     * Datetime when an entity has been created.
      *
      * @var null|DateTime
-     * @ORM\Column(type="datetime", nullable=true)
      *
+     * @ORM\Column(type="datetime", nullable=true)
      * @Gedmo\Timestampable(on="create")
      */
     protected $createdAt;
 
     /**
-     * Datetime when an entity has been updated
+     * Datetime when an entity has been updated.
      *
      * @var null|DateTime
-     * @ORM\Column(type="datetime", nullable=true)
      *
+     * @ORM\Column(type="datetime", nullable=true)
      * @Gedmo\Timestampable(on="update")
      */
     protected $updatedAt;
 
     /**
-     * Returns date of the creation in readable format
-     *
-     * @return string
+     * {@inheritdoc}
      */
     public function getReadableCreatedAt(): string
     {
@@ -55,9 +53,7 @@ trait TimestampableTrait
     }
 
     /**
-     * Returns date of the update in readable format
-     *
-     * @return string
+     * {@inheritdoc}
      */
     public function getReadableUpdatedAt(): string
     {
@@ -65,9 +61,7 @@ trait TimestampableTrait
     }
 
     /**
-     * Returns date of the creation
-     *
-     * @return DateTime|null
+     * {@inheritdoc}
      */
     public function getCreatedAt(): ?\DateTime
     {
@@ -75,11 +69,7 @@ trait TimestampableTrait
     }
 
     /**
-     * Sets date of the creation
-     *
-     * @param DateTime $createdAt
-     *
-     * @return void
+     * {@inheritdoc}
      */
     public function setCreatedAt(DateTime $createdAt): void
     {
@@ -89,9 +79,7 @@ trait TimestampableTrait
     }
 
     /**
-     * Returns date of last update
-     *
-     * @return DateTime|null
+     * {@inheritdoc}
      */
     public function getUpdatedAt(): ?\DateTime
     {
@@ -99,11 +87,7 @@ trait TimestampableTrait
     }
 
     /**
-     * Sets date of last update
-     *
-     * @param DateTime|null $updatedAt
-     *
-     * @return void
+     * {@inheritdoc}
      */
     public function setUpdatedAt($updatedAt): void
     {

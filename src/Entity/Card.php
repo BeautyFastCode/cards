@@ -1,5 +1,14 @@
 <?php
 
+declare(strict_types = 1);
+
+/*
+ * (c) BeautyFastCode.com
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -9,6 +18,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
+ * The card entity.
+ *
  * @ORM\Table(name="cards")
  * @ORM\Entity(repositoryClass="App\Repository\CardRepository")
  *
@@ -17,6 +28,8 @@ use Gedmo\Mapping\Annotation as Gedmo;
 class Card extends BaseEntity implements \JsonSerializable
 {
     /**
+     * The question an user is responding to.
+     *
      * @var string
      *
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -26,6 +39,8 @@ class Card extends BaseEntity implements \JsonSerializable
     private $question;
 
     /**
+     * The correct answer to the question.
+     *
      * @var string
      *
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -35,6 +50,7 @@ class Card extends BaseEntity implements \JsonSerializable
     private $answer;
 
     /**
+     * To which deck this card is assigned.
      * Many Cards have One Deck.
      *
      * @var Deck
@@ -47,6 +63,8 @@ class Card extends BaseEntity implements \JsonSerializable
     private $deck;
 
     /**
+     * Returns question.
+     *
      * @return null|string
      */
     public function getQuestion(): ?string
@@ -55,6 +73,8 @@ class Card extends BaseEntity implements \JsonSerializable
     }
 
     /**
+     * Sets question.
+     *
      * @param null|string $question
      *
      * @return Card
@@ -67,6 +87,8 @@ class Card extends BaseEntity implements \JsonSerializable
     }
 
     /**
+     * Returns answer.
+     *
      * @return null|string
      */
     public function getAnswer(): ?string
@@ -75,6 +97,8 @@ class Card extends BaseEntity implements \JsonSerializable
     }
 
     /**
+     * Sets answer.
+     *
      * @param null|string $answer
      *
      * @return Card
@@ -87,6 +111,8 @@ class Card extends BaseEntity implements \JsonSerializable
     }
 
     /**
+     * Returns deck.
+     *
      * @return null|Deck
      */
     public function getDeck(): ?Deck
@@ -95,6 +121,8 @@ class Card extends BaseEntity implements \JsonSerializable
     }
 
     /**
+     * Sets deck.
+     *
      * @param Deck $deck
      *
      * @return Card

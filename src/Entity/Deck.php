@@ -1,5 +1,14 @@
 <?php
 
+declare(strict_types = 1);
+
+/*
+ * (c) BeautyFastCode.com
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -11,6 +20,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
+ * The deck entity.
+ *
  * @ORM\Table(name="decks")
  * @ORM\Entity(repositoryClass="App\Repository\DeckRepository")
  *
@@ -19,6 +30,8 @@ use Gedmo\Mapping\Annotation as Gedmo;
 class Deck extends BaseEntity implements \JsonSerializable
 {
     /**
+     * The name of an deck.
+     *
      * @var string
      *
      * @ORM\Column(type="string", length=64)
@@ -29,6 +42,7 @@ class Deck extends BaseEntity implements \JsonSerializable
     private $name;
 
     /**
+     * What cards are assigned to this deck.
      * One Deck has Many Cards.
      *
      * @var Collection
@@ -38,6 +52,7 @@ class Deck extends BaseEntity implements \JsonSerializable
     private $cards;
 
     /**
+     * To which suites this deck is assigned.
      * Many Decks has Many Suites.
      *
      * @var Collection
@@ -47,7 +62,7 @@ class Deck extends BaseEntity implements \JsonSerializable
     private $suites;
 
     /**
-     * Class constructor
+     * Class constructor.
      */
     public function __construct()
     {
@@ -56,6 +71,8 @@ class Deck extends BaseEntity implements \JsonSerializable
     }
 
     /**
+     * Returns name.
+     *
      * @return null|string
      */
     public function getName(): ?string
@@ -64,6 +81,8 @@ class Deck extends BaseEntity implements \JsonSerializable
     }
 
     /**
+     * Sets name.
+     *
      * @param string $name
      *
      * @return Deck
@@ -76,6 +95,8 @@ class Deck extends BaseEntity implements \JsonSerializable
     }
 
     /**
+     * Adds card.
+     *
      * @param Card $card
      *
      * @return Deck
@@ -93,6 +114,8 @@ class Deck extends BaseEntity implements \JsonSerializable
     }
 
     /**
+     * Removes card.
+     *
      * @param Card $card
      *
      * @return Deck
@@ -109,6 +132,8 @@ class Deck extends BaseEntity implements \JsonSerializable
     }
 
     /**
+     * Returns all cards.
+     *
      * @return Collection
      */
     public function getCards(): Collection
@@ -117,6 +142,8 @@ class Deck extends BaseEntity implements \JsonSerializable
     }
 
     /**
+     * Returns only cards Ids.
+     *
      * @return array
      */
     public function getCardsIds(): array
@@ -135,6 +162,8 @@ class Deck extends BaseEntity implements \JsonSerializable
     }
 
     /**
+     * Adds suite.
+     *
      * @param Suite $suite
      *
      * @return Deck
@@ -152,6 +181,8 @@ class Deck extends BaseEntity implements \JsonSerializable
     }
 
     /**
+     * Removes suite.
+     *
      * @param Suite $suite
      *
      * @return Deck
@@ -169,6 +200,8 @@ class Deck extends BaseEntity implements \JsonSerializable
     }
 
     /**
+     * Returns all suites.
+     *
      * @return Collection
      */
     public function getSuites(): Collection
@@ -177,6 +210,8 @@ class Deck extends BaseEntity implements \JsonSerializable
     }
 
     /**
+     * Returns only suites Ids.
+     *
      * @return array
      */
     public function getSuitesIds(): array

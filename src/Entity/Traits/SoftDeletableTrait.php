@@ -15,7 +15,7 @@ use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * SoftDeletableTrait
+ * Provides SoftDeletable functionality.
  *
  * @author    Bogumił Brzeziński <beautyfastcode@gmail.com>
  * @copyright BeautyFastCode.com
@@ -23,7 +23,7 @@ use Doctrine\ORM\Mapping as ORM;
 trait SoftDeletableTrait
 {
     /**
-     * Datetime when an entity has been removed
+     * Datetime when an entity has been removed.
      *
      * @var DateTime|null
      *
@@ -32,9 +32,7 @@ trait SoftDeletableTrait
     protected $deletedAt;
 
     /**
-     * Returns true if entity is deleted
-     *
-     * @return bool
+     * {@inheritdoc}
      */
     public function isDeleted():bool
     {
@@ -42,9 +40,7 @@ trait SoftDeletableTrait
     }
 
     /**
-     * Returns true if entity is not deleted
-     *
-     * @return bool
+     * {@inheritdoc}
      */
     public function isNotDeleted():bool
     {
@@ -52,9 +48,7 @@ trait SoftDeletableTrait
     }
 
     /**
-     * Recover an entity
-     *
-     * @return void
+     * {@inheritdoc}
      */
     public function recover(): void
     {
@@ -64,11 +58,7 @@ trait SoftDeletableTrait
     }
 
     /**
-     * Sets date of deletion
-     *
-     * @param DateTime $deletedAt
-     *
-     * @return void
+     * {@inheritdoc}
      */
     public function setDeletedAt(DateTime $deletedAt): void
     {
@@ -78,9 +68,7 @@ trait SoftDeletableTrait
     }
 
     /**
-     * Returns date of deletion
-     *
-     * @return DateTime|null
+     * {@inheritdoc}
      */
     public function getDeletedAt(): ?DateTime
     {
