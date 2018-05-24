@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * (c) BeautyFastCode.com
@@ -25,12 +25,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class SuiteTypeSpec extends ObjectBehavior
 {
-    function it_is_initializable()
+    public function it_is_initializable()
     {
         $this->shouldHaveType(SuiteType::class);
     }
 
-    function it_can_build_a_form(FormBuilderInterface $builder)
+    public function it_can_build_a_form(FormBuilderInterface $builder)
     {
         // Promises & Expectations
         $builder
@@ -48,12 +48,12 @@ class SuiteTypeSpec extends ObjectBehavior
         $this->buildForm($builder, []);
     }
 
-    function it_can_correctly_configure_options(OptionsResolver $resolver)
+    public function it_can_correctly_configure_options(OptionsResolver $resolver)
     {
         // Expectations
         $resolver
             ->setDefaults([
-                'data_class'      => Suite::class,
+                'data_class' => Suite::class,
                 'csrf_protection' => false,
             ])
             ->shouldBeCalledTimes(1);

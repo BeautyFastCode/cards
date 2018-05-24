@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * (c) BeautyFastCode.com
@@ -25,17 +25,17 @@ use PhpSpec\ObjectBehavior;
  */
 class TimestampableTraitSpec extends ObjectBehavior
 {
-    function let()
+    public function let()
     {
         $this->beAnInstanceOf(TimestampableStub::class);
     }
 
-    function it_is_timestampable()
+    public function it_is_timestampable()
     {
         $this->shouldImplement(TimestampableInterface::class);
     }
 
-    function it_have_created_at_property()
+    public function it_have_created_at_property()
     {
         $datetime = new DateTime();
 
@@ -50,8 +50,8 @@ class TimestampableTraitSpec extends ObjectBehavior
             ->getCreatedAt()
             ->shouldReturn($datetime);
     }
-    
-    function it_have_updated_at_property()
+
+    public function it_have_updated_at_property()
     {
         $datetime = new DateTime();
 
@@ -67,7 +67,7 @@ class TimestampableTraitSpec extends ObjectBehavior
             ->shouldReturn($datetime);
     }
 
-    function it_can_returns_date_of_creation_in_readable_format()
+    public function it_can_returns_date_of_creation_in_readable_format()
     {
         $readable = '17/05/2018 14:18';
 
@@ -83,7 +83,7 @@ class TimestampableTraitSpec extends ObjectBehavior
             ->shouldReturn($readable);
     }
 
-    function it_can_returns_date_of_update_in_readable_format()
+    public function it_can_returns_date_of_update_in_readable_format()
     {
         $readable = '17/05/2018 14:18';
 

@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * (c) BeautyFastCode.com
@@ -28,7 +28,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class DeckControllerSpec extends ObjectBehavior
 {
-    function let(
+    public function let(
         DeckManager $deckManager,
         JsonHelper $jsonHelper,
         JsonResponseHelper $jsonResponseHelper)
@@ -36,12 +36,12 @@ class DeckControllerSpec extends ObjectBehavior
         $this->beConstructedWith($deckManager, $jsonHelper, $jsonResponseHelper);
     }
 
-    function it_is_initializable()
+    public function it_is_initializable()
     {
         $this->shouldHaveType(DeckController::class);
     }
 
-    function it_should_respond_to_read_action(
+    public function it_should_respond_to_read_action(
         DeckManager $deckManager,
         Deck $deck,
         JsonResponseHelper $jsonResponseHelper)
@@ -60,7 +60,7 @@ class DeckControllerSpec extends ObjectBehavior
             ->shouldHaveType(JsonResponse::class);
     }
 
-    function it_should_respond_to_list_action(
+    public function it_should_respond_to_list_action(
         DeckManager $deckManager,
         JsonResponseHelper $jsonResponseHelper)
     {
@@ -79,7 +79,7 @@ class DeckControllerSpec extends ObjectBehavior
             ->shouldHaveType(JsonResponse::class);
     }
 
-    function it_should_respond_to_create_action(
+    public function it_should_respond_to_create_action(
         Request $request,
         JsonHelper $jsonHelper,
         DeckManager $deckManager,
@@ -88,7 +88,7 @@ class DeckControllerSpec extends ObjectBehavior
     {
         $jsonContent = '{\n "name":"New Deck"\n}';
         $data = [
-            'name'  => 'New Deck'
+            'name' => 'New Deck',
         ];
 
         $request
@@ -112,7 +112,7 @@ class DeckControllerSpec extends ObjectBehavior
             ->shouldHaveType(JsonResponse::class);
     }
 
-    function it_should_respond_to_update_all_action(
+    public function it_should_respond_to_update_all_action(
         Request $request,
         JsonHelper $jsonHelper,
         DeckManager $deckManager,
@@ -122,7 +122,7 @@ class DeckControllerSpec extends ObjectBehavior
         $id = 1;
         $jsonContent = '{\n "name":"Deck A, version 2"\n}';
         $data = [
-            'name'  => 'Deck A, version 2'
+            'name' => 'Deck A, version 2',
         ];
 
         $request
@@ -146,7 +146,7 @@ class DeckControllerSpec extends ObjectBehavior
             ->shouldHaveType(JsonResponse::class);
     }
 
-    function it_should_respond_to_update_selected_action(
+    public function it_should_respond_to_update_selected_action(
         Request $request,
         JsonHelper $jsonHelper,
         DeckManager $deckManager,
@@ -156,7 +156,7 @@ class DeckControllerSpec extends ObjectBehavior
         $id = 1;
         $jsonContent = '{\n "name":"Deck A, version 2"\n}';
         $data = [
-            'name'  => 'Deck A, version 2'
+            'name' => 'Deck A, version 2',
         ];
 
         $request
@@ -180,7 +180,7 @@ class DeckControllerSpec extends ObjectBehavior
             ->shouldHaveType(JsonResponse::class);
     }
 
-    function it_should_respond_to_delete_action(
+    public function it_should_respond_to_delete_action(
         DeckManager $deckManager,
         JsonResponseHelper $jsonResponseHelper)
     {

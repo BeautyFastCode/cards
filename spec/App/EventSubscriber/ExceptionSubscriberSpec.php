@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * (c) BeautyFastCode.com
@@ -29,22 +29,22 @@ use Symfony\Component\HttpKernel\KernelEvents;
  */
 class ExceptionSubscriberSpec extends ObjectBehavior
 {
-    function let(JsonResponseHelper $jsonResponseHelper)
+    public function let(JsonResponseHelper $jsonResponseHelper)
     {
         $this->beConstructedWith($jsonResponseHelper);
     }
 
-    function it_is_initializable()
+    public function it_is_initializable()
     {
         $this->shouldHaveType(ExceptionSubscriber::class);
     }
 
-    function it_should_be_event_subscriber()
+    public function it_should_be_event_subscriber()
     {
         $this->shouldImplement(EventSubscriberInterface::class);
     }
 
-    function it_should_subscribe_kernel_exception_event()
+    public function it_should_subscribe_kernel_exception_event()
     {
         $this::getSubscribedEvents()
             ->shouldReturn([
@@ -61,7 +61,7 @@ class ExceptionSubscriberSpec extends ObjectBehavior
             ]);
     }
 
-    function it_should_handle_not_found_exception(
+    public function it_should_handle_not_found_exception(
         GetResponseForExceptionEvent $event,
         EntityNotFoundException $exception,
         JsonResponseHelper $jsonResponseHelper,
@@ -82,7 +82,7 @@ class ExceptionSubscriberSpec extends ObjectBehavior
         $this->onNotFoundException($event);
     }
 
-    function it_should_handle_form_is_not_valid(
+    public function it_should_handle_form_is_not_valid(
         GetResponseForExceptionEvent $event,
         FormIsNotValidException $exception,
         JsonResponseHelper $jsonResponseHelper,

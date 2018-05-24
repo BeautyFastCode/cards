@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * (c) BeautyFastCode.com
@@ -28,7 +28,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CardControllerSpec extends ObjectBehavior
 {
-    function let(
+    public function let(
         CardManager $cardManager,
         JsonHelper $jsonHelper,
         JsonResponseHelper $jsonResponseHelper)
@@ -36,12 +36,12 @@ class CardControllerSpec extends ObjectBehavior
         $this->beConstructedWith($cardManager, $jsonHelper, $jsonResponseHelper);
     }
 
-    function it_is_initializable()
+    public function it_is_initializable()
     {
         $this->shouldHaveType(CardController::class);
     }
 
-    function it_should_respond_to_read_action(
+    public function it_should_respond_to_read_action(
         CardManager $cardManager,
         Card $card,
         JsonResponseHelper $jsonResponseHelper)
@@ -61,7 +61,7 @@ class CardControllerSpec extends ObjectBehavior
             ->shouldHaveType(JsonResponse::class);
     }
 
-    function it_should_respond_to_list_action(
+    public function it_should_respond_to_list_action(
         CardManager $cardManager,
         JsonResponseHelper $jsonResponseHelper)
     {
@@ -80,7 +80,7 @@ class CardControllerSpec extends ObjectBehavior
             ->shouldHaveType(JsonResponse::class);
     }
 
-    function it_should_respond_to_create_action(
+    public function it_should_respond_to_create_action(
         Request $request,
         JsonHelper $jsonHelper,
         CardManager $cardManager,
@@ -89,8 +89,8 @@ class CardControllerSpec extends ObjectBehavior
     {
         $jsonContent = '{"question":"Where are you?","answer":"I\'m here"}';
         $data = [
-            'question'  => 'Where are you?',
-            'answer' => 'I\'m here'
+            'question' => 'Where are you?',
+            'answer' => 'I\'m here',
         ];
 
         $request
@@ -114,7 +114,7 @@ class CardControllerSpec extends ObjectBehavior
             ->shouldHaveType(JsonResponse::class);
     }
 
-    function it_should_respond_to_update_all_action(
+    public function it_should_respond_to_update_all_action(
         Request $request,
         JsonHelper $jsonHelper,
         CardManager $cardManager,
@@ -124,8 +124,8 @@ class CardControllerSpec extends ObjectBehavior
         $id = 1;
         $jsonContent = '{"question":"Where are you?","answer":"I\'m here"}';
         $data = [
-            'question'  => 'Where are you?',
-            'answer' => 'I\'m here'
+            'question' => 'Where are you?',
+            'answer' => 'I\'m here',
         ];
 
         $request
@@ -149,7 +149,7 @@ class CardControllerSpec extends ObjectBehavior
             ->shouldHaveType(JsonResponse::class);
     }
 
-     function it_should_respond_to_update_selected_action(
+    public function it_should_respond_to_update_selected_action(
         Request $request,
         JsonHelper $jsonHelper,
         CardManager $cardManager,
@@ -159,8 +159,8 @@ class CardControllerSpec extends ObjectBehavior
         $id = 1;
         $jsonContent = '{"question":"Where are you?","answer":"I\'m here"}';
         $data = [
-            'question'  => 'Where are you?',
-            'answer' => 'I\'m here'
+            'question' => 'Where are you?',
+            'answer' => 'I\'m here',
         ];
 
         $request
@@ -184,7 +184,7 @@ class CardControllerSpec extends ObjectBehavior
             ->shouldHaveType(JsonResponse::class);
     }
 
-    function it_should_respond_to_delete_action(
+    public function it_should_respond_to_delete_action(
         CardManager $cardManager,
         JsonResponseHelper $jsonResponseHelper)
     {

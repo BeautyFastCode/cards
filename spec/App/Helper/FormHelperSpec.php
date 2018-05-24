@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * (c) BeautyFastCode.com
@@ -28,19 +28,19 @@ use Symfony\Component\Form\FormInterface;
  */
 class FormHelperSpec extends ObjectBehavior
 {
-    function let(
+    public function let(
         FormFactoryInterface $formFactory,
         FormErrorSerializer $formErrorSerializer)
     {
         $this->beConstructedWith($formFactory, $formErrorSerializer);
     }
 
-    function it_is_initializable()
+    public function it_is_initializable()
     {
         $this->shouldHaveType(FormHelper::class);
     }
 
-    function it_can_submit_an_entity(
+    public function it_can_submit_an_entity(
         FormFactoryInterface $formFactory,
         FormInterface $form,
         BaseEntityInterface $baseEntity)
@@ -68,7 +68,7 @@ class FormHelperSpec extends ObjectBehavior
             ->shouldReturn($baseEntity);
     }
 
-    function it_can_submit_an_entity_selected_properties(
+    public function it_can_submit_an_entity_selected_properties(
         FormFactoryInterface $formFactory,
         FormInterface $form,
         BaseEntityInterface $baseEntity)
@@ -97,7 +97,7 @@ class FormHelperSpec extends ObjectBehavior
             ->shouldReturn($baseEntity);
     }
 
-    function it_can_submit_and_validate_an_entity(
+    public function it_can_submit_and_validate_an_entity(
         FormErrorSerializer $formErrorSerializer,
         FormFactoryInterface $formFactory,
         FormInterface $form,
@@ -126,7 +126,7 @@ class FormHelperSpec extends ObjectBehavior
             ->duringSubmitEntity(FormType::class, $baseEntity, $data);
     }
 
-    function it_can_get_form_errors()
+    public function it_can_get_form_errors()
     {
         $this
             ->getErrors()

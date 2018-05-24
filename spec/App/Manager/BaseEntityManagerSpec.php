@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * (c) BeautyFastCode.com
@@ -30,7 +30,7 @@ use Symfony\Component\Form\Extension\Core\Type\FormType;
  */
 class BaseEntityManagerSpec extends ObjectBehavior
 {
-    function let(
+    public function let(
         ObjectRepository $entityRepository,
         EntityManagerInterface $entityManager,
         FormHelper $formHelper)
@@ -43,12 +43,12 @@ class BaseEntityManagerSpec extends ObjectBehavior
             $formHelper);
     }
 
-    function it_have_base_interface()
+    public function it_have_base_interface()
     {
         $this->shouldImplement(BaseEntityManagerInterface::class);
     }
 
-    function it_can_read_an_entity(
+    public function it_can_read_an_entity(
         ObjectRepository $entityRepository,
         BaseEntityInterface $baseEntity)
     {
@@ -61,7 +61,7 @@ class BaseEntityManagerSpec extends ObjectBehavior
             ->shouldReturn($baseEntity);
     }
 
-    function it_can_trow_exception_when_not_find_an_entity(
+    public function it_can_trow_exception_when_not_find_an_entity(
         ObjectRepository $entityRepository)
     {
         $entityRepository
@@ -73,18 +73,18 @@ class BaseEntityManagerSpec extends ObjectBehavior
             ->duringRead(1000);
     }
 
-    function it_can_find_all_entities(ObjectRepository $entityRepository)
+    public function it_can_find_all_entities(ObjectRepository $entityRepository)
     {
         $entityRepository
             ->findAll()
-            ->willReturn([]);;
+            ->willReturn([]);
 
         $this
             ->list()
             ->shouldBeArray();
     }
 
-    function it_can_create_an_entity(
+    public function it_can_create_an_entity(
         EntityManagerInterface $entityManager,
         FormHelper $formHelper,
         BaseEntityInterface $baseEntity,
@@ -116,7 +116,7 @@ class BaseEntityManagerSpec extends ObjectBehavior
             ->create($data);
     }
 
-    function it_can_update_properties_in_an_entity(
+    public function it_can_update_properties_in_an_entity(
         FormHelper $formHelper,
         ObjectRepository $entityRepository,
         BaseEntityInterface $baseEntity,
@@ -149,12 +149,11 @@ class BaseEntityManagerSpec extends ObjectBehavior
             ->update($id, $data);
     }
 
-    function it_can_delete_an_entity(
+    public function it_can_delete_an_entity(
         EntityManagerInterface $entityManager,
         ObjectRepository $entityRepository,
         BaseEntityInterface $baseEntity)
     {
-
         $entityRepository
             ->findOneBy(['id' => 1])
             ->willReturn($baseEntity);
@@ -170,7 +169,7 @@ class BaseEntityManagerSpec extends ObjectBehavior
         $this->delete(1);
     }
 
-    function it_can_get_form_errors(FormHelper $formHelper)
+    public function it_can_get_form_errors(FormHelper $formHelper)
     {
         $formHelper
             ->getErrors()

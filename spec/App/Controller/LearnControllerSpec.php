@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * (c) BeautyFastCode.com
@@ -24,35 +24,35 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class LearnControllerSpec extends ObjectBehavior
 {
-    function let(EngineInterface $templating)
+    public function let(EngineInterface $templating)
     {
         $this->beConstructedWith($templating);
     }
 
-    function it_is_initializable()
+    public function it_is_initializable()
     {
         $this->shouldHaveType(LearnController::class);
     }
 
-    function it_should_respond_to_index_action(
+    public function it_should_respond_to_index_action(
         EngineInterface $templating,
         Response $response)
     {
         $deck = [
-            'name'       => 'Welcome Deck',
+            'name' => 'Welcome Deck',
             'background' => 'bg-success',
-            'cards'      => [
+            'cards' => [
                 [
                     'front' => 'Front Card',
-                    'back'  => 'Back Card',
+                    'back' => 'Back Card',
                 ],
                 [
                     'front' => 'How are you?',
-                    'back'  => 'I\'m fine.',
+                    'back' => 'I\'m fine.',
                 ],
                 [
                     'front' => 'What colour do you like?',
-                    'back'  => 'I like the red cherry.',
+                    'back' => 'I like the red cherry.',
                 ],
             ],
         ];
@@ -62,7 +62,7 @@ class LearnControllerSpec extends ObjectBehavior
         $templating
             ->renderResponse('learn/index.html.twig',
                 [
-                    'deck'  => $deck,
+                    'deck' => $deck,
                     'card' => $card,
                     'state' => $state,
                 ])
@@ -73,25 +73,25 @@ class LearnControllerSpec extends ObjectBehavior
             ->shouldHaveType(Response::class);
     }
 
-    function it_should_respond_to_learn_summary_action(
+    public function it_should_respond_to_learn_summary_action(
         EngineInterface $templating,
         Response $response)
     {
         $deck = [
-            'name'       => 'Welcome Deck',
+            'name' => 'Welcome Deck',
             'background' => 'bg-success',
-            'cards'      => [
+            'cards' => [
                 [
                     'front' => 'Front Card',
-                    'back'  => 'Back Card',
+                    'back' => 'Back Card',
                 ],
                 [
                     'front' => 'How are you?',
-                    'back'  => 'I\'m fine.',
+                    'back' => 'I\'m fine.',
                 ],
                 [
                     'front' => 'What colour do you like?',
-                    'back'  => 'I like the red cherry.',
+                    'back' => 'I like the red cherry.',
                 ],
             ],
         ];

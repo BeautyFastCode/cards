@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * (c) BeautyFastCode.com
@@ -22,19 +22,19 @@ use PhpSpec\ObjectBehavior;
  */
 class JsonHelperSpec extends ObjectBehavior
 {
-    function it_is_initializable()
+    public function it_is_initializable()
     {
         $this->shouldHaveType(JsonHelper::class);
     }
 
-    function it_can_decode_json_to_array()
+    public function it_can_decode_json_to_array()
     {
         $this
             ->decode('{}')
             ->shouldBeArray();
     }
 
-    function it_can_decode_json_to_array_2()
+    public function it_can_decode_json_to_array_2()
     {
         $jsonContent = '{"name":"New Suite"}';
         $data = [

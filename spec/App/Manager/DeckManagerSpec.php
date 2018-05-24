@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * (c) BeautyFastCode.com
@@ -8,6 +8,7 @@ declare(strict_types = 1);
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace spec\App\Manager;
 
 use App\Entity\Deck;
@@ -29,7 +30,7 @@ use PhpSpec\ObjectBehavior;
  */
 class DeckManagerSpec extends ObjectBehavior
 {
-    function let(DeckRepository $deckRepository,
+    public function let(DeckRepository $deckRepository,
                  EntityManagerInterface $entityManager,
                  FormHelper $formHelper)
     {
@@ -39,12 +40,12 @@ class DeckManagerSpec extends ObjectBehavior
                 $formHelper);
     }
 
-    function it_is_initializable()
+    public function it_is_initializable()
     {
         $this->shouldHaveType(DeckManager::class);
     }
 
-    function it_can_read_one_deck(
+    public function it_can_read_one_deck(
         DeckRepository $deckRepository,
         Deck $deck)
     {
@@ -57,7 +58,7 @@ class DeckManagerSpec extends ObjectBehavior
             ->shouldReturn($deck);
     }
 
-    function it_can_trow_exception_when_not_find_deck(DeckRepository $deckRepository)
+    public function it_can_trow_exception_when_not_find_deck(DeckRepository $deckRepository)
     {
         $deckRepository
             ->findOneBy(['id' => 1000])
@@ -68,18 +69,18 @@ class DeckManagerSpec extends ObjectBehavior
             ->duringRead(1000);
     }
 
-    function it_can_find_all_decks(DeckRepository $deckRepository)
+    public function it_can_find_all_decks(DeckRepository $deckRepository)
     {
         $deckRepository
             ->findAll()
-            ->willReturn([]);;
+            ->willReturn([]);
 
         $this
             ->list()
             ->shouldBeArray();
     }
 
-    function it_can_create_deck(
+    public function it_can_create_deck(
         EntityManagerInterface $entityManager,
         DeckRepository $deckRepository,
         Deck $deck,
@@ -109,10 +110,9 @@ class DeckManagerSpec extends ObjectBehavior
 
         $this
             ->create($data);
-
     }
 
-    function it_can_update_properties_in_the_deck(
+    public function it_can_update_properties_in_the_deck(
         EntityManagerInterface $entityManager,
         DeckRepository $deckRepository,
         FormHelper $formHelper,
@@ -145,7 +145,7 @@ class DeckManagerSpec extends ObjectBehavior
             ->update($id, $data);
     }
 
-    function it_can_delete_deck(
+    public function it_can_delete_deck(
         EntityManagerInterface $entityManager,
         DeckRepository $deckRepository,
         Deck $deck)
@@ -177,7 +177,7 @@ class DeckManagerSpec extends ObjectBehavior
         $this->delete(1);
     }
 
-    function it_can_get_form_errors(FormHelper $formHelper)
+    public function it_can_get_form_errors(FormHelper $formHelper)
     {
         $formHelper
             ->getErrors()

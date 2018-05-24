@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * (c) BeautyFastCode.com
@@ -23,17 +23,17 @@ use PhpSpec\ObjectBehavior;
  */
 class BaseEntityTraitSpec extends ObjectBehavior
 {
-    function let()
+    public function let()
     {
         $this->beAnInstanceOf(BaseEntityTraitStub::class);
     }
 
-    function it_have_base_interface()
+    public function it_have_base_interface()
     {
         $this->shouldImplement(BaseEntityInterface::class);
     }
 
-    function it_have_id_property()
+    public function it_have_id_property()
     {
         $this->getId()->shouldReturn(null);
     }

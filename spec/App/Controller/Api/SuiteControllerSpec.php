@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * (c) BeautyFastCode.com
@@ -28,7 +28,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class SuiteControllerSpec extends ObjectBehavior
 {
-    function let(
+    public function let(
         SuiteManager $suiteManager,
         JsonHelper $jsonHelper,
         JsonResponseHelper $jsonResponseHelper)
@@ -36,12 +36,12 @@ class SuiteControllerSpec extends ObjectBehavior
         $this->beConstructedWith($suiteManager, $jsonHelper, $jsonResponseHelper);
     }
 
-    function it_is_initializable()
+    public function it_is_initializable()
     {
         $this->shouldHaveType(SuiteController::class);
     }
 
-    function it_should_respond_to_read_action(
+    public function it_should_respond_to_read_action(
         SuiteManager $suiteManager,
         Suite $suite,
         JsonResponseHelper $jsonResponseHelper)
@@ -61,7 +61,7 @@ class SuiteControllerSpec extends ObjectBehavior
             ->shouldHaveType(JsonResponse::class);
     }
 
-    function it_should_respond_to_list_action(
+    public function it_should_respond_to_list_action(
         SuiteManager $suiteManager,
         JsonResponseHelper $jsonResponseHelper)
     {
@@ -80,7 +80,7 @@ class SuiteControllerSpec extends ObjectBehavior
             ->shouldHaveType(JsonResponse::class);
     }
 
-    function it_should_respond_to_create_action(
+    public function it_should_respond_to_create_action(
         Request $request,
         JsonHelper $jsonHelper,
         SuiteManager $suiteManager,
@@ -89,7 +89,7 @@ class SuiteControllerSpec extends ObjectBehavior
     {
         $jsonContent = '{\n "name":"New Suite"\n}';
         $data = [
-            'name'  => 'New Suite'
+            'name' => 'New Suite',
         ];
 
         $request
@@ -113,7 +113,7 @@ class SuiteControllerSpec extends ObjectBehavior
             ->shouldHaveType(JsonResponse::class);
     }
 
-    function it_should_respond_to_update_all_action(
+    public function it_should_respond_to_update_all_action(
         Request $request,
         JsonHelper $jsonHelper,
         SuiteManager $suiteManager,
@@ -123,7 +123,7 @@ class SuiteControllerSpec extends ObjectBehavior
         $id = 1;
         $jsonContent = '{\n "name":"Suite A, version 2"\n}';
         $data = [
-            'name'  => 'Suite A, version 2'
+            'name' => 'Suite A, version 2',
         ];
 
         $request
@@ -147,7 +147,7 @@ class SuiteControllerSpec extends ObjectBehavior
             ->shouldHaveType(JsonResponse::class);
     }
 
-    function it_should_respond_to_update_selected_action(
+    public function it_should_respond_to_update_selected_action(
         Request $request,
         JsonHelper $jsonHelper,
         SuiteManager $suiteManager,
@@ -157,7 +157,7 @@ class SuiteControllerSpec extends ObjectBehavior
         $id = 1;
         $jsonContent = '{\n "name":"Suite A, version 2"\n}';
         $data = [
-            'name'  => 'Suite A, version 2'
+            'name' => 'Suite A, version 2',
         ];
 
         $request
@@ -181,7 +181,7 @@ class SuiteControllerSpec extends ObjectBehavior
             ->shouldHaveType(JsonResponse::class);
     }
 
-    function it_should_respond_to_delete_action(
+    public function it_should_respond_to_delete_action(
         SuiteManager $suiteManager,
         JsonResponseHelper $jsonResponseHelper)
     {

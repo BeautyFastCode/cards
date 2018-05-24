@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * (c) BeautyFastCode.com
@@ -26,17 +26,17 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class UserControllerSpec extends ObjectBehavior
 {
-    function let(EngineInterface $templating)
+    public function let(EngineInterface $templating)
     {
         $this->beConstructedWith($templating);
     }
 
-    function it_is_initializable()
+    public function it_is_initializable()
     {
         $this->shouldHaveType(UserController::class);
     }
 
-    function it_should_respond_to_login_action(
+    public function it_should_respond_to_login_action(
         EngineInterface $templating,
         Response $response)
     {
@@ -49,7 +49,7 @@ class UserControllerSpec extends ObjectBehavior
             ->shouldHaveType(Response::class);
     }
 
-    function it_should_respond_to_logged_out_action(
+    public function it_should_respond_to_logged_out_action(
         EngineInterface $templating,
         Response $response)
     {
@@ -62,7 +62,7 @@ class UserControllerSpec extends ObjectBehavior
             ->shouldHaveType(Response::class);
     }
 
-    function it_should_respond_to_sign_up_action(
+    public function it_should_respond_to_sign_up_action(
         EngineInterface $templating,
         Response $response)
     {
@@ -75,7 +75,7 @@ class UserControllerSpec extends ObjectBehavior
             ->shouldHaveType(Response::class);
     }
 
-    function it_should_respond_to_forgot_action(
+    public function it_should_respond_to_forgot_action(
         EngineInterface $templating,
         Response $response,
         Request $request,
@@ -97,7 +97,7 @@ class UserControllerSpec extends ObjectBehavior
             ->shouldHaveType(Response::class);
     }
 
-    function it_should_respond_to_privacy_action(
+    public function it_should_respond_to_privacy_action(
         EngineInterface $templating,
         Response $response)
     {
@@ -110,7 +110,7 @@ class UserControllerSpec extends ObjectBehavior
             ->shouldHaveType(Response::class);
     }
 
-    function it_should_respond_to_successfully_created_action(
+    public function it_should_respond_to_successfully_created_action(
         EngineInterface $templating,
         Response $response)
     {

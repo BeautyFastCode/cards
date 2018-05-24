@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * (c) BeautyFastCode.com
@@ -29,7 +29,7 @@ use PhpSpec\ObjectBehavior;
  */
 class CardManagerSpec extends ObjectBehavior
 {
-    function let(
+    public function let(
         CardRepository $cardRepository,
         EntityManagerInterface $entityManager,
         FormHelper $formHelper)
@@ -40,17 +40,17 @@ class CardManagerSpec extends ObjectBehavior
             $formHelper);
     }
 
-    function it_is_initializable()
+    public function it_is_initializable()
     {
         $this->shouldHaveType(CardManager::class);
     }
 
-    function it_have_base_interface()
+    public function it_have_base_interface()
     {
         $this->shouldImplement(BaseEntityManagerInterface::class);
     }
-    
-    function it_can_trow_exception_when_not_find_card(CardRepository $cardRepository)
+
+    public function it_can_trow_exception_when_not_find_card(CardRepository $cardRepository)
     {
         $cardRepository
             ->findOneBy(['id' => 1000])
@@ -60,8 +60,8 @@ class CardManagerSpec extends ObjectBehavior
             ->shouldThrow(EntityNotFoundException::class)
             ->duringRead(1000);
     }
-    
-    function it_can_create_card(
+
+    public function it_can_create_card(
         EntityManagerInterface $entityManager,
         FormHelper $formHelper,
         Card $card,
@@ -70,7 +70,7 @@ class CardManagerSpec extends ObjectBehavior
         $data = [
             'question' => 'Where are you?',
             'answer' => 'I\'m here.',
-            'deck' => 1
+            'deck' => 1,
         ];
 
         $formHelper

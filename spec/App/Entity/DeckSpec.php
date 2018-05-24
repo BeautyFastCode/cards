@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * (c) BeautyFastCode.com
@@ -29,19 +29,19 @@ use PhpSpec\ObjectBehavior;
  */
 class DeckSpec extends ObjectBehavior
 {
-    function it_is_initializable()
+    public function it_is_initializable()
     {
         $this->shouldHaveType(Deck::class);
     }
 
-    function it_have_behaviors()
+    public function it_have_behaviors()
     {
         $this->shouldImplement(BaseEntityInterface::class);
         $this->shouldImplement(SoftDeletableInterface::class);
         $this->shouldImplement(TimestampableInterface::class);
     }
 
-    function it_have_name_property()
+    public function it_have_name_property()
     {
         $this
             ->getName()
@@ -56,7 +56,7 @@ class DeckSpec extends ObjectBehavior
             ->shouldReturn('Deck');
     }
 
-    function it_adds_a_card_to_the_deck(Card $card)
+    public function it_adds_a_card_to_the_deck(Card $card)
     {
         // Expectations
         $card
@@ -68,7 +68,7 @@ class DeckSpec extends ObjectBehavior
             ->shouldReturn($this);
     }
 
-    function it_adds_a_card_to_the_deck_2(
+    public function it_adds_a_card_to_the_deck_2(
         Card $card,
         Card $anotherCard)
     {
@@ -96,7 +96,7 @@ class DeckSpec extends ObjectBehavior
             ->shouldReturn($this);
     }
 
-    function it_removes_a_card_from_the_Deck(Card $card)
+    public function it_removes_a_card_from_the_Deck(Card $card)
     {
         $this
             ->removeCard($card)
@@ -116,14 +116,14 @@ class DeckSpec extends ObjectBehavior
             ->shouldReturn($this);
     }
 
-    function it_gets_all_cards_from_the_deck()
+    public function it_gets_all_cards_from_the_deck()
     {
         $this
             ->getCards()
             ->shouldImplement(Collection::class);
     }
 
-    function it_gets_all_cards_ids_from_the_deck(Card $card)
+    public function it_gets_all_cards_ids_from_the_deck(Card $card)
     {
         $this
             ->getCardsIds()
@@ -147,7 +147,7 @@ class DeckSpec extends ObjectBehavior
             ->shouldReturn([0]);
     }
 
-    function it_gets_all_cards_ids_from_the_deck_2(
+    public function it_gets_all_cards_ids_from_the_deck_2(
         Card $card,
         Card $anotherCard)
     {
@@ -188,7 +188,7 @@ class DeckSpec extends ObjectBehavior
         ]);
     }
 
-    function it_adds_a_suite_to_the_deck(Suite $suite)
+    public function it_adds_a_suite_to_the_deck(Suite $suite)
     {
         // Expectations
         $suite
@@ -200,7 +200,7 @@ class DeckSpec extends ObjectBehavior
             ->shouldReturn($this);
     }
 
-    function it_adds_a_suite_to_the_deck_2(
+    public function it_adds_a_suite_to_the_deck_2(
         Suite $suite,
         Suite $anotherSuite)
     {
@@ -228,7 +228,7 @@ class DeckSpec extends ObjectBehavior
             ->shouldReturn($this);
     }
 
-    function it_removes_a_suite_from_the_Deck(Suite $suite)
+    public function it_removes_a_suite_from_the_Deck(Suite $suite)
     {
         $this
             ->removeSuite($suite)
@@ -252,14 +252,14 @@ class DeckSpec extends ObjectBehavior
             ->shouldReturn($this);
     }
 
-    function it_gets_all_suites_from_the_deck()
+    public function it_gets_all_suites_from_the_deck()
     {
         $this
             ->getSuites()
             ->shouldImplement(Collection::class);
     }
 
-    function it_gets_all_suites_ids_from_the_deck(Suite $suite)
+    public function it_gets_all_suites_ids_from_the_deck(Suite $suite)
     {
         $this
             ->getSuitesIds()
@@ -283,7 +283,7 @@ class DeckSpec extends ObjectBehavior
             ->shouldReturn([0]);
     }
 
-    function it_gets_all_suites_ids_from_the_deck_2(
+    public function it_gets_all_suites_ids_from_the_deck_2(
         Suite $suite,
         Suite $anotherSuite)
     {
@@ -320,12 +320,12 @@ class DeckSpec extends ObjectBehavior
         ]);
     }
 
-    function it_is_json_serializable()
+    public function it_is_json_serializable()
     {
         $this->shouldImplement(JsonSerializable::class);
     }
 
-    function it_returns_object_as_an_array()
+    public function it_returns_object_as_an_array()
     {
         $this
             ->jsonSerialize()

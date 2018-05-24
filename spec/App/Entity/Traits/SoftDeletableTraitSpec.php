@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * (c) BeautyFastCode.com
@@ -24,17 +24,17 @@ use DateTime;
  */
 class SoftDeletableTraitSpec extends ObjectBehavior
 {
-    function let()
+    public function let()
     {
         $this->beAnInstanceOf(SoftDeletableStub::class);
     }
 
-    function it_is_soft_deletable()
+    public function it_is_soft_deletable()
     {
         $this->shouldImplement(SoftDeletableInterface::class);
     }
 
-    function it_have_deleted_at_property()
+    public function it_have_deleted_at_property()
     {
         $datetime = new DateTime();
 
@@ -50,7 +50,7 @@ class SoftDeletableTraitSpec extends ObjectBehavior
             ->shouldReturn($datetime);
     }
 
-    function it_can_recover_entity()
+    public function it_can_recover_entity()
     {
         $datetime = new DateTime();
 
@@ -70,14 +70,14 @@ class SoftDeletableTraitSpec extends ObjectBehavior
             ->shouldReturn(null);
     }
 
-    function it_can_check_if_entity_is_deleted()
+    public function it_can_check_if_entity_is_deleted()
     {
         $this
             ->isDeleted()
             ->shouldReturn(false);
     }
 
-    function it_can_check_if_entity_is_not_deleted()
+    public function it_can_check_if_entity_is_not_deleted()
     {
         $this
             ->isNotDeleted()

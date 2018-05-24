@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * (c) BeautyFastCode.com
@@ -27,19 +27,19 @@ use PhpSpec\ObjectBehavior;
  */
 class CardSpec extends ObjectBehavior
 {
-    function it_is_initializable()
+    public function it_is_initializable()
     {
         $this->shouldHaveType(Card::class);
     }
 
-    function it_have_behaviors()
+    public function it_have_behaviors()
     {
         $this->shouldImplement(BaseEntityInterface::class);
         $this->shouldImplement(SoftDeletableInterface::class);
         $this->shouldImplement(TimestampableInterface::class);
     }
 
-    function it_have_question_property()
+    public function it_have_question_property()
     {
         $this
             ->getQuestion()
@@ -54,7 +54,7 @@ class CardSpec extends ObjectBehavior
             ->shouldReturn('How are you?');
     }
 
-    function it_have_answer_property()
+    public function it_have_answer_property()
     {
         $this
             ->getAnswer()
@@ -69,7 +69,7 @@ class CardSpec extends ObjectBehavior
             ->shouldReturn('I\'m fine');
     }
 
-    function it_have_deck_property(Deck $deck)
+    public function it_have_deck_property(Deck $deck)
     {
         $this
             ->getDeck()
@@ -84,12 +84,12 @@ class CardSpec extends ObjectBehavior
             ->shouldReturn($deck);
     }
 
-    function it_is_json_serializable()
+    public function it_is_json_serializable()
     {
         $this->shouldImplement(JsonSerializable::class);
     }
 
-    function it_returns_object_as_an_array()
+    public function it_returns_object_as_an_array()
     {
         $this
             ->jsonSerialize()
@@ -108,7 +108,7 @@ class CardSpec extends ObjectBehavior
             ->shouldHaveKey('deck');
     }
 
-    function it_returns_object_as_an_array_2(Deck $deck)
+    public function it_returns_object_as_an_array_2(Deck $deck)
     {
         // Expectations
         $deck

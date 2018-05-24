@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * (c) BeautyFastCode.com
@@ -25,17 +25,17 @@ use Symfony\Component\Translation\TranslatorInterface;
  */
 class FormErrorSerializerSpec extends ObjectBehavior
 {
-    function let(TranslatorInterface $translator)
+    public function let(TranslatorInterface $translator)
     {
         $this->beConstructedWith($translator);
     }
 
-    function it_is_initializable()
+    public function it_is_initializable()
     {
         $this->shouldHaveType(FormErrorSerializer::class);
     }
 
-    function it_can_convert_form_errors_to_array(FormInterface $data)
+    public function it_can_convert_form_errors_to_array(FormInterface $data)
     {
         $data
             ->getErrors()
@@ -50,7 +50,7 @@ class FormErrorSerializerSpec extends ObjectBehavior
             ->shouldReturn([]);
     }
 
-    function it_can_convert_child_errors(
+    public function it_can_convert_child_errors(
         FormInterface $data,
         FormError $error)
     {
@@ -70,11 +70,10 @@ class FormErrorSerializerSpec extends ObjectBehavior
             ->shouldReturn([]);
     }
 
-    function it_can_convert_form_errors_to_array_2(
+    public function it_can_convert_form_errors_to_array_2(
         FormInterface $data,
         FormError $error)
     {
-        //
         $data
             ->getErrors()
             ->willReturn([$error]);
@@ -98,7 +97,6 @@ class FormErrorSerializerSpec extends ObjectBehavior
             ->getMessageParameters()
             ->shouldBeCalled();
 
-        //
         $error
             ->getMessagePluralization()
             ->willReturn(null);
@@ -119,11 +117,11 @@ class FormErrorSerializerSpec extends ObjectBehavior
             ]);
     }
 
-    function it_can_convert_form_errors_to_array_3(
+    public function it_can_convert_form_errors_to_array_3(
         FormInterface $data,
         TranslatorInterface $translator)
     {
-        $error = new FormError("This value should not be blank.");
+        $error = new FormError('This value should not be blank.');
         $data->addError($error);
 
         $data
@@ -135,7 +133,7 @@ class FormErrorSerializerSpec extends ObjectBehavior
             ->willReturn([]);
 
         $translator->trans($error->getMessageTemplate(), $error->getMessageParameters(), 'validators')
-            ->willReturn("This value should not be blank.");
+            ->willReturn('This value should not be blank.');
 
         /*
          * Expectation
@@ -149,7 +147,7 @@ class FormErrorSerializerSpec extends ObjectBehavior
             ]);
     }
 
-    function it_can_get_error_message_with_pluralization_from_translator(
+    public function it_can_get_error_message_with_pluralization_from_translator(
         FormInterface $data,
         FormError $error)
     {

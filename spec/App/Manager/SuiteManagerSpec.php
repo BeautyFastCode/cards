@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * (c) BeautyFastCode.com
@@ -30,7 +30,7 @@ use PhpSpec\ObjectBehavior;
  */
 class SuiteManagerSpec extends ObjectBehavior
 {
-    function let(
+    public function let(
         SuiteRepository $suiteRepository,
         EntityManagerInterface $entityManager,
         FormHelper $formHelper)
@@ -41,12 +41,12 @@ class SuiteManagerSpec extends ObjectBehavior
             $formHelper);
     }
 
-    function it_is_initializable()
+    public function it_is_initializable()
     {
         $this->shouldHaveType(SuiteManager::class);
     }
 
-    function it_can_read_one_suite(
+    public function it_can_read_one_suite(
         SuiteRepository $suiteRepository,
         Suite $suite)
     {
@@ -59,7 +59,7 @@ class SuiteManagerSpec extends ObjectBehavior
             ->shouldReturn($suite);
     }
 
-    function it_can_trow_exception_when_not_find_suite(SuiteRepository $suiteRepository)
+    public function it_can_trow_exception_when_not_find_suite(SuiteRepository $suiteRepository)
     {
         $suiteRepository
             ->findOneBy(['id' => 1000])
@@ -70,18 +70,18 @@ class SuiteManagerSpec extends ObjectBehavior
             ->duringRead(1000);
     }
 
-    function it_can_find_all_suites(SuiteRepository $suiteRepository)
+    public function it_can_find_all_suites(SuiteRepository $suiteRepository)
     {
         $suiteRepository
             ->findAll()
-            ->willReturn([]);;
+            ->willReturn([]);
 
         $this
             ->list()
             ->shouldBeArray();
     }
 
-    function it_can_create_suite(
+    public function it_can_create_suite(
         EntityManagerInterface $entityManager,
         FormHelper $formHelper,
         Suite $suite,
@@ -111,10 +111,9 @@ class SuiteManagerSpec extends ObjectBehavior
 
         $this
             ->create($data);
-
     }
 
-    function it_can_update_properties_in_the_suite(
+    public function it_can_update_properties_in_the_suite(
         SuiteRepository $suiteRepository,
         FormHelper $formHelper,
         Suite $suite,
@@ -147,7 +146,7 @@ class SuiteManagerSpec extends ObjectBehavior
             ->update($id, $data);
     }
 
-    function it_can_delete_suite(
+    public function it_can_delete_suite(
         EntityManagerInterface $entityManager,
         SuiteRepository $suiteRepository,
         Suite $suite)
@@ -179,7 +178,7 @@ class SuiteManagerSpec extends ObjectBehavior
         $this->delete(1);
     }
 
-    function it_can_get_form_errors(FormHelper $formHelper)
+    public function it_can_get_form_errors(FormHelper $formHelper)
     {
         $formHelper
             ->getErrors()

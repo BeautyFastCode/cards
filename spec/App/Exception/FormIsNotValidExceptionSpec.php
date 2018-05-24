@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * (c) BeautyFastCode.com
@@ -22,23 +22,23 @@ use PhpSpec\ObjectBehavior;
  */
 class FormIsNotValidExceptionSpec extends ObjectBehavior
 {
-    function let()
+    public function let()
     {
         $this->beConstructedWith([
-            'error' => 'This value should not be blank.'
+            'error' => 'This value should not be blank.',
             ]);
     }
 
-    function it_is_initializable()
+    public function it_is_initializable()
     {
         $this->shouldHaveType(FormIsNotValidException::class);
     }
 
-    function it_can_get_form_errors()
+    public function it_can_get_form_errors()
     {
         $this->getFormErrors()
             ->shouldReturn([
-                'error' => 'This value should not be blank.'
+                'error' => 'This value should not be blank.',
             ]);
     }
 }

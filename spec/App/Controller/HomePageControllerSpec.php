@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * (c) BeautyFastCode.com
@@ -24,17 +24,17 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class HomePageControllerSpec extends ObjectBehavior
 {
-    function let(EngineInterface $templating)
+    public function let(EngineInterface $templating)
     {
         $this->beConstructedWith($templating);
     }
 
-    function it_is_initializable()
+    public function it_is_initializable()
     {
         $this->shouldHaveType(HomePageController::class);
     }
 
-    function it_should_respond_to_index_action(
+    public function it_should_respond_to_index_action(
         EngineInterface $templating,
         Response $response)
     {
@@ -47,7 +47,7 @@ class HomePageControllerSpec extends ObjectBehavior
             ->shouldHaveType(Response::class);
     }
 
-    function it_should_respond_to_theme_showcase_action(
+    public function it_should_respond_to_theme_showcase_action(
         EngineInterface $templating,
         Response $response)
     {

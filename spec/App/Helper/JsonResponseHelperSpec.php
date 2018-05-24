@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * (c) BeautyFastCode.com
@@ -23,12 +23,12 @@ use Symfony\Component\HttpFoundation\JsonResponse;
  */
 class JsonResponseHelperSpec extends ObjectBehavior
 {
-    function it_is_initializable()
+    public function it_is_initializable()
     {
         $this->shouldHaveType(JsonResponseHelper::class);
     }
 
-    function it_can_create_ok_json_response()
+    public function it_can_create_ok_json_response()
     {
         /** @var JsonResponse $jsonResponse */
         $jsonResponse = $this->okResponse();
@@ -38,7 +38,7 @@ class JsonResponseHelperSpec extends ObjectBehavior
             ->shouldReturn(200);
     }
 
-    function it_can_create_created_json_response()
+    public function it_can_create_created_json_response()
     {
         /** @var JsonResponse $jsonResponse */
         $jsonResponse = $this->createdResponse();
@@ -48,7 +48,7 @@ class JsonResponseHelperSpec extends ObjectBehavior
             ->shouldReturn(201);
     }
 
-    function it_can_create_no_content_json_response()
+    public function it_can_create_no_content_json_response()
     {
         /** @var JsonResponse $jsonResponse */
         $jsonResponse = $this->noContentResponse();
@@ -58,14 +58,14 @@ class JsonResponseHelperSpec extends ObjectBehavior
             ->shouldReturn(204);
     }
 
-    function it_can_create_not_found_json_response()
+    public function it_can_create_not_found_json_response()
     {
         $this
             ->notFoundResponse('')
             ->shouldHaveType(JsonResponse::class);
     }
 
-    function it_can_create_not_found_json_response_2()
+    public function it_can_create_not_found_json_response_2()
     {
         /** @var JsonResponse $jsonResponse */
         $jsonResponse = $this->notFoundResponse('Not Found Response');
@@ -75,7 +75,7 @@ class JsonResponseHelperSpec extends ObjectBehavior
             ->shouldReturn(404);
     }
 
-    function it_can_create_not_found_json_response_3()
+    public function it_can_create_not_found_json_response_3()
     {
         /** @var JsonResponse $jsonResponse */
         $jsonResponse = $this->notFoundResponse('Not Found Response');
@@ -85,7 +85,7 @@ class JsonResponseHelperSpec extends ObjectBehavior
             ->shouldReturn('{"status":"error","message":"Not Found Response"}');
     }
 
-    function it_can_create_bad_request_json_response()
+    public function it_can_create_bad_request_json_response()
     {
         /** @var JsonResponse $jsonResponse */
         $jsonResponse = $this->badRequestResponse('Bad Request Response');

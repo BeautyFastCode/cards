@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * (c) BeautyFastCode.com
@@ -8,6 +8,7 @@ declare(strict_types = 1);
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace spec\App\Exception;
 
 use App\Exception\EntityNotFoundException;
@@ -21,12 +22,12 @@ use PhpSpec\ObjectBehavior;
  */
 class EntityNotFoundExceptionSpec extends ObjectBehavior
 {
-    function let()
+    public function let()
     {
         $this->beConstructedWith('Suite', 1);
     }
 
-    function it_is_initializable()
+    public function it_is_initializable()
     {
         $this->shouldHaveType(EntityNotFoundException::class);
     }

@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * (c) BeautyFastCode.com
@@ -28,19 +28,19 @@ use PhpSpec\ObjectBehavior;
  */
 class SuiteSpec extends ObjectBehavior
 {
-    function it_is_initializable()
+    public function it_is_initializable()
     {
         $this->shouldHaveType(Suite::class);
     }
 
-    function it_have_behaviors()
+    public function it_have_behaviors()
     {
         $this->shouldImplement(BaseEntityInterface::class);
         $this->shouldImplement(SoftDeletableInterface::class);
         $this->shouldImplement(TimestampableInterface::class);
     }
 
-    function it_have_name_property()
+    public function it_have_name_property()
     {
         $this
             ->getName()
@@ -55,7 +55,7 @@ class SuiteSpec extends ObjectBehavior
             ->shouldReturn('Suite');
     }
 
-    function it_adds_a_deck_to_the_suite(Deck $deck)
+    public function it_adds_a_deck_to_the_suite(Deck $deck)
     {
         // Expectations
         $deck
@@ -67,7 +67,7 @@ class SuiteSpec extends ObjectBehavior
             ->shouldReturn($this);
     }
 
-    function it_adds_a_deck_to_the_suite_2(
+    public function it_adds_a_deck_to_the_suite_2(
         Deck $deck,
         Deck $anotherDeck)
     {
@@ -95,7 +95,7 @@ class SuiteSpec extends ObjectBehavior
             ->shouldReturn($this);
     }
 
-    function it_checks_whether_it_has_this_deck(Deck $deck)
+    public function it_checks_whether_it_has_this_deck(Deck $deck)
     {
         // Expectations
         $deck
@@ -115,7 +115,7 @@ class SuiteSpec extends ObjectBehavior
             ->shouldReturn(true);
     }
 
-    function it_removes_a_deck_from_the_suite(Deck $deck)
+    public function it_removes_a_deck_from_the_suite(Deck $deck)
     {
         // Expectation
         $deck
@@ -135,14 +135,14 @@ class SuiteSpec extends ObjectBehavior
             ->shouldReturn($this);
     }
 
-    function it_gets_all_decks_from_the_suite()
+    public function it_gets_all_decks_from_the_suite()
     {
         $this
             ->getDecks()
             ->shouldImplement(Collection::class);
     }
 
-    function it_gets_all_decks_ids_from_the_suite(Deck $deck)
+    public function it_gets_all_decks_ids_from_the_suite(Deck $deck)
     {
         $this
             ->getDecksIds()
@@ -166,7 +166,7 @@ class SuiteSpec extends ObjectBehavior
             ->shouldReturn([0]);
     }
 
-    function it_gets_all_decks_ids_from_the_suite_2(
+    public function it_gets_all_decks_ids_from_the_suite_2(
         Deck $deck,
         Deck $anotherDeck)
     {
@@ -191,7 +191,6 @@ class SuiteSpec extends ObjectBehavior
             ->getId()
             ->shouldBeCalledTimes(1);
 
-        //
         $this
             ->addDeck($deck)
             ->shouldReturn($this);
@@ -208,12 +207,12 @@ class SuiteSpec extends ObjectBehavior
         ]);
     }
 
-    function it_is_json_serializable()
+    public function it_is_json_serializable()
     {
         $this->shouldImplement(JsonSerializable::class);
     }
 
-    function it_returns_object_as_an_array()
+    public function it_returns_object_as_an_array()
     {
         $this
             ->jsonSerialize()
