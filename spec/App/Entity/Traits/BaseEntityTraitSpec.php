@@ -11,7 +11,7 @@ declare(strict_types = 1);
 
 namespace spec\App\Entity\Traits;
 
-use App\Entity\Stubs\BaseEntityStub;
+use App\Entity\Stubs\BaseEntityTraitStub;
 use App\Entity\Traits\BaseEntityInterface;
 use PhpSpec\ObjectBehavior;
 
@@ -25,7 +25,7 @@ class BaseEntityTraitSpec extends ObjectBehavior
 {
     function let()
     {
-        $this->beAnInstanceOf(BaseEntityStub::class);
+        $this->beAnInstanceOf(BaseEntityTraitStub::class);
     }
 
     function it_have_base_interface()

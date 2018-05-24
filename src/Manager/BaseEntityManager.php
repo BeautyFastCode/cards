@@ -11,6 +11,7 @@ declare(strict_types = 1);
 
 namespace App\Manager;
 
+use App\Entity\BaseEntity;
 use App\Entity\Traits\BaseEntityInterface;
 use App\Exception\EntityNotFoundException;
 use App\Helper\FormHelper;
@@ -18,7 +19,7 @@ use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
 /**
- * BaseEntityManager
+ * Manager - base CRUD functionality for an entities.
  *
  * @author    Bogumił Brzeziński <beautyfastcode@gmail.com>
  * @copyright BeautyFastCode.com
@@ -26,16 +27,22 @@ use Doctrine\ORM\EntityManagerInterface;
 abstract class BaseEntityManager implements BaseEntityManagerInterface
 {
     /**
+     * Repository for an entity.
+     *
      * @var ObjectRepository
      */
     private $entityRepository;
 
     /**
+     * Interface to an entity manager.
+     *
      * @var EntityManagerInterface
      */
     private $entityManager;
 
     /**
+     * Helper for create or update and validate an entity.
+     *
      * @var FormHelper
      */
     private $formHelper;
@@ -43,9 +50,9 @@ abstract class BaseEntityManager implements BaseEntityManagerInterface
     /**
      * Class constructor
      *
-     * @param ObjectRepository       $entityRepository
-     * @param EntityManagerInterface $entityManager
-     * @param FormHelper             $formHelper
+     * @param ObjectRepository       $entityRepository Repository for an entity.
+     * @param EntityManagerInterface $entityManager    Interface to an entity manager.
+     * @param FormHelper             $formHelper       Helper for create or update and validate an entity.
      */
     public function __construct(ObjectRepository $entityRepository,
                                 EntityManagerInterface $entityManager,
@@ -56,16 +63,29 @@ abstract class BaseEntityManager implements BaseEntityManagerInterface
         $this->formHelper = $formHelper;
     }
 
-    abstract protected function getEntity();
-    abstract protected function getEntityClassName(): string;
-    abstract protected function getEntityFormType();
+    /**
+     * Returns object that represents an entity.
+     *
+     * @return BaseEntity The entity
+     */
+    abstract protected function getEntity(): BaseEntity;
 
     /**
-     * Read one an entity
+     * Returns an entity class name.
      *
-     * @param int $id
+     * @return string
+     */
+    abstract protected function getEntityClassName(): string;
+
+    /**
+     * Returns the form type class name for an entity.
      *
-     * @return BaseEntityInterface
+     * @return string
+     */
+    abstract protected function getEntityFormTypeClassName();
+
+    /**
+     * {@inheritdoc}
      */
     public function read(int $id): BaseEntityInterface
     {
@@ -79,9 +99,7 @@ abstract class BaseEntityManager implements BaseEntityManagerInterface
     }
 
     /**
-     * List of all an entities in the repository.
-     *
-     * @return array An entities
+     * {@inheritdoc}
      */
     public function list(): array
     {
@@ -89,18 +107,14 @@ abstract class BaseEntityManager implements BaseEntityManagerInterface
     }
 
     /**
-     * Create one an entity.
-     *
-     * @param array $data
-     *
-     * @return BaseEntityInterface|null
+     * {@inheritdoc}
      */
     public function create(array $data): ?BaseEntityInterface
     {
         /**@var BaseEntityInterface $baseEntity */
         $baseEntity = $this
             ->formHelper
-            ->submitEntity($this->getEntityFormType(), $this->getEntity(), $data);
+            ->submitEntity($this->getEntityFormTypeClassName(), $this->getEntity(), $data);
 
         $this->entityManager->persist($baseEntity);
         $this->entityManager->flush();
@@ -108,17 +122,12 @@ abstract class BaseEntityManager implements BaseEntityManagerInterface
         /*
          * Get data from repository, not from form.
          */
+
         return $this->read($baseEntity->getId());
     }
 
     /**
-     * Update one an entity.
-     *
-     * @param int   $id
-     * @param array $data
-     * @param bool  $allProperties
-     *
-     * @return BaseEntityInterface|null
+     * {@inheritdoc}
      */
     public function update(int $id, array $data, bool $allProperties = true): ?BaseEntityInterface
     {
@@ -126,22 +135,19 @@ abstract class BaseEntityManager implements BaseEntityManagerInterface
 
         $this
             ->formHelper
-            ->submitEntity($this->getEntityFormType(), $baseEntity, $data, $allProperties);
+            ->submitEntity($this->getEntityFormTypeClassName(), $baseEntity, $data, $allProperties);
 
         $this->entityManager->flush();
 
         /*
          * Get data from repository, not from form.
          */
+
         return $this->read($baseEntity->getId());
     }
 
     /**
-     * Delete one an entity.
-     *
-     * @param int $id
-     *
-     * @return void
+     * {@inheritdoc}
      */
     public function delete(int $id):void
     {
@@ -154,7 +160,7 @@ abstract class BaseEntityManager implements BaseEntityManagerInterface
     }
 
     /**
-     * Get errors.
+     * Get the form errors in array format.
      *
      * @return array
      */

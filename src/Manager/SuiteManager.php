@@ -11,6 +11,7 @@ declare(strict_types = 1);
 
 namespace App\Manager;
 
+use App\Entity\BaseEntity;
 use App\Entity\Suite;
 use App\Form\SuiteType;
 use App\Helper\FormHelper;
@@ -18,7 +19,7 @@ use App\Repository\SuiteRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
 /**
- * SuiteManager
+ * Manager - base CRUD functionality for the suite entity.
  *
  * @author    Bogumił Brzeziński <beautyfastcode@gmail.com>
  * @copyright BeautyFastCode.com
@@ -26,16 +27,14 @@ use Doctrine\ORM\EntityManagerInterface;
 class SuiteManager extends BaseEntityManager
 {
     /**
+     * Interface to an entity manager.
+     *
      * @var EntityManagerInterface
      */
     private $entityManager;
 
     /**
-     * Class constructor
-     *
-     * @param SuiteRepository        $suiteRepository
-     * @param EntityManagerInterface $entityManager
-     * @param FormHelper             $formHelper
+     * {@inheritdoc}
      */
     public function __construct(SuiteRepository $suiteRepository,
                                 EntityManagerInterface $entityManager,
@@ -46,27 +45,32 @@ class SuiteManager extends BaseEntityManager
         parent::__construct($suiteRepository, $entityManager, $formHelper);
     }
 
-    protected function getEntity()
+    /**
+     * {@inheritdoc}
+     */
+    protected function getEntity(): BaseEntity
     {
         return new Suite();
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function getEntityClassName(): string
     {
         return Suite::class;
     }
 
-    protected function getEntityFormType()
+    /**
+     * {@inheritdoc}
+     */
+    protected function getEntityFormTypeClassName(): string
     {
         return SuiteType::class;
     }
 
     /**
-     * Delete one Suite.
-     *
-     * @param int $id
-     *
-     * @return void
+     * {@inheritdoc}
      */
     public function delete(int $id):void
     {

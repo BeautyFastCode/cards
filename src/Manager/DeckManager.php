@@ -11,6 +11,7 @@ declare(strict_types = 1);
 
 namespace App\Manager;
 
+use App\Entity\BaseEntity;
 use App\Entity\Deck;
 use App\Form\DeckType;
 use App\Helper\FormHelper;
@@ -18,7 +19,7 @@ use App\Repository\DeckRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
 /**
- * DeckManager
+ * Manager - base CRUD functionality for the deck entity.
  *
  * @author    Bogumił Brzeziński <beautyfastcode@gmail.com>
  * @copyright BeautyFastCode.com
@@ -26,16 +27,14 @@ use Doctrine\ORM\EntityManagerInterface;
 class DeckManager extends BaseEntityManager
 {
     /**
+     * Interface to an entity manager.
+     *
      * @var EntityManagerInterface
      */
     private $entityManager;
 
     /**
-     * Class constructor
-     *
-     * @param DeckRepository         $deckRepository
-     * @param EntityManagerInterface $entityManager
-     * @param FormHelper             $formHelper
+     * {@inheritdoc}
      */
     public function __construct(DeckRepository $deckRepository,
                                 EntityManagerInterface $entityManager,
@@ -46,27 +45,32 @@ class DeckManager extends BaseEntityManager
         parent::__construct($deckRepository, $entityManager, $formHelper);
     }
 
-    protected function getEntity()
+    /**
+     * {@inheritdoc}
+     */
+    protected function getEntity(): BaseEntity
     {
         return new Deck();
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function getEntityClassName(): string
     {
         return Deck::class;
     }
 
-    protected function getEntityFormType()
+    /**
+     * {@inheritdoc}
+     */
+    protected function getEntityFormTypeClassName(): string
     {
         return DeckType::class;
     }
 
     /**
-     * Delete one Deck.
-     *
-     * @param int $id
-     *
-     * @return void
+     * {@inheritdoc}
      */
     public function delete(int $id):void
     {

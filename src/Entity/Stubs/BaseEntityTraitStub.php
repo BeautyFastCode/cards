@@ -11,14 +11,19 @@ declare(strict_types = 1);
 
 namespace App\Entity\Stubs;
 
-use App\Entity\BaseEntity;
+use App\Entity\Traits\BaseEntityInterface;
+use App\Entity\Traits\BaseEntityTrait;
 
 /**
- * Stub for BaseEntity used in specifications.
+ * Stub for BaseEntity trait used in specifications.
  *
  * @author    Bogumił Brzeziński <beautyfastcode@gmail.com>
  * @copyright BeautyFastCode.com
  */
-class BaseEntityStub extends BaseEntity
+class BaseEntityTraitStub implements BaseEntityInterface
 {
+    /**
+     * Unique identifier - id field
+     */
+    use BaseEntityTrait;
 }
