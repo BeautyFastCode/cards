@@ -1,4 +1,16 @@
 {
+    "name": "cards",
+    "description": "The Project Cards.",
+    "main": "public/index.php",
+    "repository": "https://github.com/BeautyFastCode/cards.git",
+    "authors": [
+        {
+            "name": "Bogumił Brzeziński",
+            "homepage": "http://beautyfastcode.com/",
+            "email": "beautyfastcode@gmail.com"
+        }
+    ],
+    "license": "MIT",
     "devDependencies": {
         "@symfony/webpack-encore": "^0.17.0",
         "bootstrap": "^4.0.0",
@@ -11,8 +23,6 @@
         "vue-template-compiler": "^2.5.16",
         "webpack-notifier": "^1.6.0"
     },
-    "license": "UNLICENSED",
-    "private": true,
     "scripts": {
         "dev-server": "encore dev-server",
         "dev": "encore dev",
